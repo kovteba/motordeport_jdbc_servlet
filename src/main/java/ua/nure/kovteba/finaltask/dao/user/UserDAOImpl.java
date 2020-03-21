@@ -32,7 +32,8 @@ public class UserDAOImpl implements UserDAO {
      * @return void
      * */
     @Override
-    public void createUser(User user) {
+    public Long createUser(User user) {
+        Long idNewUser = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
                 "users (first_name, last_name, phone_number, role, password) " +
@@ -47,11 +48,15 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(4, user.getRole());
             preparedStatement.setString(5, user.getPassword());
             //execute insert to table
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()){
+                idNewUser = resultSet.getLong(1);
+            }
             LOG.info("new user added successfully");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return idNewUser;
     }
 
     /**
@@ -84,7 +89,11 @@ public class UserDAOImpl implements UserDAO {
         return allUsersByRole;
     }
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public User getUserById(Long id) {
         User user = new User();
@@ -107,6 +116,11 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    /**
+     *
+     * @param phoneNumber
+     * @return
+     */
     @Override
     public User getUserByUserPhoneNumber(String phoneNumber) {
         User user = new User();
@@ -129,6 +143,10 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<User> getAllUsers() {
         //create return list
