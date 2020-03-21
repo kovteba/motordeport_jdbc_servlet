@@ -3,13 +3,15 @@ package ua.nure.kovteba.finaltask.entity;
 import lombok.*;
 import ua.nure.kovteba.finaltask.enumlist.Role;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class User {
+public class User implements Serializable {
 
     private Long id;
 
