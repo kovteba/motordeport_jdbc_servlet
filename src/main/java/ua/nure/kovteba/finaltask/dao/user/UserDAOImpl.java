@@ -64,8 +64,8 @@ public class UserDAOImpl implements UserDAO {
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
-        String selectAllByRole = "SELECT id, first_name, last_name, phone_number " +
-                "FROM users WHERE role = '" + role.getRoleValue() + "';";
+        String selectAllByRole = "SELECT * FROM users " +
+                "WHERE role = '" + role.getRoleValue() + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectAllByRole);) {
             while (rs.next()) {
@@ -74,6 +74,7 @@ public class UserDAOImpl implements UserDAO {
                 newUser.setFirstName(rs.getString(2));
                 newUser.setLastName(rs.getString(3));
                 newUser.setPhoneNumber(rs.getString(4));
+                newUser.setRole(rs.getString(5));
                 allUsersByRole.add(newUser);
             }
         } catch (SQLException e) {
@@ -88,16 +89,16 @@ public class UserDAOImpl implements UserDAO {
     public User getUserById(Long id) {
         User user = new User();
         //SQL query for select users by id
-        String selectUserById = "SELECT first_name, last_name, phone_number, role " +
-                "FROM users WHERE id = '" + id + "';";
+        String selectUserById = "SELECT * FROM users " +
+                "WHERE id = '" + id + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectUserById);) {
             while (rs.next()) {
-                user.setId(id);
-                user.setFirstName(rs.getString(1));
-                user.setLastName(rs.getString(2));
-                user.setPhoneNumber(rs.getString(3));
-                user.setRole(rs.getString(4));
+                user.setId(rs.getLong(1));
+                user.setFirstName(rs.getString(2));
+                user.setLastName(rs.getString(3));
+                user.setPhoneNumber(rs.getString(4));
+                user.setRole(rs.getString(5));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,16 +111,16 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByUserPhoneNumber(String phoneNumber) {
         User user = new User();
         //SQL query for select users by id
-        String selectUserById = "SELECT id, first_name, last_name, role " +
-                "FROM users WHERE id = '" + phoneNumber + "';";
+        String selectUserById = "SELECT * FROM users " +
+                "WHERE phone_number = '" + phoneNumber + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectUserById);) {
             while (rs.next()) {
                 user.setId(rs.getLong(1));
                 user.setFirstName(rs.getString(2));
                 user.setLastName(rs.getString(3));
-                user.setPhoneNumber(phoneNumber);
-                user.setRole(rs.getString(4));
+                user.setPhoneNumber(rs.getString(4));
+                user.setRole(rs.getString(5));
             }
         } catch (SQLException e) {
             e.printStackTrace();
