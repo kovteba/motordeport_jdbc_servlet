@@ -1,14 +1,13 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
-public enum CarStatus {
+import java.util.ArrayList;
+import java.util.List;
 
-    GOOD("good"),
+public enum  CarStatus {
 
-    REPAIRS("repairs"),
+    BUSY("BUSY"),
 
-    BUSY("busy"),
-
-    FREE("free");
+    FREE("FREE");
 
     private final String carStatus;
 
@@ -16,8 +15,23 @@ public enum CarStatus {
         this.carStatus = carStatus;
     }
 
-    public String getCarStatus() {
+    public String getCarStatusValue() {
         return carStatus;
+    }
+
+    public static List<CarStatus> getListCarStatus(){
+        List<CarStatus> listCarStatus = new ArrayList<>();
+        listCarStatus.add(CarStatus.FREE);
+        listCarStatus.add(CarStatus.BUSY);
+        return listCarStatus;
+    }
+
+    public static CarStatus findCarClass(String carClassValue){
+        return getListCarStatus()
+                .stream()
+                .filter(s -> s.getCarStatusValue().equals(carClassValue))
+                .findAny()
+                .get();
     }
 
 }
