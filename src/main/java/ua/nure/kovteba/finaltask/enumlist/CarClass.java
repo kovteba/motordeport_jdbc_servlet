@@ -2,20 +2,21 @@ package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public enum  CarClass {
 
-    ECONOMY("Economy"),
+    ECONOMY("ECONOMY"),
 
-    STANDART("Standard"),
+    STANDART("STANDART"),
 
-    COMFORT("Comfort"),
+    COMFORT("COMFORT"),
 
-    BUSINESS("Business"),
+    BUSINESS("BUSINESS"),
 
-    STATIONWAGON("Station Wagon"),
+    STATIONWAGON("STATION WAGON"),
 
-    MINIVAN("Minivan");
+    MINIVAN("MINIVAN");
 
     private final String classValue;
 
@@ -27,15 +28,23 @@ public enum  CarClass {
         return classValue;
     }
 
-    public static List<String> getListCarClass(){
-        List<String> classList = new ArrayList<>();
-        classList.add(CarClass.ECONOMY.getClassValue());
-        classList.add(CarClass.STANDART.getClassValue());
-        classList.add(CarClass.COMFORT.getClassValue());
-        classList.add(CarClass.BUSINESS.getClassValue());
-        classList.add(CarClass.STATIONWAGON.getClassValue());
-        classList.add(CarClass.MINIVAN.getClassValue());
+    public static List<CarClass> getListCarClass(){
+        List<CarClass> classList = new ArrayList<>();
+        classList.add(CarClass.ECONOMY);
+        classList.add(CarClass.STANDART);
+        classList.add(CarClass.COMFORT);
+        classList.add(CarClass.BUSINESS);
+        classList.add(CarClass.STATIONWAGON);
+        classList.add(CarClass.MINIVAN);
         return classList;
+    }
+
+    public static CarClass findCarClass(String carClassValue){
+        return getListCarClass()
+                .stream()
+                .filter(s -> s.getClassValue().equals(carClassValue))
+                .findAny()
+                .get();
     }
 
 
