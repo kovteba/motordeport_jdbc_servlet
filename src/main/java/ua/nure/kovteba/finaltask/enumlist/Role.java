@@ -33,12 +33,13 @@ public enum Role {
         return roles;
     }
 
-    public static Optional<Role> findRole(String roleString){
-        Optional<Role> role = null;
+    public static Role findRole(String roleString){
+        Role role = null;
         return role = getListRole()
                 .stream()
                 .filter(s -> s.getRoleValue().equals(roleString))
-                .findAny();
+                .findAny()
+                .get();
     }
 
 
