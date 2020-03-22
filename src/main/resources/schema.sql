@@ -53,3 +53,10 @@ create table requests
     driver_id           bigint not null,
     request_status      varchar(255) not null
 );
+
+create table tokens
+(
+    id    bigint auto_increment primary key,
+    token varchar(255) not null,
+    user  varchar(255) not null
+);
