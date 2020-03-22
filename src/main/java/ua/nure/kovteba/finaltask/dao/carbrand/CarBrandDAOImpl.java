@@ -7,7 +7,7 @@ import ua.nure.kovteba.finaltask.util.Serialization;
 import java.sql.*;
 import java.util.logging.Logger;
 
-public class CarBrandDAOImpl implements CarBrandDAO{
+public class CarBrandDAOImpl implements CarBrandDAO {
 
     //Create logger
     private static Logger LOG = Logger.getLogger(CarBrandDAOImpl.class.getName());
@@ -28,8 +28,10 @@ public class CarBrandDAOImpl implements CarBrandDAO{
             e.printStackTrace();
         }
     }
+
     @Override
     public Long cteateCarBrand(CarBrand carBrand) {
+        LOG.info("CREATE CAR BRAND");
         Long idNewCarBrand = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -55,6 +57,7 @@ public class CarBrandDAOImpl implements CarBrandDAO{
 
     @Override
     public CarBrand getCarBrandById(Long id) {
+        LOG.info(" GET CAR BRAND BY ID");
         CarBrand carBrand = new CarBrand();
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM car_brand WHERE id = '" + id + "';";
@@ -73,6 +76,7 @@ public class CarBrandDAOImpl implements CarBrandDAO{
 
     @Override
     public CarBrand getCarBrandByBrandValue(String brandValue) {
+        LOG.info("GET CAR BRAND BY BRAND VALUE");
         CarBrand carBrand = new CarBrand();
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM car_brand WHERE brand_name = '" + brandValue + "';";
