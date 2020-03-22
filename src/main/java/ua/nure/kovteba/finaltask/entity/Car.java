@@ -2,6 +2,10 @@ package ua.nure.kovteba.finaltask.entity;
 
 import lombok.*;
 import ua.nure.kovteba.finaltask.enumlist.CarClass;
+import ua.nure.kovteba.finaltask.enumlist.CarStatus;
+import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
+
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,7 +13,7 @@ import ua.nure.kovteba.finaltask.enumlist.CarClass;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Car {
+public class Car implements Serializable {
 
     private Long id;
 
@@ -28,5 +32,9 @@ public class Car {
     private Boolean airConditioning;
 
     private Boolean navigator;
+
+    private CarTechnicalStatus carTechnicalStatus;
+
+    private CarStatus carStatus;
 
 }
