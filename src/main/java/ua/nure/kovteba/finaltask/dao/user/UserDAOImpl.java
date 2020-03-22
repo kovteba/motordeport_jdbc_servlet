@@ -1,6 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.user;
 
-import ua.nure.kovteba.finaltask.connection.Connect;
+import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Role;
 

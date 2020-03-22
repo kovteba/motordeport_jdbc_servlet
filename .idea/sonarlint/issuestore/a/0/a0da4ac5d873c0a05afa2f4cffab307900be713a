@@ -1,0 +1,10 @@
+
+t	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÅÍéø8ıı¯Á.
+h
+java:S2095"HUse try-with-resources or close this "Connection" in a "finally" clause.(¹»­èúÿÿÿÿ8ıı¯Á.
+n
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÖèûÿÿÿÿ8ıı¯Á.
+y	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(úäÀ˜úÿÿÿÿ8ıı¯Á.
+Z
+java:S1118":Add a private constructor to hide the implicit public one.(Õ“ùÿÿÿÿ8ıı¯Á.
+y	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Âû©ãıÿÿÿÿ8ıı¯Á.

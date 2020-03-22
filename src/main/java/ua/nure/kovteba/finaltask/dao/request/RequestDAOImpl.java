@@ -1,11 +1,10 @@
 package ua.nure.kovteba.finaltask.dao.request;
 
-import ua.nure.kovteba.finaltask.connection.Connect;
+import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.Request;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.CarClass;
 import ua.nure.kovteba.finaltask.enumlist.RequestStatus;
-import ua.nure.kovteba.finaltask.enumlist.Role;
 import ua.nure.kovteba.finaltask.util.Serialization;
 
 import java.io.IOException;

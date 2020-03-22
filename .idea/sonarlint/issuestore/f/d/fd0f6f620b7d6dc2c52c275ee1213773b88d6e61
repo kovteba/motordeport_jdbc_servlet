@@ -1,0 +1,37 @@
+
+e
+java:S32525"HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ÃÆãÒ8şå‚è.
+b
+java:S2147j"ECombine this catch with the one at line 102, which has the same body.(ıàÑÎ8ñ½¼é.
+m
+java:S2095¡"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(­£²ê8ñÑ¼ê.
+F
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÊŒÃä.
+E
+java:S1148#"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‘‹ÖÍ.
+F
+java:S1148Œ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÊŒÃä.
+b
+java:S2147h"ECombine this catch with the one at line 102, which has the same body.(ï­£Ä8ñ½¼é.
+E
+java:S1148i"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ñ½¼é.
+d
+java:S2095A"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(ø÷´à8±Ô‹è.
+c
+java:S2147‹"ECombine this catch with the one at line 137, which has the same body.(ï­£Ä8ÊŒÃä.
+E
+java:S1148G"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‘‹ÖÍ.
+F
+java:S1148¦"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ñÑ¼ê.
+E
+java:S1148k"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ñ½¼é.
+p
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…İ²‰øÿÿÿÿ8‘‹ÖÍ.
+E
+java:S1148g"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¯‰®é.
+a
+java:S1128"DRemove this unused import 'ua.nure.kovteba.finaltask.enumlist.Role'.(ø¥Ä8¯‰®é.
+F
+java:S1148Š"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÊŒÃä.
+c
+java:S2147"ECombine this catch with the one at line 137, which has the same body.(ıàÑÎ8ÊŒÃä.

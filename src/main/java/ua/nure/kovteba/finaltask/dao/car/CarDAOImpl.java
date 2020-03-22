@@ -1,9 +1,8 @@
 package ua.nure.kovteba.finaltask.dao.car;
 
-import ua.nure.kovteba.finaltask.connection.Connect;
+import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Car;
-import ua.nure.kovteba.finaltask.entity.CarBrand;
 import ua.nure.kovteba.finaltask.enumlist.CarClass;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
 import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;

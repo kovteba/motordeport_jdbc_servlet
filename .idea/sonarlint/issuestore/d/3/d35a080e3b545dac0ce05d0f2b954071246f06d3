@@ -1,0 +1,17 @@
+
+E
+java:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8…“τ.
+E
+java:S11483"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8…“τ.
+E
+java:S1148D"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8‡¨“υ.
+p
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(θέώÿÿÿÿ8…“τ.
+d
+java:S2095-"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(ψχ΄ΰ8…“τ.
+E
+java:S1148V"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8ήΒυ.
+e
+java:S3252("HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ΓΖγÒ8…“τ.
+S
+java:S1068"1Remove this unused "serialization" private field.(οφΏύÿÿÿÿ8έχ”υ.

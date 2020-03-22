@@ -1,6 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.carbrand;
 
-import ua.nure.kovteba.finaltask.connection.Connect;
+import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.CarBrand;
 import ua.nure.kovteba.finaltask.util.Serialization;
 
