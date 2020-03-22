@@ -1,14 +1,17 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum FlightStatus {
 
-    OPEN("open"),
+    OPEN("OPEN"),
 
-    INPROGRESS("inProgress"),
+    INPROGRESS("IN PROGRESS"),
 
-    CLOSE("close"),
+    CLOSE("CLOSE"),
 
-    CANСELED("canceled");
+    CANСELED("CANCELED");
 
     private final String statusValue;
 
@@ -18,6 +21,23 @@ public enum FlightStatus {
 
     public String getStatusValue() {
         return statusValue;
+    }
+
+    public static List<FlightStatus> getFlightStatus(){
+        List<FlightStatus> listCarStatus = new ArrayList<>();
+        listCarStatus.add(FlightStatus.OPEN);
+        listCarStatus.add(FlightStatus.INPROGRESS);
+        listCarStatus.add(FlightStatus.CLOSE);
+        listCarStatus.add(FlightStatus.CANСELED);
+        return listCarStatus;
+    }
+
+    public static FlightStatus findFlightStatus(String flightStatus){
+        return getFlightStatus()
+                .stream()
+                .filter(s -> s.getStatusValue().equals(flightStatus))
+                .findAny()
+                .get();
     }
 
 }
