@@ -45,14 +45,14 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPhoneNumber());
-            preparedStatement.setString(4, user.getRole());
+            preparedStatement.setString(4, user.getRole().getRoleValue());
             preparedStatement.setString(5, user.getPassword());
             //execute insert to table
             preparedStatement.executeUpdate();            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()){
                 idNewUser = resultSet.getLong(1);
             }
-            LOG.info("new user added successfully");
+            LOG.info("NEW USER ADDED SUCCESSFULY");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,6 +66,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getUserByRole(Role role) {
+        LOG.info("FIND USERS LIST BY ROLE");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -79,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
                 newUser.setFirstName(rs.getString(2));
                 newUser.setLastName(rs.getString(3));
                 newUser.setPhoneNumber(rs.getString(4));
-                newUser.setRole(rs.getString(5));
+                newUser.setRole(Role.findRole(rs.getString(5)));
                 allUsersByRole.add(newUser);
             }
         } catch (SQLException e) {
@@ -96,18 +97,20 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserById(Long id) {
-        User user = new User();
+        LOG.info("FIND USER BY ID");
+        User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
                 "WHERE id = '" + id + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectUserById);) {
             while (rs.next()) {
+                user = new User();
                 user.setId(rs.getLong(1));
                 user.setFirstName(rs.getString(2));
                 user.setLastName(rs.getString(3));
                 user.setPhoneNumber(rs.getString(4));
-                user.setRole(rs.getString(5));
+                user.setRole(Role.findRole(rs.getString(5)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,18 +126,21 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserByUserPhoneNumber(String phoneNumber) {
-        User user = new User();
+        LOG.info("FIND USER BY PHONE NUMBER");
+        User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
                 "WHERE phone_number = '" + phoneNumber + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectUserById);) {
             while (rs.next()) {
+                user = new User();
                 user.setId(rs.getLong(1));
                 user.setFirstName(rs.getString(2));
                 user.setLastName(rs.getString(3));
                 user.setPhoneNumber(rs.getString(4));
-                user.setRole(rs.getString(5));
+                user.setRole(Role.findRole(rs.getString(5)));
+                user.setPassword(rs.getString(6));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,6 +155,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getAllUsers() {
+        LOG.info("FIND ALL USERS LIST");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -161,7 +168,7 @@ public class UserDAOImpl implements UserDAO {
                 newUser.setFirstName(rs.getString(2));
                 newUser.setLastName(rs.getString(3));
                 newUser.setPhoneNumber(rs.getString(4));
-                newUser.setRole(rs.getString(5));
+                newUser.setRole(Role.findRole(rs.getString(5)));
                 allUsersByRole.add(newUser);
             }
         } catch (SQLException e) {
