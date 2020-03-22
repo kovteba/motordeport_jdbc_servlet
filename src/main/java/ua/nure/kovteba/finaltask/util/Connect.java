@@ -1,4 +1,4 @@
-package ua.nure.kovteba.finaltask.connection;
+package ua.nure.kovteba.finaltask.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
