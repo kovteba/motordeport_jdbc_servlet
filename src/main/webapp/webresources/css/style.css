@@ -1,0 +1,62 @@
+@font-face {
+    font-family: LCDDisplayCapsSSK; /* Гарнитура шрифта */
+    src: url("../font/LCDDisplayCapsSSK.otf"); /* Путь к файлу со шрифтом */
+}
+
+@font-face {
+    font-family: MinecartLCD; /* Гарнитура шрифта */
+    src: url("../font/MinecartLCD.ttf"); /* Путь к файлу со шрифтом */
+}
+
+
+
+.header{
+    background: black;
+    color: black;
+    margin-bottom: 2%;
+    border-radius:  0 0 40px 40px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5); /* Параметры тени */
+}
+
+.logo{
+    margin: 10px 10px 10px 3%;
+    width: 25%;
+}
+
+.base{
+    width: 95%;
+    margin: auto;
+}
+
+/*table flight*/
+.tableFlights{
+    border-radius:  9px 9px 9px 9px;
+    width: 100%;
+    font-family: MinecartLCD;
+    text-align: center;
+}
+
+.tableFlights tbody tr{
+    color: yellow;
+    border-top: 2px solid #000000 !important;
+}
+
+.tableFlights thead{
+    color: #007402;
+    cursor: pointer;
+}
+
+.hrBeetwen{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.tableFlights thead tr th{
+    cursor: pointer;
+}
+
+
+
+
+
+

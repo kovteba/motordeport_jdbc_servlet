@@ -8,6 +8,12 @@
     <description>Example JEE Servlet Application</description>
 
 
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>default</servlet-name>-->
+<!--        <url-pattern>/webresources/*</url-pattern>-->
+<!--        <url-pattern>/WEB-INF/*</url-pattern>-->
+<!--        <url-pattern>/webapp/*</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 
 </web-app>

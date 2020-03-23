@@ -1,5 +1,9 @@
 
-P
-java:S1121&".Extract the assignment out of this expression.(“›º øÿÿÿÿ8Ò¹§¿.
-Z
-java:S1854&"8Remove this useless assignment to local variable "role".(“›º øÿÿÿÿ8Ò¹§¿.
+X
+java:S1854"8Remove this useless assignment to local variable "role".(“›º øÿÿÿÿ8Ò¹§¿.
+W
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(“›º øÿÿÿÿ8Ğø¥•.
+N
+java:S1121".Extract the assignment out of this expression.(“›º øÿÿÿÿ8Ò¹§¿.
+O
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8ùÏ¦•.

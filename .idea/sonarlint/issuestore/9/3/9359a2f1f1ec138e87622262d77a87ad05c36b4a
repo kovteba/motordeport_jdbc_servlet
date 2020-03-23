@@ -1,21 +1,21 @@
 
-E
-java:S11489"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8•èµÂ.
-p
-java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷·•Úûÿÿÿÿ8•èµÂ.
 i
-java:S20953"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Û­±şıÿÿÿÿ8ãø—è.
-F
-java:S1148¨"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‹ÖÍ.
-E
-java:S1148V"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¹œÃ.
-e
-java:S3252+"HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ÃÆãÒ8¤İÂ.
-F
-java:S1148Œ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‹ÖÍ.
-E
-java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8•èµÂ.
+java:S20953"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Û­±şıÿÿÿÿ8Ò‰ö.
 r
-java:S1192H"UDefine a constant instead of duplicating this literal "SELECT * FROM users " 3 times.(¶‡£½8ÉŒÃä.
+java:S1192I"UDefine a constant instead of duplicating this literal "SELECT * FROM users " 3 times.(¶‡£½8Ò‰ö.
 E
-java:S1148q"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‹ÖÍ.
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+E
+java:S11489"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+E
+java:S1148W"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+E
+java:S1148t"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+F
+java:S1148’"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+F
+java:S1148¯"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ò‰ö.
+p
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷·•Úûÿÿÿÿ8Ò‰ö.
+e
+java:S3252+"HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ÃÆãÒ8Ò‰ö.

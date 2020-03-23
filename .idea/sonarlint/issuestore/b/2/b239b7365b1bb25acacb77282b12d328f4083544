@@ -1,2 +1,4 @@
 
-r	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(õôš˜ùÿÿÿÿ
+r	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Öşôòûÿÿÿÿ
+R
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(ˆ„Àø8–ó˜.

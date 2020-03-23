@@ -13,11 +13,16 @@
 <div>ID: <%= user.getId()%></div>
 <div>First Name: <%= user.getFirstName()%></div>
 <div>Last Name: <%= user.getLastName()%></div>
+<div>type : <%= request.getAttribute("type")%></div>
 
 <%
 } else {
 %>
 
+
+<c:forEach>
+
+</c:forEach>
 <h1>No student record found.</h1>
 
 <% } %>

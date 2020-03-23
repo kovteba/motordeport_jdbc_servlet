@@ -1,3 +1,19 @@
 
-V
-java:S2094"BRemove this empty class, write its code or make it an "interface".(œ‡×š
+F
+java:S1068"+Remove this unused "userDAO" private field.(©×–Å8«‹Œ’.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8±¼Ò’.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8±ïĞ’.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8±ïĞ’.
+J
+java:S5411"*Use the primitive boolean expression here.(…ì›ßıÿÿÿÿ8¥úÏ’.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¡Å†”.
+n
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(š¥÷ ıÿÿÿÿ8å›‘‘.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8å›‘‘.
+Q
+java:S1068"1Remove this unused "serialization" private field.(ïö¿ıÿÿÿÿ8¨•’.

@@ -43,8 +43,6 @@ o
 ?src/main/java/ua/nure/kovteba/finaltask/dao/token/TokenDAO.java,9/9/996846a046c40be2f7506100bad08b0fc0bc650e
 m
 =src/main/java/ua/nure/kovteba/finaltask/dao/user/UserDAO.java,3/5/3504d662ce841e1679f21a45efebbf5591f88108
-o
-?src/main/java/ua/nure/kovteba/finaltask/connection/Connect.java,a/0/a0da4ac5d873c0a05afa2f4cffab307900be713a
 h
 8src/main/java/ua/nure/kovteba/finaltask/entity/User.java,7/b/7ba10b63f043274e30f0836a34da8fcc8ffcc808
 q
@@ -69,3 +67,27 @@ y
 Isrc/test/java/ua/nure/kovteba/finaltask/dao/flight/FlightDAOImplTest.java,b/f/bfbdb9419748644907b73ee6a53f7a8fb00f1827
 }
 Msrc/test/java/ua/nure/kovteba/finaltask/dao/carbrand/CarBrandDAOImplTest.java,a/6/a6b1af1625d9e4207fec3060b0b233369682b9f6
+i
+9src/main/java/ua/nure/kovteba/finaltask/util/Connect.java,8/1/81adfe2234e68b353476fd1816f52b663096d3e8
+j
+:.idea/dataSources/781a5c8d-3049-4284-b162-b30d9a25ee20.xml,f/4/f41a1354bb1882ecdbe61aac6be2b50691bb8b45
+w
+G.idea/sonarlint/issuestore/f/6/f6917949c9c90da6afade22a28d314e682bff528,0/1/0142ec29bb56c4cdbff5a50c042d4099ac954d35
+s
+Csrc/test/java/ua/nure/kovteba/finaltask/dao/car/CarDAOImplTest.java,1/e/1ea5169f25716dcdebbdee9b57f8373df996b973
+K
+src/main/resources/data.sql,7/3/73d31a43eeb5160da7670a8c11a94a16128cf92d
+r
+Bsrc/test/java/ua/nure/kovteba/finaltask/enumlist/CarClassTest.java,0/1/018c941f0a1c35e97c7df1c88fb47a15df128b05
+w
+Gsrc/test/java/ua/nure/kovteba/finaltask/dao/token/TokenDAOImplTest.java,d/0/d0a565cf8824bcbc804ed726717d4ab0ff1ca65a
+M
+src/main/resources/schema.sql,f/6/f670ac9cd71304abfdf3105b446a441347f608f6
+T
+$src/main/webapp/WEB-INF/jsp/user.jsp,5/f/5f26c8ec16d0a1f78c69ec9cc85cdbc96efb46d5
+Q
+!src/main/webapp/WEB-INF/index.jsp,5/3/53f2773448a6c5938ccf5b998853f2da8ff8c2d4
+O
+src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+J
+src/main/webapp/index.html,1/3/1337d72a3b1928dba82aa5210f5cdc0e88ce895b

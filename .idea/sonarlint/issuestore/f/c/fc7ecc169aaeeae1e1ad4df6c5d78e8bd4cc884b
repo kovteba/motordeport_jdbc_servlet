@@ -1,17 +1,23 @@
 
-E
-java:S1148;"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ºÏ€ó.
-E
-java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ûå¼ò.
-e
-java:S3252+"HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ÃÆãÒ8ºÏ€ó.
-d
-java:S20955"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(ø÷´à8ºÏ€ó.
-H
-java:S1168B"+Return an empty collection instead of null.(¥¹ï8Ïè¾ò.
-p
-java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­õ¬ˆøÿÿÿÿ8Ûå¼ò.
-m
-java:S1128"QRemove this unused import 'ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl'.(”§²E8ø—½ò.
-E
-java:S1068"(Remove this unused "smtp" private field.(Å·âÌ8Ûå¼ò.
+b
+java:S2095"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(ø÷´à8öÂÉ–.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8öÂÉ–.
+_
+java:S1128"DRemove this unused import 'ua.nure.kovteba.finaltask.enumlist.Role'.(ø¥Ä8·½ä—.
+_
+java:S2147"DCombine this catch with the one at line 89, which has the same body.(ï­£Ä8ˆ¹”˜.
+n
+java:S3008"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­õ¬ˆøÿÿÿÿ8öÂÉ–.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8öÂÉ–.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ˆ¹”˜.
+c
+java:S3252"HUse static access with "java.sql.Statement" for "RETURN_GENERATED_KEYS".(ÃÆãÒ8öÂÉ–.
+_
+java:S2147"DCombine this catch with the one at line 89, which has the same body.(ıàÑÎ8ˆ¹”˜.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8û“˜.
+C
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ˆ¹”˜.
