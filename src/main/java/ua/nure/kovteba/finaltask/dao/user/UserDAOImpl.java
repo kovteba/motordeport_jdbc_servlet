@@ -33,6 +33,7 @@ public class UserDAOImpl implements UserDAO {
      * */
     @Override
     public Long createUser(User user) {
+        LOG.info("CRETE NEW USER WITH ROLE : " + user.getRole().getRoleValue());
         Long idNewUser = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -66,7 +67,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getUserByRole(Role role) {
-        LOG.info("FIND USERS LIST BY ROLE");
+        LOG.info("FIND USERS LIST BY ROLE : " + role.getRoleValue());
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -97,7 +98,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserById(Long id) {
-        LOG.info("FIND USER BY ID");
+        LOG.info("FIND USER BY ID : " + id);
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -126,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserByUserPhoneNumber(String phoneNumber) {
-        LOG.info("FIND USER BY PHONE NUMBER");
+        LOG.info("FIND USER BY PHONE NUMBER : " + phoneNumber);
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -155,7 +156,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getAllUsers() {
-        LOG.info("FIND ALL USERS LIST");
+        LOG.info("GET ALL USERS LIST");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -176,5 +177,17 @@ public class UserDAOImpl implements UserDAO {
         }
         //return all users by role
         return allUsersByRole;
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        LOG.info("DELETE USER WITH ID : " + id);
+        String deleteUserById = "DELETE FROM users where id=" + id;
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteUserById);
+            LOG.info("USER WITH ID -> " + id + "DELETED SUCCESSFULY");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
