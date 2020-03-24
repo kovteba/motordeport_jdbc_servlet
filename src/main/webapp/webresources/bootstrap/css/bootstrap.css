@@ -1695,8 +1695,9 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0rem;
-  vertical-align: top;
+  /*padding: 0rem;*/
+  /*vertical-align: top;*/
+  text-align: center;
   border-top: 1px solid #dee2e6;
 }
 
@@ -5895,7 +5896,7 @@ a.close.disabled {
 }
 
 .toast-body {
-  padding: 0.75rem;
+  /*padding: 0.75rem;*/
 }
 
 .modal-open {
@@ -6073,7 +6074,7 @@ a.close.disabled {
   align-items: center;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 0.75rem;
+  /*padding: 0.75rem;*/
   border-top: 1px solid #dee2e6;
   border-bottom-right-radius: calc(0.3rem - 1px);
   border-bottom-left-radius: calc(0.3rem - 1px);

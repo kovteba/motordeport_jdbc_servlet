@@ -185,7 +185,7 @@ public class UserDAOImpl implements UserDAO {
         String deleteUserById = "DELETE FROM users where id=" + id;
         try (Statement stmt = conn.createStatement();) {
             stmt.executeUpdate(deleteUserById);
-            LOG.info("USER WITH ID -> " + id + "DELETED SUCCESSFULY");
+            LOG.info("USER WITH ID -> " + id + ", DELETED SUCCESSFULY");
         } catch (SQLException e) {
             e.printStackTrace();
         }

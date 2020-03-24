@@ -31,7 +31,7 @@ public class CarBrandDAOImpl implements CarBrandDAO {
 
     @Override
     public Long cteateCarBrand(CarBrand carBrand) {
-        LOG.info("CREATE CAR BRAND");
+        LOG.info("CREATE CAR BRAND : " + carBrand.getBrandName());
         Long idNewCarBrand = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -57,7 +57,7 @@ public class CarBrandDAOImpl implements CarBrandDAO {
 
     @Override
     public CarBrand getCarBrandById(Long id) {
-        LOG.info(" GET CAR BRAND BY ID");
+        LOG.info("GET CAR BRAND BY ID : " + id);
         CarBrand carBrand = new CarBrand();
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM car_brand WHERE id = '" + id + "';";
@@ -76,7 +76,7 @@ public class CarBrandDAOImpl implements CarBrandDAO {
 
     @Override
     public CarBrand getCarBrandByBrandValue(String brandValue) {
-        LOG.info("GET CAR BRAND BY BRAND VALUE");
+        LOG.info("GET CAR BRAND BY BRAND VALUE : " + brandValue);
         CarBrand carBrand = new CarBrand();
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM car_brand WHERE brand_name = '" + brandValue + "';";

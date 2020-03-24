@@ -7,7 +7,11 @@
     font-family: MinecartLCD; /* Гарнитура шрифта */
     src: url("../font/MinecartLCD.ttf"); /* Путь к файлу со шрифтом */
 }
+/******START PAGE******/
+.logIn{
 
+}
+/*****END START PAGE*******/
 
 
 .header{
@@ -27,8 +31,9 @@
     width: 95%;
     margin: auto;
 }
+/*****START FLIGHT BLOCK********/
 
-/*table flight*/
+/*start table flight*/
 .tableFlights{
     border-radius:  9px 9px 9px 9px;
     width: 100%;
@@ -39,6 +44,8 @@
 .tableFlights tbody tr{
     color: yellow;
     border-top: 2px solid #000000 !important;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 .tableFlights thead{
@@ -46,15 +53,28 @@
     cursor: pointer;
 }
 
+.tableFlights thead tr th{
+    cursor: pointer;
+}
+
+.tableFlights td{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+/*end table flight*/
+
+/*****END FLIGHT BLOCK********/
+
 .hrBeetwen{
     margin-top: 5%;
     margin-bottom: 5%;
 }
 
-.tableFlights thead tr th{
-    cursor: pointer;
-}
+/*****START DISPATCHER BLOCK********/
+/*****END DISPATCHER BLOCK********/
+/*****START DRIVERS BLOCK********/
 
+/*****END DRIVERS BLOCK********/
 
 
 

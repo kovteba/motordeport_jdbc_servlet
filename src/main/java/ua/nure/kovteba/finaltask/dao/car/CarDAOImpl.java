@@ -73,7 +73,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public Car getCarById(Long id) {
-        LOG.info("FIND CAR BY ID");
+        LOG.info("FIND CAR BY ID : " + id);
         Car car = new Car();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars WHERE id = '" + id + "';";
@@ -101,7 +101,8 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public void changeCarTechnicalStatus(Long id, CarTechnicalStatus carTechnicalStatus) {
-        LOG.info("CHANGE CAR TECHNICAL STATUS BY ID");
+        LOG.info("CHANGE CAR TECHNICAL STATUS : "
+                + carTechnicalStatus.getCarTechnicalStatusValue() + ", BY ID : " + id);
         //SQL query for update car_technical_status request by id
         String changeCarTechnicelStatusById =
                 "UPDATE cars SET car_technical_status = ? WHERE id = ?;";
@@ -118,7 +119,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public void changeCarStatus(Long id, CarStatus carStatus) {
-        LOG.info("CHANGE CAR STATUS BY ID");
+        LOG.info("CHANGE CAR STATUS : " + carStatus.getCarStatusValue() + ", BY ID : " + id);
         //SQL query for update car_status car by id
         String changeCarTechnicelStatusById =
                 "UPDATE cars SET car_status = ? WHERE id = ?;";

@@ -29,6 +29,7 @@ public class RequestDAOImpl implements RequestDAO {
 
     static {
         try {
+            assert conn != null;
             smtp = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,9 +38,10 @@ public class RequestDAOImpl implements RequestDAO {
 
     /**
      * Insert new request in data base
+     *
      * @param request
      * @return id new user in data base Long
-      */
+     */
     @Override
     public Long createRequest(Request request) {
         Long idNewRequest = null;
@@ -74,11 +76,13 @@ public class RequestDAOImpl implements RequestDAO {
 
     /**
      * Return all request by status : OPEN, CLOSED
+     *
      * @param requestStatus
      * @return List<Request>
      */
     @Override
     public List<Request> getAllRequestByStatus(RequestStatus requestStatus) {
+        LOG.info("GET ALL REQUEST BY STATUS : " + requestStatus.getRequestSatus());
         //create return list
         List<Request> allRequestBySatus = new ArrayList();
         //SQL query for select request by status
@@ -86,23 +90,19 @@ public class RequestDAOImpl implements RequestDAO {
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectAllByRole);) {
             while (rs.next()) {
-                Request request = new Request();
-                request.setId(rs.getLong(1));
-                request.setDriver((User) serialization.fromString(rs.getString(8)));
-                request.setCarClass(CarClass.findCarClass(rs.getString(3)));
-                request.setLoadCapacity(rs.getInt(4));
-                request.setSeats(rs.getInt(7));
-                request.setLuggageCompartment(rs.getBoolean(5));
-                request.setAirConditioning(rs.getBoolean(2));
-                request.setNavigator(rs.getBoolean(6));
-                request.setRequestStatus(RequestStatus.findRequestStatus(rs.getString(9)));
+                Request request = installRequest(
+                        rs.getLong(1),
+                        rs.getString(8),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(7),
+                        rs.getBoolean(5),
+                        rs.getBoolean(2),
+                        rs.getBoolean(6),
+                        rs.getString(9));
                 allRequestBySatus.add(request);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         //return all users by role
@@ -111,33 +111,32 @@ public class RequestDAOImpl implements RequestDAO {
 
     /**
      * Get request by Long id
+     *
      * @param id request
      * @return request
      */
     @Override
     public Request getRequestById(Long id) {
-        Request request = new Request();
+        LOG.info("GET REQUEST BY ID : " + id);
+        Request request = null;
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM requests " +
                 "WHERE id = '" + id + "';";
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectUserById);) {
             while (rs.next()) {
-                request.setId(rs.getLong(1));
-                request.setDriver((User) serialization.fromString(rs.getString(8)));
-                request.setCarClass(CarClass.findCarClass(rs.getString(3)));
-                request.setLoadCapacity(rs.getInt(4));
-                request.setSeats(rs.getInt(7));
-                request.setLuggageCompartment(rs.getBoolean(5));
-                request.setAirConditioning(rs.getBoolean(2));
-                request.setNavigator(rs.getBoolean(6));
-                request.setRequestStatus(RequestStatus.findRequestStatus(rs.getString(9)));
+                request = installRequest(
+                        rs.getLong(1),
+                        rs.getString(8),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(7),
+                        rs.getBoolean(5),
+                        rs.getBoolean(2),
+                        rs.getBoolean(6),
+                        rs.getString(9));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         //return request by id
@@ -146,11 +145,13 @@ public class RequestDAOImpl implements RequestDAO {
 
     /**
      * Change request status : OPEN, CLOSED
+     *
      * @param id
      * @param requestStatus
      */
     @Override
     public void changeStatusRequestById(Long id, RequestStatus requestStatus) {
+        LOG.info("CHENGE REQUEST STATUS ON -> " + requestStatus.getRequestSatus() + ", BY ID : " + id);
         //SQL query for update status request by id
         String changeStatusRequestById =
                 "UPDATE requests SET request_status = ? WHERE id = ?;";
@@ -164,6 +165,27 @@ public class RequestDAOImpl implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    private static Request installRequest(
+            Long id, String driver, String carClass, int loadCapacity, int seats,
+            Boolean luggage, Boolean air, Boolean navigator, String requestStatus) {
+        Request request = new Request();
+        request.setId(id);
+        try {
+            request.setDriver((User) serialization.fromString(driver));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        request.setCarClass(CarClass.findCarClass(carClass));
+        request.setLoadCapacity(loadCapacity);
+        request.setSeats(seats);
+        request.setLuggageCompartment(luggage);
+        request.setAirConditioning(air);
+        request.setNavigator(navigator);
+        request.setRequestStatus(RequestStatus.findRequestStatus(requestStatus));
+        return request;
     }
 }

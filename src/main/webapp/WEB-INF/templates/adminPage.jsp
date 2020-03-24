@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ADMIN PAGE</title>
+    <link type="text/css" rel="stylesheet" href="webresources/css/reset.css">
     <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap.css">
     <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-grid.css">
     <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-reboot.css">
@@ -14,6 +15,8 @@
 <body>
 <!--parent container-->
 <div class="container-fluid html">
+    <%String token = (String) request.getAttribute("token");%>
+    <input type="hidden" name="token" value="<%=token%>">
     <div class="row">
         <div class="col-md-12 header">
             <img src="webresources/img/logo.png" class="logo">
@@ -36,6 +39,7 @@
         <!--    main container    -->
         <div class="col-md-10">
             <div class="tab-content" id="v-pills-tabContent">
+                <!----------------------------START BLOCK FLIGHTS IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade show active" id="v-pills-flights" role="tabpanel"
                      aria-labelledby="v-pills-flights-tab">
                     <table class="table-hover table-dark tableFlights">
@@ -79,12 +83,10 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <%
-                            List<Flight> list = (List<Flight>) request.getAttribute("flightList");
+                            List<Flight> list = (List<Flight>) request.getAttribute("flightsList");
                             if (list != null) {
                                 for (Flight flight : list) { %>
-                        <tr>
                         <tr>
                             <td><%=flight.getFlightNumber()%>
                             </td>
@@ -101,7 +103,6 @@
                                 }
                             }
                         %>
-
                         </tbody>
                     </table>
                     <!--                    -->
@@ -165,18 +166,81 @@
                         </div>
                     </div>
                 </div>
-                <!--                -->
+                <!--------------------------------END BLOCK FLIGHTS IN ADMIN PAGE------------------------------------->
+                <!-------------------------------START BLOCK DISPATCHER IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade" id="v-pills-dispatchers" role="tabpanel"
                      aria-labelledby="v-pills-dispatchers-tab">
-                    s;kjlbfs;dkjnfsd
+                    DISPATCHER
                 </div>
+                <!-------------------------------END BLOCK DISPATCHER IN ADMIN PAGE------------------------------------->
+                <!-------------------------------START BLOCK DRIVERS IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade" id="v-pills-drivers" role="tabpanel" aria-labelledby="v-pills-drivers-tab">
-                    w;dkfjns;dkvn
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">FIRST NAME</th>
+                            <th scope="col">LAST NAME</th>
+                            <th scope="col">PHONE NUMBER</th>
+                            <th scope="col">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            List<User> driverList = (List<User>) request.getAttribute("driversList");
+                            if (driverList != null) {
+                                int index = 1;
+                                for (User driver : driverList) {
+                        %>
+                        <tr>
+                            <th scope="row"><%=index%>
+                            </th>
+                            <td><%=driver.getFirstName()%>
+                            </td>
+                            <td><%=driver.getLastName()%>
+                            </td>
+                            <td><%=driver.getPhoneNumber()%>
+                            </td>
+                            <td>
+                                <form method="post" action="deleteDriver">
+                                    <input type="hidden" name="token" value="<%=token%>">
+                                    <input type="hidden" name="idDriver" value="<%=driver.getId()%>">
+                                    <input type="submit" class="btn btn-danger" value="DELETE">
+                                </form>
+                            </td>
+                        </tr>
+                        <%
+                                    index++;
+                                }
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <form method="post" action="driver">
+                        <label for="firstName">First name</label>
+                        <input id="firstName" name="firstName">
+                        <label for="lastName">Last name</label>
+                        <input id="lastName" name="lastName">
+                        <label for="phoneNumber">Phone number</label>
+                        <input id="phoneNumber" name="phoneNumber">
+                        <label for="password">Password</label>
+                        <input id="password" name="password">
+                        <input type="submit" class="btn btn-success">
+                    </form>
                 </div>
+                <!-------------------------------END BLOCK DRIVERS IN ADMIN PAGE------------------------------------->
+                <!-------------------------------START CARS DRIVERS IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade" id="v-pills-cars" role="tabpanel" aria-labelledby="v-pills-cars-tab">
-                    s;dlknsd;lknc
+                    CARS
+
                 </div>
+                <!-------------------------------START CARS DRIVERS IN ADMIN PAGE------------------------------------->
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 footer">
+
         </div>
     </div>
 </div>
