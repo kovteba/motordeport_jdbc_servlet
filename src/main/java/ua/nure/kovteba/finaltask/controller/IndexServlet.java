@@ -5,6 +5,7 @@ import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +17,19 @@ import java.io.IOException;
         name = "indexServlet",
         urlPatterns = "/"
 )
-public class IndexServlet  extends HttpServlet {
+public class IndexServlet extends HttpServlet {
 
-    private static UserDAOImpl userDAO = new UserDAOImpl();
-    private static TokenDAOImpl tokenDAO = new TokenDAOImpl();
-    private static FlightDAOImpl flightDAO = new FlightDAOImpl();
+    private static UserDAOImpl userDAO;
+    private static TokenDAOImpl tokenDAO;
+    private static FlightDAOImpl flightDAO;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        userDAO = new UserDAOImpl();
+        tokenDAO = new TokenDAOImpl();
+        flightDAO = new FlightDAOImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,14 +51,12 @@ public class IndexServlet  extends HttpServlet {
 
         String token = null;
         User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
-        if (user.getPassword().equals(password)){
+        if (user.getPassword().equals(password)) {
             token = tokenDAO.createToken(user.getId());
-            if (user.getRole().getRoleValue().equals("ADMIN")){
+            if (user.getRole().getRoleValue().equals("ADMIN")) {
                 resp.sendRedirect("admin?token=" + token);
             }
         }
-
-
 
 
     }

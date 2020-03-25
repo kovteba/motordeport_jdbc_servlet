@@ -8,6 +8,8 @@ import ua.nure.kovteba.finaltask.enumlist.CarClass;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
 import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarDAOImplTest {
@@ -50,5 +52,17 @@ class CarDAOImplTest {
     @Test
     void changeCarStatus() {
         carDAO.changeCarStatus(1L, CarStatus.BUSY);
+    }
+
+    @Test
+    void getListCarFreeAndGood() {
+    }
+
+    @Test
+    void getAllCars() {
+        List<Car> list = carDAO.getAllCars();
+        for (Car car : list){
+            System.out.println(car.toString());
+        }
     }
 }

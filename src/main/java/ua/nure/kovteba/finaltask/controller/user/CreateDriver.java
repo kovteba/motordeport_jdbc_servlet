@@ -1,7 +1,8 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
-import jdk.vm.ci.meta.Local;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
+import ua.nure.kovteba.finaltask.entity.User;
+import ua.nure.kovteba.finaltask.enumlist.Role;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -10,33 +11,38 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
-import java.util.UUID;
+import java.io.PrintWriter;
 
 @WebServlet(
-        name = "deleteDriver",
-        urlPatterns = "/deleteDriver"
+        name = "createDriver",
+        urlPatterns = "/createDriver"
 )
-public class DeleteDriver extends HttpServlet {
+public class CreateDriver extends HttpServlet {
 
     private static UserDAOImpl userDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         userDAO = new UserDAOImpl();
+        super.init(config);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        userDAO.deleteUserById(Long.valueOf(req.getParameter("idDriver")));
+        User newDriver = new User();
+        newDriver.setFirstName(req.getParameter("firstNameDriver"));
+        newDriver.setLastName(req.getParameter("lastNameDriver"));
+        newDriver.setPhoneNumber(req.getParameter("phoneNumberDriver"));
+        newDriver.setPassword(req.getParameter("passwordDriver"));
+        newDriver.setRole(Role.DRIVER);
+        userDAO.createUser(newDriver);
 
 
         String token = req.getParameter("token");
         System.out.println("DELETE DRIVER : " + token);
         resp.sendRedirect("admin?token=" + token);
     }
-
-
 }

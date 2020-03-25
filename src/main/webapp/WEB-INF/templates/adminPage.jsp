@@ -2,6 +2,7 @@
 <%@ page import="ua.nure.kovteba.finaltask.entity.Flight" %>
 <%@ page import="ua.nure.kovteba.finaltask.entity.Request" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ua.nure.kovteba.finaltask.entity.Car" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,13 +15,13 @@
 </head>
 <body>
 <!--parent container-->
-<div class="container-fluid html">
+<div class="container-fluid html perent">
     <%String token = (String) request.getAttribute("token");%>
     <input type="hidden" name="token" value="<%=token%>">
-    <div class="row">
-        <div class="col-md-12 header">
-            <img src="webresources/img/logo.png" class="logo">
-        </div>
+    <div class="row header">
+        <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
+        <div class="col-md-4 time">TIME</div>
+        <div class="col-md-4 logIn">LOG IN</div>
     </div>
     <div class="row base">
         <!--    left link bar    -->
@@ -84,9 +85,9 @@
                         </thead>
                         <tbody>
                         <%
-                            List<Flight> list = (List<Flight>) request.getAttribute("flightsList");
-                            if (list != null) {
-                                for (Flight flight : list) { %>
+                            List<Flight> flightList = (List<Flight>) request.getAttribute("flightsList");
+                            if (flightList != null) {
+                                for (Flight flight : flightList) { %>
                         <tr>
                             <td><%=flight.getFlightNumber()%>
                             </td>
@@ -137,28 +138,101 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <form>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Economy</td>
-                                                <td>1000</td>
-                                                <td>20</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>
-                                                    <select>
-                                                        <option disabled selected>Choose car</option>
-                                                        <option>Пункт 1</option>
-                                                        <option>Пункт 2</option>
+                                        <%
+                                            List<Request> requestsList = (List<Request>) request.getAttribute("requestsList");
+                                            if (requestsList != null) {
+                                                int indexReq = 1;
+                                                for (Request reqL : requestsList) {
+                                        %>
+
+                                        <form action="createFlight" method="post">
+                                            <tr>
+                                                <input type="hidden" name="idRequest" value="<%=reqL.getId()%>">
+                                                <input type="hidden" name="token" value="<%=token%>">
+                                                <th rowspan="2" scope="row"><%=indexReq%>
+                                                </th>
+                                                <td><input type="hidden" name="idDriverInReq"
+                                                           value="<%=reqL.getDriver().getId()%>"><%=reqL.getDriver().getLastName()%>
+                                                </td>
+                                                <td style="padding: 10px"><%=reqL.getCarClass().getClassValue()%>
+                                                </td>
+                                                <td style="padding: 10px"><%=reqL.getLoadCapacity()%>
+                                                </td>
+                                                <td style="padding: 10px"><%=reqL.getSeats()%>
+                                                </td>
+                                                <%
+                                                    String luggageCompartment = null;
+                                                    if (reqL.getLuggageCompartment()) {
+                                                        luggageCompartment = "checked";
+                                                    }
+                                                %>
+                                                <td style="padding: 10px"><input type="checkbox" <%=luggageCompartment%>
+                                                                                 disabled></td>
+                                                <%
+                                                    String airConditioning = null;
+                                                    if (reqL.getAirConditioning()) {
+                                                        airConditioning = "checked";
+                                                    }
+                                                %>
+                                                <td style="padding: 10px"><input type="checkbox" <%=airConditioning%>
+                                                                                 disabled></td>
+                                                <%
+                                                    String navigator = null;
+                                                    if (reqL.getNavigator()) {
+                                                        navigator = "checked";
+                                                    }
+                                                %>
+                                                <td style="padding: 10px"><input type="checkbox" <%=navigator%>
+                                                                                 disabled></td>
+                                                <td style="padding: 10px">
+                                                    <select name="carValueId" required>
+                                                        <option selected disabled="disabled">Choose car</option>
+                                                        <%
+                                                            List<Car> carList = (List<Car>) request.getAttribute("carsListForRequest");
+                                                            if (carList != null) {
+                                                                for (Car car : carList) {
+                                                        %>
+                                                        <option value="<%=car.getId()%>"
+                                                                title="<%=car.toString()%>"><%=car.getCarNumber()%>
+                                                        </option>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
                                                     </select>
                                                 </td>
-                                                <td>
+                                                <td style="padding: 10px" rowspan="2">
                                                     <button class="btn btn-success">APPROVE</button>
                                                 </td>
-                                            </form>
-                                        </tr>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 10px" colspan="2"><input type="text"
+                                                                                             name="numbreFlightInReq"
+                                                                                             placeholder="Flight Number"
+                                                                                             required>
+                                                </td>
+                                                <td style="padding: 10px" colspan="2"><input type="date"
+                                                                                             name="startDateInReq"
+                                                                                             placeholder="Start date"
+                                                                                             required>
+                                                </td>
+                                                <td style="padding: 10px"><input type="time" name="startTimeInReq"
+                                                                                 placeholder="Start time" required></td>
+                                                <td style="padding: 10px" colspan="2"><input type="date"
+                                                                                             name="endDateInReq"
+                                                                                             placeholder="End date"
+                                                                                             required>
+                                                </td>
+                                                <td style="padding: 10px"><input type="time" name="endTimeInReq"
+                                                                                 placeholder="End time" required></td>
+
+                                            </tr>
+                                        </form>
+                                        <%
+                                                    indexReq++;
+                                                }
+                                            }
+                                        %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -170,7 +244,61 @@
                 <!-------------------------------START BLOCK DISPATCHER IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade" id="v-pills-dispatchers" role="tabpanel"
                      aria-labelledby="v-pills-dispatchers-tab">
-                    DISPATCHER
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">FIRST NAME</th>
+                            <th scope="col">LAST NAME</th>
+                            <th scope="col">PHONE NUMBER</th>
+                            <th scope="col">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            List<User> dispatcherList = (List<User>) request.getAttribute("dispatcherList");
+                            if (dispatcherList != null) {
+                                int index = 1;
+                                for (User driver : dispatcherList) {
+                        %>
+                        <tr>
+                            <th scope="row"><%=index%>
+                            </th>
+                            <td><%=driver.getFirstName()%>
+                            </td>
+                            <td><%=driver.getLastName()%>
+                            </td>
+                            <td><%=driver.getPhoneNumber()%>
+                            </td>
+                            <td>
+                                <form method="post" action="deleteDriver">
+                                    <input type="hidden" name="token" value="<%=token%>">
+                                    <input type="hidden" name="idDriver" value="<%=driver.getId()%>">
+                                    <input type="submit" class="btn btn-danger" value="DELETE">
+                                </form>
+                            </td>
+                        </tr>
+                        <%
+                                    index++;
+                                }
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <form method="post" action="createDispatcher">
+                        <input type="hidden" name="token" value="<%=token%>">
+                        <label for="firstNameDispatcher">First name</label>
+                        <input id="firstNameDispatcher" name="firstNameDispatcher">
+                        <label for="lastNameDispatcher">Last name</label>
+                        <input id="lastNameDispatcher" name="lastNameDispatcher">
+                        <label for="phoneNumberDispatcher">Phone number</label>
+                        <input id="phoneNumberDispatcher" name="phoneNumberDispatcher">
+                        <label for="passwordDispatcher">Password</label>
+                        <input id="passwordDispatcher" name="passwordDispatcher">
+                        <input type="submit" class="btn btn-success">
+                    </form>
+
+
                 </div>
                 <!-------------------------------END BLOCK DISPATCHER IN ADMIN PAGE------------------------------------->
                 <!-------------------------------START BLOCK DRIVERS IN ADMIN PAGE------------------------------------->
@@ -216,30 +344,153 @@
                         %>
                         </tbody>
                     </table>
-                    <form method="post" action="driver">
-                        <label for="firstName">First name</label>
-                        <input id="firstName" name="firstName">
-                        <label for="lastName">Last name</label>
-                        <input id="lastName" name="lastName">
-                        <label for="phoneNumber">Phone number</label>
-                        <input id="phoneNumber" name="phoneNumber">
-                        <label for="password">Password</label>
-                        <input id="password" name="password">
+                    <form method="post" action="createDriver">
+                        <input type="hidden" name="token" value="<%=token%>">
+                        <label for="firstNameDriver">First name</label>
+                        <input id="firstNameDriver" name="firstNameDriver">
+                        <label for="lastNameDriver">Last name</label>
+                        <input id="lastNameDriver" name="lastNameDriver">
+                        <label for="phoneNumberDriver">Phone number</label>
+                        <input id="phoneNumberDriver" name="phoneNumberDriver">
+                        <label for="passwordDriver">Password</label>
+                        <input id="passwordDriver" name="passwordDriver">
                         <input type="submit" class="btn btn-success">
                     </form>
                 </div>
                 <!-------------------------------END BLOCK DRIVERS IN ADMIN PAGE------------------------------------->
                 <!-------------------------------START CARS DRIVERS IN ADMIN PAGE------------------------------------->
                 <div class="tab-pane fade" id="v-pills-cars" role="tabpanel" aria-labelledby="v-pills-cars-tab">
-                    CARS
-
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Car Brand</th>
+                            <th scope="col">Car Class</th>
+                            <th scope="col">Car Number</th>
+                            <th scope="col">Load Capacity</th>
+                            <th scope="col">Seats</th>
+                            <th scope="col">Luggage Compartment</th>
+                            <th scope="col">Air Conditioning</th>
+                            <th scope="col">Navigator</th>
+                            <th scope="col">Car Technical Status</th>
+                            <th scope="col">Car Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            List<Car> carsList = (List<Car>) request.getAttribute("carsList");
+                            if (carsList != null) {
+                                int index = 1;
+                                for (Car car : carsList) {
+                        %>
+                        <tr>
+                            <th scope="row"><%=index%>
+                            </th>
+                            <td><%=car.getCarBrand().getBrandName()%>
+                            </td>
+                            <td><%=car.getCarClass().getClassValue()%>
+                            </td>
+                            <td><%=car.getCarNumber()%>
+                            </td>
+                            <td><%=car.getLoadCapacity()%>
+                            </td>
+                            <td><%=car.getSeats()%>
+                            </td>
+                            <%
+                                String luggageCompartment = null;
+                                if (car.getLuggageCompartment()) {
+                                    luggageCompartment = "checked";
+                                }
+                            %>
+                            <td><input type="checkbox" <%=luggageCompartment%> disabled></td>
+                            <%
+                                String airConditioning = null;
+                                if (car.getAirConditioning()) {
+                                    airConditioning = "checked";
+                                }
+                            %>
+                            <td><input type="checkbox" <%=airConditioning%> disabled></td>
+                            <%
+                                String navigator = null;
+                                if (car.getNavigator()) {
+                                    navigator = "checked";
+                                }
+                            %>
+                            <td><input type="checkbox" <%=navigator%> disabled></td>
+                            <td><%=car.getCarTechnicalStatus().getCarTechnicalStatusValue()%>
+                            </td>
+                            <td><%=car.getCarStatus().getCarStatusValue()%>
+                            </td>
+                        </tr>
+                        <%
+                                    index++;
+                                }
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <%----%>
+                    <hr class="hrBeetwen">
+                    <%----%>
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                        Add new car
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                 data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Car Brand</th>
+                                            <th scope="col">Car Class</th>
+                                            <th scope="col">Car Number</th>
+                                            <th scope="col">Load Capacity</th>
+                                            <th scope="col">Seats</th>
+                                            <th scope="col">Luggage Compartment</th>
+                                            <th scope="col">Air Conditioning</th>
+                                            <th scope="col">Navigator</th>
+                                            <th scope="col">Car Technical Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form>
+                                            <tr>
+                                                <th scope="row">
+                                                </th>
+                                                <td></td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-------------------------------START CARS DRIVERS IN ADMIN PAGE------------------------------------->
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 footer">
+        <div class="col-md-12 foot">
 
         </div>
     </div>

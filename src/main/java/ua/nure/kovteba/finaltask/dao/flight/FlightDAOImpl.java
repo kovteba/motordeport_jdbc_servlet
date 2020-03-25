@@ -48,7 +48,7 @@ public class FlightDAOImpl implements FlightDAO {
         try (PreparedStatement preparedStatement = conn.prepareStatement(insert,
                 PreparedStatement.RETURN_GENERATED_KEYS);) {
             //set value in insert string
-            preparedStatement.setInt(1, flight.getFlightNumber());
+            preparedStatement.setString(1, flight.getFlightNumber());
             preparedStatement.setString(2, flight.getFlightStatus().getStatusValue());
             preparedStatement.setString(3, serialization.entityToString(flight.getCar()));
             preparedStatement.setString(4, serialization.entityToString(flight.getDriver()));
@@ -79,7 +79,7 @@ public class FlightDAOImpl implements FlightDAO {
                 Flight newFlight = new Flight();
                 newFlight.setId(rs.getLong(1));
                 newFlight.setEndDate(ZonedDateTime.parse(rs.getString(2)));
-                newFlight.setFlightNumber(rs.getInt(3));
+                newFlight.setFlightNumber(rs.getString(3));
                 newFlight.setFlightStatus(FlightStatus.findFlightStatus(rs.getString(4)));
                 newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
                 newFlight.setCar((Car) serialization.fromString(rs.getString(6)));

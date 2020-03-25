@@ -14,7 +14,7 @@ public class Flight {
 
     private Long id;
 
-    private int flightNumber;
+    private String flightNumber;
 
     private User driver;
 

@@ -26,7 +26,7 @@ public enum  CarStatus {
         return listCarStatus;
     }
 
-    public static CarStatus findCarClass(String carClassValue){
+    public static CarStatus findCarStatus(String carClassValue){
         return getListCarStatus()
                 .stream()
                 .filter(s -> s.getCarStatusValue().equals(carClassValue))

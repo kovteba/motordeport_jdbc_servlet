@@ -9,6 +9,8 @@ import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 import ua.nure.kovteba.finaltask.util.Serialization;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class CarDAOImpl implements CarDAO {
@@ -90,7 +92,7 @@ public class CarDAOImpl implements CarDAO {
                 car.setCarNumber(rs.getString(8));
                 car.setCarClass(CarClass.findCarClass(rs.getString(9)));
                 car.setCarTechnicalStatus(CarTechnicalStatus.findCarTechnicatlStatus(rs.getString(10)));
-                car.setCarStatus(CarStatus.findCarClass(rs.getString(11)));
+                car.setCarStatus(CarStatus.findCarStatus(rs.getString(11)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,5 +134,62 @@ public class CarDAOImpl implements CarDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Car> getListCarFreeAndGood() {
+        List<Car> listCars = new ArrayList<>();
+        //SQL query for select car by id
+        String selectCarById = "SELECT * FROM cars WHERE car_technical_status = '" + CarTechnicalStatus.GOOD.getCarTechnicalStatusValue() + "'" +
+                " and car_status = '" + CarStatus.FREE.getCarStatusValue() + "';";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectCarById);) {
+            while (rs.next()) {
+                Car car = new Car();
+                car.setId(rs.getLong(1));
+                car.setSeats(rs.getInt(2));
+                car.setLoadCapacity(rs.getInt(3));
+                car.setLuggageCompartment(rs.getBoolean(4));
+                car.setNavigator(rs.getBoolean(5));
+                car.setAirConditioning(rs.getBoolean(6));
+                car.setCarBrand(carBrandDAO.getCarBrandByBrandValue(rs.getString(7)));
+                car.setCarNumber(rs.getString(8));
+                car.setCarClass(CarClass.findCarClass(rs.getString(9)));
+                car.setCarTechnicalStatus(CarTechnicalStatus.findCarTechnicatlStatus(rs.getString(10)));
+                car.setCarStatus(CarStatus.findCarStatus(rs.getString(11)));
+                listCars.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listCars;
+    }
+
+    @Override
+    public List<Car> getAllCars() {
+        List<Car> listCars = new ArrayList<>();
+        //SQL query for select car by id
+        String selectCarById = "SELECT * FROM cars;";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectCarById);) {
+            while (rs.next()) {
+                Car car = new Car();
+                car.setId(rs.getLong(1));
+                car.setSeats(rs.getInt(2));
+                car.setLoadCapacity(rs.getInt(3));
+                car.setLuggageCompartment(rs.getBoolean(4));
+                car.setNavigator(rs.getBoolean(5));
+                car.setAirConditioning(rs.getBoolean(6));
+                car.setCarBrand(carBrandDAO.getCarBrandByBrandValue(rs.getString(7)));
+                car.setCarNumber(rs.getString(8));
+                car.setCarClass(CarClass.findCarClass(rs.getString(9)));
+                car.setCarTechnicalStatus(CarTechnicalStatus.findCarTechnicatlStatus(rs.getString(10)));
+                car.setCarStatus(CarStatus.findCarStatus(rs.getString(11)));
+                listCars.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listCars;
     }
 }

@@ -23,7 +23,7 @@ class FlightDAOImplTest {
     @Test
     void createFlight() {
         Flight flight = new Flight();
-        flight.setFlightNumber(2545);
+        flight.setFlightNumber("2545");
         flight.setDriver(userDAO.getUserById(2L));
         flight.setCar(carDAO.getCarById(2L));
         flight.setFlightStatus(FlightStatus.OPEN);
@@ -40,5 +40,7 @@ class FlightDAOImplTest {
             System.out.println(flight.toString());
             System.out.println(flight.getStartDate().toLocalDate());
         }
+
+
     }
 }
