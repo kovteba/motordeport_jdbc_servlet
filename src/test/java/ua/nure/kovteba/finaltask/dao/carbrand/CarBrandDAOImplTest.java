@@ -3,8 +3,6 @@ package ua.nure.kovteba.finaltask.dao.carbrand;
 import org.junit.jupiter.api.Test;
 import ua.nure.kovteba.finaltask.entity.CarBrand;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CarBrandDAOImplTest {
 
     private static CarBrandDAOImpl carBrandDAO = new CarBrandDAOImpl();
@@ -13,7 +11,7 @@ class CarBrandDAOImplTest {
     void cteateCarBrand() {
         CarBrand carBrand = new CarBrand();
         carBrand.setBrandName("Mersedes Benz");
-        Long id = carBrandDAO.cteateCarBrand(carBrand);
+        Long id = carBrandDAO.createCarBrand(carBrand);
         System.out.println(id);
     }
 

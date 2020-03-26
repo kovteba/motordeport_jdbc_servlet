@@ -40,7 +40,7 @@ public class CreateDispatcher extends HttpServlet {
         String token = req.getParameter("token");
         //redirect to admin
         System.out.println("CREATE FLIGHT : " + token);
-        resp.sendRedirect("admin?token=" + token);
+        resp.sendRedirect("admin?token=" + token + "&value=DISPATCHER");
     }
 
 }

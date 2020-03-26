@@ -42,7 +42,7 @@ public class CreateDriver extends HttpServlet {
 
 
         String token = req.getParameter("token");
-        System.out.println("DELETE DRIVER : " + token);
-        resp.sendRedirect("admin?token=" + token);
+        System.out.println("DRIVER : " + token);
+        resp.sendRedirect("admin?token=" + token + "&value=DRIVER");
     }
 }

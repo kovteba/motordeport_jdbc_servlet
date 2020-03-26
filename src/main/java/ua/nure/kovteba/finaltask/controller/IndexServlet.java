@@ -52,6 +52,7 @@ public class IndexServlet extends HttpServlet {
         String token = null;
         User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
         if (user.getPassword().equals(password)) {
+
             token = tokenDAO.createToken(user.getId());
             if (user.getRole().getRoleValue().equals("ADMIN")) {
                 resp.sendRedirect("admin?token=" + token);

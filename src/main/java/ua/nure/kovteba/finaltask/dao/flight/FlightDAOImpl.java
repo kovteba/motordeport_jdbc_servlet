@@ -39,7 +39,7 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public Long createFlight(Flight flight) {
-        LOG.info("CREATE FLIGHT");
+        LOG.info("Create flight --> " + flight.toString() + " ....");
         Long idNewRequest = null;
         //SQL query for create new flight
         String insert = "INSERT INTO " +
@@ -60,16 +60,16 @@ public class FlightDAOImpl implements FlightDAO {
             if (resultSet.next()) {
                 idNewRequest = resultSet.getLong(1);
             }
-            LOG.info("NEW FLIGHT SDDED SUCCESSFULY");
+            LOG.info("New request with id == " + idNewRequest + ", added successfully!");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();LOG.warning("Same problem in \"createFlight\" method");
         }
         return idNewRequest;
     }
 
     @Override
     public List<Flight> getAllFlight() {
-        LOG.info("GET ALL FLIGHT");
+        LOG.info("Get all flight ....");
         List<Flight> flightList = new ArrayList<>();
         //SQL query for create new flight
         String selectAll = "SELECT * FROM flights;";

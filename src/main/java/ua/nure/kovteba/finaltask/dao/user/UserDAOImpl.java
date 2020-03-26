@@ -19,6 +19,7 @@ public class UserDAOImpl implements UserDAO {
 
     //create statement
     private static Statement smtp;
+
     static {
         try {
             smtp = conn.createStatement();
@@ -27,13 +28,15 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    /** Create new user
-     * @param  user
+    /**
+     * Create new user
+     *
+     * @param user
      * @return void
-     * */
+     */
     @Override
     public Long createUser(User user) {
-        LOG.info("CRETE NEW USER WITH ROLE : " + user.getRole().getRoleValue());
+        LOG.info("Create user with role --> \"" + user.getRole().getRoleValue() + "\" ....");
         Long idNewUser = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -49,25 +52,29 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(4, user.getRole().getRoleValue());
             preparedStatement.setString(5, user.getPassword());
             //execute insert to table
-            preparedStatement.executeUpdate();            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()){
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
                 idNewUser = resultSet.getLong(1);
             }
-            LOG.info("NEW USER ADDED SUCCESSFULY");
+            LOG.info("New user with id == " + idNewUser + ", added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"createUser\" with role --> \"" + user.getRole().getRoleValue()
+                    + ", " + e.toString());
         }
         return idNewUser;
     }
 
     /**
      * Get all users by role
+     *
      * @param role
      * @return list all users by role
      */
     @Override
     public List<User> getUserByRole(Role role) {
-        LOG.info("FIND USERS LIST BY ROLE : " + role.getRoleValue());
+        LOG.info("Find users list by role --> \"" + role.getRoleValue() + "\" ....");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -86,19 +93,20 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"getUserByRole\" with role --> \"" + role.getRoleValue()
+                    + "\", " + e.toString());
         }
         //return all users by role
         return allUsersByRole;
     }
 
     /**
-     *
      * @param id
      * @return
      */
     @Override
     public User getUserById(Long id) {
-        LOG.info("FIND USER BY ID : " + id);
+        LOG.info("Find user by id == " + id + " ....");
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -115,19 +123,19 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"getUserById\" with id == " + id + ", " + e.toString());
         }
         //return user by id
         return user;
     }
 
     /**
-     *
      * @param phoneNumber
      * @return
      */
     @Override
     public User getUserByUserPhoneNumber(String phoneNumber) {
-        LOG.info("FIND USER BY PHONE NUMBER : " + phoneNumber);
+        LOG.info("Find user by phone number --> " + phoneNumber + " ....");
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -145,18 +153,18 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"getUserByUserPhoneNumber\" with phone == " + phoneNumber + ", " + e.toString());
         }
         //return user by id
         return user;
     }
 
     /**
-     *
      * @return
      */
     @Override
     public List<User> getAllUsers() {
-        LOG.info("GET ALL USERS LIST");
+        LOG.info("Get all users ....");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -174,6 +182,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"getAllUsers\"");
         }
         //return all users by role
         return allUsersByRole;
@@ -181,11 +190,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUserById(Long id) {
-        LOG.info("DELETE USER WITH ID : " + id);
+        LOG.info("Delete user with id == " + id + " ....");
         String deleteUserById = "DELETE FROM users where id=" + id;
         try (Statement stmt = conn.createStatement();) {
             stmt.executeUpdate(deleteUserById);
-            LOG.info("USER WITH ID -> " + id + ", DELETED SUCCESSFULY");
+            LOG.info("User with id == " + id + ", deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }

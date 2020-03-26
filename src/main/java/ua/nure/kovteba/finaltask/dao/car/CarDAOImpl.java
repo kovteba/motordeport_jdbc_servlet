@@ -40,6 +40,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public Long createCar(Car car) {
+        LOG.info("Create car --> " + car.toString() + " ....");
         Long idNewCar = null;
         //SQL query for create new car
         String insert = "INSERT INTO " +
@@ -66,16 +67,17 @@ public class CarDAOImpl implements CarDAO {
             if (resultSet.next()) {
                 idNewCar = resultSet.getLong(1);
             }
-            LOG.info("NEW CAR ADDED SUCCESSFULY");
+            LOG.info("New car with id == " + idNewCar + ", added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"changeCarTechnicalStatus\" method");
         }
         return idNewCar;
     }
 
     @Override
     public Car getCarById(Long id) {
-        LOG.info("FIND CAR BY ID : " + id);
+        LOG.info("Find car by id == " + id + " ....");
         Car car = new Car();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars WHERE id = '" + id + "';";
@@ -96,6 +98,7 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"getCarById\" method with id == " + id);
         }
         //return car by id
         return car;
@@ -103,8 +106,8 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public void changeCarTechnicalStatus(Long id, CarTechnicalStatus carTechnicalStatus) {
-        LOG.info("CHANGE CAR TECHNICAL STATUS : "
-                + carTechnicalStatus.getCarTechnicalStatusValue() + ", BY ID : " + id);
+        LOG.info("Change car technical status on --> \""
+                + carTechnicalStatus.getCarTechnicalStatusValue() + "\", by id == " + id + " ....");
         //SQL query for update car_technical_status request by id
         String changeCarTechnicelStatusById =
                 "UPDATE cars SET car_technical_status = ? WHERE id = ?;";
@@ -116,12 +119,13 @@ public class CarDAOImpl implements CarDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"changeCarTechnicalStatus\" method");
         }
     }
 
     @Override
     public void changeCarStatus(Long id, CarStatus carStatus) {
-        LOG.info("CHANGE CAR STATUS : " + carStatus.getCarStatusValue() + ", BY ID : " + id);
+        LOG.info("Change car status on --> \"" + carStatus.getCarStatusValue() + "\", by id == " + id + " ....");
         //SQL query for update car_status car by id
         String changeCarTechnicelStatusById =
                 "UPDATE cars SET car_status = ? WHERE id = ?;";
@@ -133,11 +137,13 @@ public class CarDAOImpl implements CarDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"changeCarStatus\" method");
         }
     }
 
     @Override
     public List<Car> getListCarFreeAndGood() {
+        LOG.info("Get car list with status --> \'FREE\', technical status --> \"GOOD\" ....");
         List<Car> listCars = new ArrayList<>();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars WHERE car_technical_status = '" + CarTechnicalStatus.GOOD.getCarTechnicalStatusValue() + "'" +
@@ -161,12 +167,14 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"getListCarFreeAndGood\" method");
         }
         return listCars;
     }
 
     @Override
     public List<Car> getAllCars() {
+        LOG.info("Get all cars ....");
         List<Car> listCars = new ArrayList<>();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars;";
@@ -189,6 +197,7 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Same problem in \"getAllCars\" method");
         }
         return listCars;
     }

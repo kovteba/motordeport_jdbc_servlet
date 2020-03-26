@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.UUID;
 
 @WebServlet(
-        name = "deleteDriver",
-        urlPatterns = "/deleteDriver"
+        name = "deleteUser",
+        urlPatterns = "/deleteUser"
 )
-public class DeleteDriver extends HttpServlet {
+public class DeleteUser extends HttpServlet {
 
     private static UserDAOImpl userDAO;
 
@@ -30,12 +30,13 @@ public class DeleteDriver extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        userDAO.deleteUserById(Long.valueOf(req.getParameter("idDriver")));
-
+        Long id = Long.valueOf(req.getParameter("idDriver"));
+        String redirectString = userDAO.getUserById(id).getRole().getRoleValue();
+        userDAO.deleteUserById(id);
 
         String token = req.getParameter("token");
         System.out.println("DELETE DRIVER : " + token);
-        resp.sendRedirect("admin?token=" + token);
+        resp.sendRedirect("admin?token=" + token + "&value=" + redirectString);
     }
 
 
