@@ -124,6 +124,7 @@ public class Admin extends HttpServlet {
         req.setAttribute("carBrandList", carBrandDAO.getAllCarBrand());
         req.setAttribute("carClassList", CarClass.getListCarClass());
         req.setAttribute("carTechnicalStatusList", CarTechnicalStatus.getListCarTechnicalStatus());
+        req.setAttribute("carStatus", CarStatus.getListCarStatus());
 
 
         //set token
