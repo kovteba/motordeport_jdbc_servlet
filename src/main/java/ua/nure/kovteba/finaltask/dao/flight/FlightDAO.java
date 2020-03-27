@@ -10,4 +10,6 @@ public interface FlightDAO {
 
     List<Flight> getAllFlight();
 
+    void deleteFlightByIdRequest(Long id);
+
 }

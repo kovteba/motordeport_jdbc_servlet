@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.dao.flight;
 
 import ua.nure.kovteba.finaltask.entity.Car;
+import ua.nure.kovteba.finaltask.entity.Request;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
 import ua.nure.kovteba.finaltask.enumlist.Role;
@@ -43,8 +44,8 @@ public class FlightDAOImpl implements FlightDAO {
         Long idNewRequest = null;
         //SQL query for create new flight
         String insert = "INSERT INTO " +
-                "flights (flight_number, flight_status, car_id, driver_id, start_date, end_date) " +
-                "VALUES (?, ?, ?, ?, ?, ?);";
+                "flights (flight_number, flight_status, car_id, driver_id, start_date, end_date, request) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (PreparedStatement preparedStatement = conn.prepareStatement(insert,
                 PreparedStatement.RETURN_GENERATED_KEYS);) {
             //set value in insert string
@@ -54,6 +55,7 @@ public class FlightDAOImpl implements FlightDAO {
             preparedStatement.setString(4, serialization.entityToString(flight.getDriver()));
             preparedStatement.setString(5, flight.getStartDate().toString());
             preparedStatement.setString(6, flight.getEndDate().toString());
+            preparedStatement.setString(7, String.valueOf(flight.getRequest()));
             //execute insert to table
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -84,6 +86,7 @@ public class FlightDAOImpl implements FlightDAO {
                 newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
                 newFlight.setCar((Car) serialization.fromString(rs.getString(6)));
                 newFlight.setDriver((User) serialization.fromString(rs.getString(7)));
+                newFlight.setRequest(Long.valueOf(rs.getString(8)));
                 flightList.add(newFlight);
             }
         } catch (SQLException e) {
@@ -95,5 +98,17 @@ public class FlightDAOImpl implements FlightDAO {
         }
         //return all flight
         return flightList;
+    }
+
+    @Override
+    public void deleteFlightByIdRequest(Long id) {
+        //SQL query for create new flight
+        String deleteFlightByIdRequest = "DELETE FROM flights WHERE request = " + id + ";";
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteFlightByIdRequest);
+            LOG.info("User with id == " + id + ", deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
