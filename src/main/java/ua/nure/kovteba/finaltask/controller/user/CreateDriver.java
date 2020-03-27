@@ -32,13 +32,22 @@ public class CreateDriver extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User newDriver = new User();
-        newDriver.setFirstName(req.getParameter("firstNameDriver"));
-        newDriver.setLastName(req.getParameter("lastNameDriver"));
-        newDriver.setPhoneNumber(req.getParameter("phoneNumberDriver"));
-        newDriver.setPassword(req.getParameter("passwordDriver"));
-        newDriver.setRole(Role.DRIVER);
-        userDAO.createUser(newDriver);
+
+        String phoneNumber = req.getParameter("phoneNumberDriver");
+        User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
+        if (user == null){
+            User newDriver = new User();
+            newDriver.setFirstName(req.getParameter("firstNameDriver"));
+            newDriver.setLastName(req.getParameter("lastNameDriver"));
+            newDriver.setPhoneNumber(phoneNumber);
+            newDriver.setPassword(req.getParameter("passwordDriver"));
+            newDriver.setRole(Role.DRIVER);
+            userDAO.createUser(newDriver);
+        } else {
+            System.out.println("User with " + phoneNumber + " already exist");
+        }
+
+
 
 
         String token = req.getParameter("token");
