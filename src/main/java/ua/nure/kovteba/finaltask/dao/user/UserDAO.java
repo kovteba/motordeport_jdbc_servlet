@@ -19,4 +19,6 @@ public interface UserDAO {
 
     void deleteUserById(Long id);
 
+    List<User> getAllUsersByListId(List<Long> idList);
+
 }

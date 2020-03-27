@@ -199,4 +199,28 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<User> getAllUsersByListId(List<Long> idList) {
+        List<User> getAllUsersByListId = new ArrayList<>();
+        for (Long id : idList){
+            String slecetUsersByIdList = "SELECT * FROM users where id=" + id;
+            try (ResultSet rs = smtp.executeQuery(slecetUsersByIdList);) {
+                while (rs.next()) {
+                    User newUser = new User();
+                    newUser.setId(rs.getLong(1));
+                    newUser.setFirstName(rs.getString(2));
+                    newUser.setLastName(rs.getString(3));
+                    newUser.setPhoneNumber(rs.getString(4));
+                    newUser.setRole(Role.findRole(rs.getString(5)));
+                    getAllUsersByListId.add(newUser);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                LOG.warning("Some problem in method \"getAllUsers\"");
+            }
+        }
+        return getAllUsersByListId;
+
+    }
 }
