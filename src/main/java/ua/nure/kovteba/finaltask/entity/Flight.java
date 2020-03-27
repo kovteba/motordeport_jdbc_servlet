@@ -26,4 +26,6 @@ public class Flight {
 
     private ZonedDateTime endDate;
 
+    private Long request;
+
 }
