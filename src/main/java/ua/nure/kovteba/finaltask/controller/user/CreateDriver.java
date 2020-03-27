@@ -1,7 +1,9 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
+import ua.nure.kovteba.finaltask.enumlist.Employment;
 import ua.nure.kovteba.finaltask.enumlist.Role;
 
 import javax.servlet.RequestDispatcher;
@@ -22,10 +24,12 @@ import java.io.PrintWriter;
 public class CreateDriver extends HttpServlet {
 
     private static UserDAOImpl userDAO;
+    private static EmploymentStatusDAOImpl employmentStatusDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         userDAO = new UserDAOImpl();
+        employmentStatusDAO = new EmploymentStatusDAOImpl();
         super.init(config);
     }
 
@@ -42,7 +46,8 @@ public class CreateDriver extends HttpServlet {
             newDriver.setPhoneNumber(phoneNumber);
             newDriver.setPassword(req.getParameter("passwordDriver"));
             newDriver.setRole(Role.DRIVER);
-            userDAO.createUser(newDriver);
+            Long newDriverId = userDAO.createUser(newDriver);
+            employmentStatusDAO.createEmploymentStatus(newDriverId, Employment.FREE);
         } else {
             System.out.println("User with " + phoneNumber + " already exist");
         }

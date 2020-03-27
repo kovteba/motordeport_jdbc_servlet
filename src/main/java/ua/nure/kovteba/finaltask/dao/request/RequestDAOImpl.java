@@ -176,7 +176,7 @@ public class RequestDAOImpl implements RequestDAO {
 
     @Override
     public List<Request> getAllRequest() {
-        LOG.info("Get all requests by status ....");
+        LOG.info("Get all requests by ....");
         //create return list
         List<Request> allRequestBySatus = new ArrayList();
         //SQL query for select all requests

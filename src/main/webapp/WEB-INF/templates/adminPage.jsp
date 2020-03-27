@@ -42,6 +42,8 @@
     <%List<User> dispatcherList = (List<User>) request.getAttribute("dispatcherList");%>
     <%--GET DRIVER LIST--%>
     <%List<User> driverList = (List<User>) request.getAttribute("driversList");%>
+    <%--GET DRIVER LIST--%>
+    <%List<User> freeDrivers = (List<User>) request.getAttribute("freeDrivers");%>
     <%--GET CAR LIST FOR REQUEST GOOD TETCHNICAL STATUS AND FREE--%>
     <%List<Car> carsListForRequest = (List<Car>) request.getAttribute("carsListForRequest");%>
     <%--GET ALL CARS LIST--%>
@@ -259,7 +261,7 @@
                                                         <input type="hidden" name="idRequest" value="<%=reqOpen.getId()%>">
                                                         <input type="hidden" name="token" value="<%=token%>">
                                                         <input type="hidden" name="idDriverInReq" value="<%=reqOpen.getDriver().getId()%>">
-                                                        <th rowspan="3" scope="row"><%=indexReqOpen%></th>
+                                                        <th rowspan="2"><%=indexReqOpen%></th>
                                                         <td><%=reqOpen.getDriver().getLastName()%></td>
                                                         <td style="padding: 10px"><%=reqOpen.getCarClass().getClassValue()%></td>
                                                         <td style="padding: 10px"><%=reqOpen.getLoadCapacity()%></td>
@@ -304,7 +306,7 @@
                                                         <td style="padding: 10px" rowspan="2"><button class="btn btn-success">APPROVE</button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="padding: 10px" colspan="2">
+                                                        <td  colspan="2">
                                                             <label for="flightNumberInReq">Flight number</label>
                                                             <input type="text" id="flightNumberInReq" name="numbreFlightInReq" placeholder="Flight Number" required>
                                                         </td>
@@ -396,7 +398,66 @@
                                             <%--------------------END SHOW ALL REQUEST CLOSED-----------------------%>
                                         </div>
                                         <div class="tab-pane fade" id="createRequests" role="tabpanel" aria-labelledby="createRequests-tab">
+                                            <%------CREATE REQUEST---------%>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Driver</th>
+                                                    <th scope="col">Car Class</th>
+                                                    <th scope="col">Load Copacity</th>
+                                                    <th scope="col">Seats</th>
+                                                    <th scope="col">Luggage</th>
+                                                    <th scope="col">Air</th>
+                                                    <th scope="col">Navigator</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
 
+                                                <form action="createRequest" method="post">
+                                                    <tr>
+                                                        <input type="hidden" name="token" value="<%=token%>">
+                                                        <td style="padding: 10px">
+                                                            <select name="freeDriversId" required>
+                                                                <option selected disabled="disabled">Choose driver</option>
+                                                                <%
+                                                                    if (freeDrivers != null) {
+                                                                        for (User driver : freeDrivers) {
+                                                                %>
+                                                                <option value="<%=driver.getId()%>" title="<%=driver.toString()%>">
+                                                                    <%=driver.getFirstName()%> <%=driver.getLastName()%>
+                                                                </option>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </select>
+                                                        </td>
+                                                        <td style="padding: 10px">
+                                                            <select name="carClassForRequest" required>
+                                                                <option selected disabled="disabled">Choose carClass</option>
+                                                                <%
+                                                                    if (carClassList != null) {
+                                                                        for (CarClass carClass : carClassList) {
+                                                                %>
+                                                                <option value="<%=carClass.getClassValue()%>">
+                                                                    <%=carClass.getClassValue()%>
+                                                                </option>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </select>
+                                                        </td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="LoadCapacity" name="loadCapacityForRequest" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="Seats" name="seatsForRequest" required></td>
+                                                        <td style="padding: 10px"><input type="checkbox" name="luggageCompartmentForRequest"></td>
+                                                        <td style="padding: 10px"><input type="checkbox" name="airConditioningForRequest"></td>
+                                                        <td style="padding: 10px"><input type="checkbox" name="navigatorForRequest"></td>
+                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success">Add New request</button></td>
+                                                    </tr>
+                                                </form>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
 

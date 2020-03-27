@@ -96,4 +96,16 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
         //return all users by role
         return allIdFreeDrivers;
     }
+
+    @Override
+    public void deleteEmploymentStatusByDriverId(Long id) {
+        LOG.info("Delete employment status with driver id == " + id + " ....");
+        String deleteUserById = "DELETE FROM employment_status where id_driver =" + id;
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteUserById);
+            LOG.info("Employment status with idDriver == " + id + ", deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -3,6 +3,7 @@ package ua.nure.kovteba.finaltask.controller.user;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAO;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
 import ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
@@ -35,15 +36,17 @@ public class Admin extends HttpServlet {
     private static RequestDAOImpl requestDAO;
     private static CarBrandDAOImpl carBrandDAO;
     private static CarDAOImpl carDAO;
+    private static EmploymentStatusDAOImpl employmentStatusDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         userDAO = new UserDAOImpl();
         flightDAO = new FlightDAOImpl();
         requestDAO = new RequestDAOImpl();
         carBrandDAO = new CarBrandDAOImpl();
         carDAO = new CarDAOImpl();
+        employmentStatusDAO = new EmploymentStatusDAOImpl();
+        super.init(config);
     }
 
     @Override()
@@ -120,6 +123,7 @@ public class Admin extends HttpServlet {
         //drivers section
         //set driver list
         req.setAttribute("driversList", userDAO.getUserByRole(Role.DRIVER));
+        req.setAttribute("freeDrivers", userDAO.getAllUsersByListId(employmentStatusDAO.getAllFreeDrivers()));
 
         //car section
         //set car list

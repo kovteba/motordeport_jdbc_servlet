@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
 import jdk.vm.ci.meta.Local;
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -20,11 +21,13 @@ import java.util.UUID;
 public class DeleteUser extends HttpServlet {
 
     private static UserDAOImpl userDAO;
+    private static EmploymentStatusDAOImpl employmentStatusDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         userDAO = new UserDAOImpl();
+        employmentStatusDAO = new EmploymentStatusDAOImpl();
+        super.init(config);
     }
 
     @Override
@@ -33,6 +36,7 @@ public class DeleteUser extends HttpServlet {
         Long id = Long.valueOf(req.getParameter("idDriver"));
         String redirectString = userDAO.getUserById(id).getRole().getRoleValue();
         userDAO.deleteUserById(id);
+        employmentStatusDAO.deleteEmploymentStatusByDriverId(id);
 
         String token = req.getParameter("token");
         System.out.println("DELETE DRIVER : " + token);

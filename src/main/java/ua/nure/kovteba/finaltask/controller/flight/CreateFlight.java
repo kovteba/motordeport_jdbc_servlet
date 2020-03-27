@@ -1,11 +1,13 @@
 package ua.nure.kovteba.finaltask.controller.flight;
 
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
 import ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
+import ua.nure.kovteba.finaltask.enumlist.Employment;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
 import ua.nure.kovteba.finaltask.enumlist.RequestStatus;
 
@@ -30,6 +32,7 @@ public class CreateFlight extends HttpServlet {
     private static CarDAOImpl carDAO;
     private static FlightDAOImpl flightDAO;
     private static RequestDAOImpl requestDAO;
+    private static EmploymentStatusDAOImpl employmentStatusDAO;
 
     /**
      * @param config
@@ -41,6 +44,7 @@ public class CreateFlight extends HttpServlet {
         carDAO = new CarDAOImpl();
         flightDAO = new FlightDAOImpl();
         requestDAO = new RequestDAOImpl();
+        employmentStatusDAO = new EmploymentStatusDAOImpl();
         super.init(config);
     }
 
@@ -65,12 +69,13 @@ public class CreateFlight extends HttpServlet {
         ZonedDateTime endDateTime = ZonedDateTime.of(LocalDate.parse(endDate), LocalTime.parse(endTime), ZonedDateTime.now().getZone());
         //get id car to flight
         Long idCar = null;
+        Long idDriver = Long.valueOf(req.getParameter("idDriverInReq"));
         if (req.getParameter("carValueId") != null){
             idCar = Long.valueOf(req.getParameter("carValueId"));
             //create new flight
             Flight flight = new Flight();
             flight.setFlightNumber(req.getParameter("numbreFlightInReq"));
-            flight.setDriver(userDAO.getUserById(Long.valueOf(req.getParameter("idDriverInReq"))));
+            flight.setDriver(userDAO.getUserById(idDriver));
             flight.setCar(carDAO.getCarById(idCar));
             flight.setFlightStatus(FlightStatus.OPEN);
             flight.setStartDate(startDateTime);
@@ -80,6 +85,7 @@ public class CreateFlight extends HttpServlet {
             if (flightDAO.createFlight(flight) != null) {
                 carDAO.changeCarStatus(idCar, CarStatus.BUSY);
                 requestDAO.changeStatusRequestById(idRequest, RequestStatus.CLOSED);
+                employmentStatusDAO.changeEmploymentStatus(idDriver, Employment.BUSY);
             }
         }
 
