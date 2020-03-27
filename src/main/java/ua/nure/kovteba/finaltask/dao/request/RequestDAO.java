@@ -15,4 +15,6 @@ public interface RequestDAO {
 
     void changeStatusRequestById(Long id, RequestStatus requestStatus);
 
+    List<Request> getAllRequest();
+
 }

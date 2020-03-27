@@ -174,6 +174,36 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    @Override
+    public List<Request> getAllRequest() {
+        LOG.info("Get all requests by status ....");
+        //create return list
+        List<Request> allRequestBySatus = new ArrayList();
+        //SQL query for select all requests
+        String selectAllByRole = "SELECT * FROM requests;";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAllByRole);) {
+            while (rs.next()) {
+                Request request = installRequest(
+                        rs.getLong(1),
+                        rs.getString(8),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(7),
+                        rs.getBoolean(5),
+                        rs.getBoolean(2),
+                        rs.getBoolean(6),
+                        rs.getString(9));
+                allRequestBySatus.add(request);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+        }
+        //return all users by role
+        return allRequestBySatus;
+    }
+
     /**
      *
      * @param id
