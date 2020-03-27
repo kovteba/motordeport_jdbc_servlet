@@ -101,6 +101,11 @@
     flex: 0 0 auto;
 }
 
+.navBox{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
 
 
 

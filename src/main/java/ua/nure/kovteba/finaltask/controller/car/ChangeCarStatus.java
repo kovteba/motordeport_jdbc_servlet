@@ -3,7 +3,6 @@ package ua.nure.kovteba.finaltask.controller.car;
 import ua.nure.kovteba.finaltask.controller.user.Admin;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
-import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

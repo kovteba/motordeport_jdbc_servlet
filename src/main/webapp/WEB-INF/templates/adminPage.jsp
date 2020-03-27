@@ -30,8 +30,14 @@
     <%String carBtn = (String) request.getAttribute("carBtn");%>
     <%--GET ALL FLIGHTS--%>
     <%List<Flight> flightList = (List<Flight>) request.getAttribute("flightsList");%>
-    <%--GET ALL REQUESTS--%>
-    <%List<Request> requestsList = (List<Request>) request.getAttribute("requestsList");%>
+
+    <%--GET ALL REQUESTS OPEN--%>
+    <%List<Request> requestsListOpen = (List<Request>) request.getAttribute("requestsListOpen");%>
+    <%--GET ALL REQUESTS ALL--%>
+    <%List<Request> requestsListAll = (List<Request>) request.getAttribute("requestsListAll");%>
+    <%--GET ALL REQUESTS CLOSED--%>
+    <%List<Request> requestsListClosed = (List<Request>) request.getAttribute("requestsListClosed");%>
+
     <%--GET DISPATCHER LIST--%>
     <%List<User> dispatcherList = (List<User>) request.getAttribute("dispatcherList");%>
     <%--GET DRIVER LIST--%>
@@ -138,104 +144,264 @@
                     </table>
                     <%------------------END SHOW ALL FLIGHT-----------------%>
                     <hr class="hrBeetwen">
-                    <div class="accordion" id="accordionExample">
+                    <%----%>
+                    <div class="accordion" id="accordionExampleWorkWithRequest">
                         <div class="card">
-                            <div class="card-header" id="headingOne">
+                            <div class="card-header" id="headingWorkWithRequest">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
-                                            aria-expanded="true" aria-controls="collapseOne">Requests
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseWorkWithRequest"
+                                            aria-expanded="true" aria-controls="collapseWorkWithRequest">Requests
                                     </button>
                                 </h5>
                             </div>
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseWorkWithRequest" class="collapse" aria-labelledby="headingWorkWithRequest" data-parent="#accordionExampleWorkWithRequest">
                                 <div class="card-body">
-                                    <%-----------------START SHOW ALL REQUEST------------------------%>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Driver</th>
-                                            <th scope="col">Car Class</th>
-                                            <th scope="col">Load Copacity</th>
-                                            <th scope="col">Seats</th>
-                                            <th scope="col">Luggage</th>
-                                            <th scope="col">Air</th>
-                                            <th scope="col">Navigator</th>
-                                            <th scope="col">List Car</th>
-                                            <th scope="col">Approve</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <%
-                                            if (requestsList != null) {
-                                                int indexReq = 1;
-                                                for (Request reqL : requestsList) {
-                                        %>
-                                        <form action="createFlight" method="post">
-                                            <tr>
-                                                <input type="hidden" name="idRequest" value="<%=reqL.getId()%>">
-                                                <input type="hidden" name="token" value="<%=token%>">
-                                                <input type="hidden" name="idDriverInReq" value="<%=reqL.getDriver().getId()%>">
-                                                <th rowspan="2" scope="row"><%=indexReq%></th>
-                                                <td><%=reqL.getDriver().getLastName()%></td>
-                                                <td style="padding: 10px"><%=reqL.getCarClass().getClassValue()%></td>
-                                                <td style="padding: 10px"><%=reqL.getLoadCapacity()%></td>
-                                                <td style="padding: 10px"><%=reqL.getSeats()%></td>
+                                    <ul class="nav nav-tabs" id="myTabRequest" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="allRequests-tab" data-toggle="tab" href="#allRequests" role="tab" aria-controls="allRequests" aria-selected="true">All Request</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="openRequests-tab" data-toggle="tab" href="#openRequests" role="tab" aria-controls="openRequests" aria-selected="false">Open Request</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="closedRequests-tab" data-toggle="tab" href="#closedRequests" role="tab" aria-controls="closedRequests" aria-selected="false">Closed Request</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="createRequests-tab" data-toggle="tab" href="#createRequests" role="tab" aria-controls="createRequests" aria-selected="false">Create Request</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="allRequests" role="tabpanel" aria-labelledby="allRequests-tab">
+                                            <%-----------------START SHOW ALL REQUEST------------------------%>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Driver</th>
+                                                    <th scope="col">Car Class</th>
+                                                    <th scope="col">Load Copacity</th>
+                                                    <th scope="col">Seats</th>
+                                                    <th scope="col">Luggage</th>
+                                                    <th scope="col">Air</th>
+                                                    <th scope="col">Navigator</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
                                                 <%
-                                                    String luggageCompartment = null;
-                                                    if (reqL.getLuggageCompartment()) {
-                                                        luggageCompartment = "checked";
+                                                    if (requestsListAll != null) {
+                                                        int indexReqAll = 1;
+                                                        for (Request reqAll : requestsListAll) {
+                                                %>
+                                                <tr>
+                                                    <th scope="row"><%=indexReqAll%></th>
+                                                    <td><%=reqAll.getDriver().getLastName()%></td>
+                                                    <td style="padding: 10px"><%=reqAll.getCarClass().getClassValue()%></td>
+                                                    <td style="padding: 10px"><%=reqAll.getLoadCapacity()%></td>
+                                                    <td style="padding: 10px"><%=reqAll.getSeats()%></td>
+                                                    <%
+                                                        String luggageCompartment = null;
+                                                        if (reqAll.getLuggageCompartment()) {
+                                                            luggageCompartment = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=luggageCompartment%> disabled></td>
+                                                    <%
+                                                        String airConditioning = null;
+                                                        if (reqAll.getAirConditioning()) {
+                                                            airConditioning = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=airConditioning%> disabled></td>
+                                                    <%
+                                                        String navigator = null;
+                                                        if (reqAll.getNavigator()) {
+                                                            navigator = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=navigator%> disabled></td>
+                                                    <td style="padding: 10px"><%=reqAll.getRequestStatus().getRequestSatus()%></td>
+                                                </tr>
+                                                <%
+                                                            indexReqAll++;
+                                                        }
                                                     }
                                                 %>
-                                                <td style="padding: 10px"><input type="checkbox" <%=luggageCompartment%> disabled></td>
+                                                </tbody>
+                                            </table>
+                                            <%--------------------END SHOW ALL REQUEST-----------------------%>
+                                        </div>
+                                        <div class="tab-pane fade" id="openRequests" role="tabpanel" aria-labelledby="openRequests-tab">
+                                            <%-----------------START SHOW ALL REQUEST OPEN------------------------%>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Driver</th>
+                                                    <th scope="col">Car Class</th>
+                                                    <th scope="col">Load Copacity</th>
+                                                    <th scope="col">Seats</th>
+                                                    <th scope="col">Luggage</th>
+                                                    <th scope="col">Air</th>
+                                                    <th scope="col">Navigator</th>
+                                                    <th scope="col">List Car</th>
+                                                    <th scope="col">Approve</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
                                                 <%
-                                                    String airConditioning = null;
-                                                    if (reqL.getAirConditioning()) {
-                                                        airConditioning = "checked";
-                                                    }
+                                                    if (requestsListOpen != null) {
+                                                        int indexReqOpen = 1;
+                                                        for (Request reqOpen : requestsListOpen) {
                                                 %>
-                                                <td style="padding: 10px"><input type="checkbox" <%=airConditioning%> disabled></td>
-                                                <%
-                                                    String navigator = null;
-                                                    if (reqL.getNavigator()) {
-                                                        navigator = "checked";
-                                                    }
-                                                %>
-                                                <td style="padding: 10px"><input type="checkbox" <%=navigator%> disabled></td>
-                                                <td style="padding: 10px">
-                                                    <select name="carValueId" required>
-                                                        <option selected disabled="disabled">Choose car</option>
+                                                <form action="createFlight" method="post">
+                                                    <tr>
+                                                        <input type="hidden" name="idRequest" value="<%=reqOpen.getId()%>">
+                                                        <input type="hidden" name="token" value="<%=token%>">
+                                                        <input type="hidden" name="idDriverInReq" value="<%=reqOpen.getDriver().getId()%>">
+                                                        <th rowspan="3" scope="row"><%=indexReqOpen%></th>
+                                                        <td><%=reqOpen.getDriver().getLastName()%></td>
+                                                        <td style="padding: 10px"><%=reqOpen.getCarClass().getClassValue()%></td>
+                                                        <td style="padding: 10px"><%=reqOpen.getLoadCapacity()%></td>
+                                                        <td style="padding: 10px"><%=reqOpen.getSeats()%></td>
                                                         <%
-                                                            if (carsListForRequest != null) {
-                                                                for (Car car : carsListForRequest) {
-                                                        %>
-                                                        <option value="<%=car.getId()%>" title="<%=car.toString()%>">
-                                                            <%=car.getCarNumber()%>
-                                                        </option>
-                                                        <%
-                                                                }
+                                                            String luggageCompartment = null;
+                                                            if (reqOpen.getLuggageCompartment()) {
+                                                                luggageCompartment = "checked";
                                                             }
                                                         %>
-                                                    </select>
-                                                </td>
-                                                <td style="padding: 10px" rowspan="2"><button class="btn btn-success">APPROVE</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 10px" colspan="2"><input type="text" name="numbreFlightInReq" placeholder="Flight Number" required></td>
-                                                <td style="padding: 10px" colspan="2"><input type="date" name="startDateInReq" placeholder="Start date" required></td>
-                                                <td style="padding: 10px"><input type="time" name="startTimeInReq" placeholder="Start time" required></td>
-                                                <td style="padding: 10px" colspan="2"><input type="date" name="endDateInReq" placeholder="End date" required></td>
-                                                <td style="padding: 10px"><input type="time" name="endTimeInReq" placeholder="End time" required></td>
-                                            </tr>
-                                        </form>
-                                        <%
-                                                    indexReq++;
-                                                }
-                                            }
-                                        %>
-                                        </tbody>
-                                    </table>
-                                    <%--------------------END SHOW ALL REQUEST---------------------------------%>
+                                                        <td style="padding: 10px"><input type="checkbox" <%=luggageCompartment%> disabled></td>
+                                                        <%
+                                                            String airConditioning = null;
+                                                            if (reqOpen.getAirConditioning()) {
+                                                                airConditioning = "checked";
+                                                            }
+                                                        %>
+                                                        <td style="padding: 10px"><input type="checkbox" <%=airConditioning%> disabled></td>
+                                                        <%
+                                                            String navigator = null;
+                                                            if (reqOpen.getNavigator()) {
+                                                                navigator = "checked";
+                                                            }
+                                                        %>
+                                                        <td style="padding: 10px"><input type="checkbox" <%=navigator%> disabled></td>
+                                                        <td style="padding: 10px">
+                                                            <select name="carValueId" required>
+                                                                <option selected disabled="disabled">Choose car</option>
+                                                                <%
+                                                                    if (carsListForRequest != null) {
+                                                                        for (Car car : carsListForRequest) {
+                                                                %>
+                                                                <option value="<%=car.getId()%>" title="<%=car.toString()%>">
+                                                                    <%=car.getCarNumber()%>
+                                                                </option>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </select>
+                                                        </td>
+                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success">APPROVE</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 10px" colspan="2">
+                                                            <label for="flightNumberInReq">Flight number</label>
+                                                            <input type="text" id="flightNumberInReq" name="numbreFlightInReq" placeholder="Flight Number" required>
+                                                        </td>
+                                                        <td style="padding: 10px" colspan="2">
+                                                            <label for="startDateInReq">Start date</label>
+                                                            <input type="date" id="startDateInReq" name="startDateInReq" placeholder="Start date" required>
+                                                        </td>
+                                                        <td style="padding: 10px">
+                                                            <label for="startTimeInReq">Start Time</label>
+                                                            <input type="time" id="startTimeInReq" name="startTimeInReq" placeholder="Start time" required>
+                                                        </td>
+                                                        <td style="padding: 10px" colspan="2">
+                                                            <label for="endDateInReq">End date</label>
+                                                            <input type="date" id="endDateInReq" name="endDateInReq" placeholder="End date" required>
+                                                        </td>
+                                                        <td style="padding: 10px">
+                                                            <label for="endTimeInReq">End Time</label>
+                                                            <input type="time" id="endTimeInReq" name="endTimeInReq" placeholder="End time" required>
+                                                        </td>
+                                                    </tr>
+                                                </form>
+                                                <%
+                                                            indexReqOpen++;
+                                                        }
+                                                    }
+                                                %>
+                                                </tbody>
+                                            </table>
+                                            <%--------------------END SHOW ALL REQUEST OPEN-----------------------%>
+                                        </div>
+                                        <div class="tab-pane fade" id="closedRequests" role="tabpanel" aria-labelledby="closedRequests-tab">
+                                            <%-----------------START SHOW ALL REQUEST CLOSED------------------------%>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Driver</th>
+                                                    <th scope="col">Car Class</th>
+                                                    <th scope="col">Load Copacity</th>
+                                                    <th scope="col">Seats</th>
+                                                    <th scope="col">Luggage</th>
+                                                    <th scope="col">Air</th>
+                                                    <th scope="col">Navigator</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <%
+                                                    if (requestsListClosed != null) {
+                                                        int indexReqClosed = 1;
+                                                        for (Request reqClosed : requestsListAll) {
+                                                %>
+                                                <tr>
+                                                    <th scope="row"><%=indexReqClosed%></th>
+                                                    <td><%=reqClosed.getDriver().getLastName()%></td>
+                                                    <td style="padding: 10px"><%=reqClosed.getCarClass().getClassValue()%></td>
+                                                    <td style="padding: 10px"><%=reqClosed.getLoadCapacity()%></td>
+                                                    <td style="padding: 10px"><%=reqClosed.getSeats()%></td>
+                                                    <%
+                                                        String luggageCompartment = null;
+                                                        if (reqClosed.getLuggageCompartment()) {
+                                                            luggageCompartment = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=luggageCompartment%> disabled></td>
+                                                    <%
+                                                        String airConditioning = null;
+                                                        if (reqClosed.getAirConditioning()) {
+                                                            airConditioning = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=airConditioning%> disabled></td>
+                                                    <%
+                                                        String navigator = null;
+                                                        if (reqClosed.getNavigator()) {
+                                                            navigator = "checked";
+                                                        }
+                                                    %>
+                                                    <td style="padding: 10px"><input type="checkbox" <%=navigator%> disabled></td>
+                                                    <td style="padding: 10px"><%=reqClosed.getRequestStatus().getRequestSatus()%></td>
+                                                </tr>
+                                                <%
+                                                            indexReqClosed++;
+                                                        }
+                                                    }
+                                                %>
+                                                </tbody>
+                                            </table>
+                                            <%--------------------END SHOW ALL REQUEST CLOSED-----------------------%>
+                                        </div>
+                                        <div class="tab-pane fade" id="createRequests" role="tabpanel" aria-labelledby="createRequests-tab">
+
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -284,17 +450,17 @@
                     <%-------------------------END SHOW ALL DISPATCHER TABLE-----------------------%>
                     <hr class="hrBeetwen">
                     <%------------------------START BLOCK ADD NEW DISPATCHER--------------------------%>
-                    <div class="accordion" id="accordionExampleFour">
+                    <div class="accordion" id="accordionExampleCreateNewDispatcher">
                         <div class="card">
-                            <div class="card-header" id="headingFour">
+                            <div class="card-header" id="headingCreateNewDispatcher">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
-                                            aria-controls="collapseFour">Add dispatcher
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCreateNewDispatcher" aria-expanded="true"
+                                            aria-controls="collapseCreateNewDispatcher">Add dispatcher
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapseFour" class="collapse show" aria-labelledby="headingFour"
-                                 data-parent="#accordionExampleFour">
+                            <div id="collapseCreateNewDispatcher" class="collapse" aria-labelledby="headingCreateNewDispatcher"
+                                 data-parent="#accordionExampleCreateNewDispatcher">
                                 <div class="card-body">
                                     <form method="post" action="createDispatcher">
                                         <input type="hidden" name="token" value="<%=token%>">
@@ -357,17 +523,17 @@
                     <%---------------END TABLE SHOW ALL DRIVERS--------------------%>
                     <hr class="hrBeetwen">
                     <%------------START CREATE NEW USER---------------------%>
-                    <div class="accordion" id="accordionExampleThree">
+                    <div class="accordion" id="accordionExampleCreateNewUser">
                         <div class="card">
-                            <div class="card-header" id="headingThree">
+                            <div class="card-header" id="headingCreateNewUser">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse"data-target="#collapseThree" aria-expanded="true"
-                                            aria-controls="collapseThree">add driver
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCreateNewUser" aria-expanded="true"
+                                            aria-controls="collapseCreateNewUser">add driver
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                 data-parent="#accordionExampleThree">
+                            <div id="collapseCreateNewUser" class="collapse" aria-labelledby="headingCreateNewUser"
+                                 data-parent="#accordionExampleCreateNewUser">
                                 <div class="card-body">
                                     <table class="table table-bordered">
                                         <form method="post" action="createDriver">
@@ -401,7 +567,6 @@
                                             </tbody>
                                         </form>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
@@ -470,8 +635,8 @@
                             <td><input type="checkbox" <%=navigator%> disabled></td>
                             <td>
                                 <div class="navbar">
-                                    <div data-toggle="dropdown">
-                                        <%=car.getCarTechnicalStatus().getCarTechnicalStatusValue()%>
+                                    <div data-toggle="dropdown" class="navBox">
+                                        <div><%=car.getCarTechnicalStatus().getCarTechnicalStatusValue()%></div>
                                     </div>
                                     <ul class="dropdown-menu">
                                         <%
@@ -479,7 +644,7 @@
                                                 for (CarTechnicalStatus carTechnicalStatus : carTechnicalStatusList) {
                                         %>
                                         <li>
-                                            <form action="changeTechnicalStatus" method="post">
+                                            <form action="changeTechnicalStatus" method="post" class="navBox">
                                                 <input type="hidden" name="token" value="<%=token%>">
                                                 <input type="hidden" value="<%=car.getId()%>" name="carId">
                                                 <input class="dropdown-item" type="submit"value="<%=carTechnicalStatus.getCarTechnicalStatusValue()%>" name="technicalValue">
@@ -489,14 +654,13 @@
                                                 }
                                             }
                                         %>
-
                                     </ul>
                                 </div>
                             </td>
                             <td>
                                 <div class="navbar">
-                                    <div data-toggle="dropdown">
-                                        <%=car.getCarStatus().getCarStatusValue()%>
+                                    <div data-toggle="dropdown"  class="navBox">
+                                        <div><%=car.getCarStatus().getCarStatusValue()%></div>
                                     </div>
                                     <ul class="dropdown-menu">
                                         <%
@@ -504,7 +668,7 @@
                                                 for (CarStatus carStatus : carStatusList) {
                                         %>
                                         <li>
-                                            <form action="changeStatus" method="post">
+                                            <form action="changeStatus" method="post" class="navBox">
                                                 <input type="hidden" name="token" value="<%=token%>">
                                                 <input type="hidden" value="<%=car.getId()%>" name="carId">
                                                 <input class="dropdown-item" type="submit"value="<%=carStatus.getCarStatusValue()%>" name="carStatusValue">
@@ -529,24 +693,23 @@
                     <%---------------------END TABLE SHOW ALL CARS-----------------%>
                     <hr class="hrBeetwen">
                     <%-------------------START BLOCK FOR CREATE NEW CAR AND CREATE CAR BRAND----------------------%>
-                    <div class="accordion" id="accordionExampleTwo">
+                    <div class="accordion" id="accordionExampleCarAndBrand">
                         <div class="card">
-                            <div class="card-header" id="headingTwo">
+                            <div class="card-header" id="headingCarAndBrand">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">Add car
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCarAndBrand" aria-expanded="false"
+                                            aria-controls="collapseCarAndBrand">Add car
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                 data-parent="#accordionExample">
+                            <div id="collapseCarAndBrand" class="collapse" aria-labelledby="headingCarAndBrand" data-parent="#accordionExampleCarAndBrand">
                                 <div class="card-body">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add car</a></li>
-                                        <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add car Brand</a></li>
+                                    <ul class="nav nav-tabs" id="myTabCar" role="tablist">
+                                        <li class="nav-item"><a class="nav-link active" id="addNewCar-tab" data-toggle="tab" href="#addNewCar" role="tab" aria-controls="addNewCar" aria-selected="true">Add car</a></li>
+                                        <li class="nav-item"><a class="nav-link" id="addNewCarBrand-tab" data-toggle="tab" href="#addNewCarBrand" role="tab" aria-controls="addNewCarBrand" aria-selected="false">Add car Brand</a></li>
                                     </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-content" id="myTabContentCar">
+                                        <div class="tab-pane fade show active" id="addNewCar" role="tabpanel" aria-labelledby="home-tab">
                                             <%---------------START BLOCK CREATE NEW CAR--------------------%>
                                             <table class="table table-bordered">
                                                 <tbody>
@@ -626,7 +789,7 @@
                                             </table>
                                             <%---------------END BLOCK CREATE NEW CAR--------------------%>
                                         </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel"
+                                        <div class="tab-pane fade" id="addNewCarBrand" role="tabpanel"
                                              aria-labelledby="profile-tab">
                                             <div class="row">
                                                 <div class="col-md-6">

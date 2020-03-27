@@ -75,6 +75,7 @@ public class CreateFlight extends HttpServlet {
             flight.setFlightStatus(FlightStatus.OPEN);
             flight.setStartDate(startDateTime);
             flight.setEndDate(endDateTime);
+            flight.setRequest(idRequest);
             //if flightDAO return id new flight change car status and request status
             if (flightDAO.createFlight(flight) != null) {
                 carDAO.changeCarStatus(idCar, CarStatus.BUSY);

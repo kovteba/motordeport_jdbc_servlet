@@ -55,4 +55,12 @@ class RequestDAOImplTest {
     void changeStatusRequestById() {
         requestDAO.changeStatusRequestById(10L, RequestStatus.CLOSED);
     }
+
+    @Test
+    void getAllRequest() {
+        List<Request> list = requestDAO.getAllRequest();
+        for (Request request : list){
+            System.out.println(request.toString());
+        }
+    }
 }

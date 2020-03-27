@@ -106,7 +106,10 @@ public class Admin extends HttpServlet {
         //set flight list
         req.setAttribute("flightsList", flightDAO.getAllFlight());
         //set requests with status OPEN
-        req.setAttribute("requestsList", requestDAO.getAllRequestByStatus(RequestStatus.OPEN));
+        req.setAttribute("requestsListOpen", requestDAO.getAllRequestByStatus(RequestStatus.OPEN));
+        req.setAttribute("requestsListAll", requestDAO.getAllRequest());
+        req.setAttribute("requestsListClosed", requestDAO.getAllRequestByStatus(RequestStatus.CLOSED));
+
         //set car with status FREE
         req.setAttribute("carsListForRequest", carDAO.getListCarFreeAndGood());
 

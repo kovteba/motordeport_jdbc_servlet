@@ -29,6 +29,7 @@ class FlightDAOImplTest {
         flight.setFlightStatus(FlightStatus.OPEN);
         flight.setStartDate(ZonedDateTime.now());
         flight.setEndDate(ZonedDateTime.now().plusDays(2));
+        flight.setRequest(16L);
         flightDAO.createFlight(flight);
 
     }
@@ -42,5 +43,10 @@ class FlightDAOImplTest {
         }
 
 
+    }
+
+    @Test
+    void deleteFlightByIdRequest() {
+        flightDAO.deleteFlightByIdRequest(16L);
     }
 }
