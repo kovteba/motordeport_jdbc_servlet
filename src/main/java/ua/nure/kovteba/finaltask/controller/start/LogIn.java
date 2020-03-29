@@ -1,4 +1,4 @@
-package ua.nure.kovteba.finaltask.controller;
+package ua.nure.kovteba.finaltask.controller.start;
 
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
@@ -17,7 +17,7 @@ import java.io.IOException;
         name = "indexServlet",
         urlPatterns = "/"
 )
-public class IndexServlet extends HttpServlet {
+public class LogIn extends HttpServlet {
 
     private static UserDAOImpl userDAO;
     private static TokenDAOImpl tokenDAO;
