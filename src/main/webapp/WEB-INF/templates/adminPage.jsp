@@ -56,11 +56,22 @@
     <%List<CarBrand> carBrandList = (List<CarBrand>) request.getAttribute("carBrandList");%>
     <%--GET CAR CLASS LIST--%>
     <%List<CarClass> carClassList = (List<CarClass>) request.getAttribute("carClassList");%>
+
+
     <div class="row header">
         <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
+
         <div class="col-md-4 time">TIME</div>
+
         <div class="col-md-4 logIn" id="logIn">LOG IN</div>
-        <div class="col-md-4 logIn" id="logOut">LOG OUT</div>
+
+        <div class="col-md-4 logIn" id="logOut">
+            <form method="post" action="logOut">
+                <input type="hidden" name="token" value="<%=token%>">
+                <input type="submit" value="log out">
+            </form>
+        </div>
+
     </div>
     <div class="row base">
         <!--    left link bar    -->

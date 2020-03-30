@@ -8,4 +8,6 @@ public interface TokenDAO {
 
     Token getTokenByToken(String token);
 
+    void deleteTokenByToken(String token);
+
 }

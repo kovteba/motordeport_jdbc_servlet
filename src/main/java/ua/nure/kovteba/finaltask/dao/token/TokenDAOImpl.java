@@ -59,6 +59,18 @@ public class TokenDAOImpl implements TokenDAO {
         return token;
     }
 
+    @Override
+    public void deleteTokenByToken(String token) {
+        LOG.info("Delete token where token == " + token + " ....");
+        String deleteTokenByValue = "DELETE FROM tokens WHERE token='" + token + "'";
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteTokenByValue);
+            LOG.info("Token == " + token + ", deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String generateToken(){
         return UUID.randomUUID().toString();
     }

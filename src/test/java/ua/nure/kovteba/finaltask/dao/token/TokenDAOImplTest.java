@@ -21,4 +21,9 @@ class TokenDAOImplTest {
         Token token = tokenDAO.getTokenByToken(newToken);
         assertEquals(token.getToken(), newToken);
     }
+
+    @Test
+    void deleteTokenByToken() {
+        tokenDAO.deleteTokenByToken("097c9965-0750-439b-87e5-a957d901efa4");
+    }
 }

@@ -9,7 +9,7 @@ public class Connect {
     private static Logger LOG = Logger.getLogger(Connect.class.getName());
 
     // JDBC URL, username and password of MySQL server
-    private static final String url = "jdbc:mysql://localhost:3306/motordeport";
+    private static final String url = "jdbc:mysql://localhost:3306/motordeport?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "root";
     private static final String password = "root";
 

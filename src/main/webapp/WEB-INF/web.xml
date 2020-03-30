@@ -9,19 +9,17 @@
 
 
     <servlet-mapping>
-        <servlet-name>indexServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>index</servlet-name>
+        <url-pattern></url-pattern>
     </servlet-mapping>
 
-
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>index.jsp</welcome-file>-->
+<!--    </welcome-file-list>-->
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
-
 
 </web-app>

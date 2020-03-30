@@ -5,6 +5,7 @@ import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,12 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(
-        name = "indexServlet",
-        urlPatterns = "/"
+        name = "index",
+        urlPatterns = "/index"
 )
-public class LogIn extends HttpServlet {
+public class Index extends HttpServlet {
+
+    //Create logger
+    private static Logger LOG = Logger.getLogger(Index.class.getName());
 
     private static UserDAOImpl userDAO;
     private static TokenDAOImpl tokenDAO;
@@ -25,10 +30,10 @@ public class LogIn extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         userDAO = new UserDAOImpl();
         tokenDAO = new TokenDAOImpl();
         flightDAO = new FlightDAOImpl();
+        super.init(config);
     }
 
     @Override
@@ -38,8 +43,14 @@ public class LogIn extends HttpServlet {
         req.setAttribute("flightsList", flightDAO.getAllFlight());
 
         System.out.println("FROM INDEX");
+        //set token
+        req.setAttribute("token", "null");
+        RequestDispatcher dispatcher = req.getRequestDispatcher(
+                "/WEB-INF/templates/index.jsp");
+        dispatcher.forward(req, resp);
 
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,14 +62,28 @@ public class LogIn extends HttpServlet {
 
         String token = null;
         User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
-        if (user.getPassword().equals(password)) {
 
-            token = tokenDAO.createToken(user.getId());
-            if (user.getRole().getRoleValue().equals("ADMIN")) {
-                resp.sendRedirect("admin?token=" + token);
+        if (user != null){
+            if (user.getPassword().equals(password)) {
+                token = tokenDAO.createToken(user.getId());
+                String role = user.getRole().getRoleValue();
+                if (role.equals("ADMIN")) {
+                    resp.sendRedirect("admin?token=" + token);
+                } else if (role.equals("DISPATCHER")){
+                    resp.sendRedirect("dispatcher?token=" + token);
+                } else if (role.equals("DRIVER")){
+                    resp.sendRedirect("driver?token=" + token);
+                }
             }
+        } else {
+            resp.setHeader("user", "user with phone number dont find");
+            LOG.info("User with --> " + phoneNumber +" dont find.");
         }
 
 
+
+
     }
+
+
 }
