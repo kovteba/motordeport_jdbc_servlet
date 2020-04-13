@@ -49,6 +49,7 @@ public class Admin extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         userDAO = new UserDAOImpl();
         flightDAO = new FlightDAOImpl();
         requestDAO = new RequestDAOImpl();
@@ -56,7 +57,6 @@ public class Admin extends HttpServlet {
         carDAO = new CarDAOImpl();
         employmentStatusDAO = new EmploymentStatusDAOImpl();
         tokenDAO = new TokenDAOImpl();
-        super.init(config);
     }
 
     @Override()

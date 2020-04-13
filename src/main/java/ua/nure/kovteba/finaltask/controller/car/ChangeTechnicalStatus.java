@@ -26,8 +26,8 @@ public class ChangeTechnicalStatus extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        carDAO = new CarDAOImpl();
         super.init(config);
+        carDAO = new CarDAOImpl();
     }
 
     @Override

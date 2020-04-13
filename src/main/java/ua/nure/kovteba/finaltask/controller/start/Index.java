@@ -30,10 +30,10 @@ public class Index extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         userDAO = new UserDAOImpl();
         tokenDAO = new TokenDAOImpl();
         flightDAO = new FlightDAOImpl();
-        super.init(config);
     }
 
     @Override

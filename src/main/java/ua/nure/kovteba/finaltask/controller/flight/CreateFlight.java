@@ -40,12 +40,12 @@ public class CreateFlight extends HttpServlet {
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         userDAO = new UserDAOImpl();
         carDAO = new CarDAOImpl();
         flightDAO = new FlightDAOImpl();
         requestDAO = new RequestDAOImpl();
         employmentStatusDAO = new EmploymentStatusDAOImpl();
-        super.init(config);
     }
 
     /**

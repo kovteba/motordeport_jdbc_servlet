@@ -24,8 +24,8 @@ public class DeleteCarBrand extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        carBrandDAO = new CarBrandDAOImpl();
         super.init(config);
+        carBrandDAO = new CarBrandDAOImpl();
     }
 
     @Override

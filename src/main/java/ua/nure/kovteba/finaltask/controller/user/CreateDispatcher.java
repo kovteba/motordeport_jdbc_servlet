@@ -22,8 +22,8 @@ public class CreateDispatcher extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        userDAO = new UserDAOImpl();
         super.init(config);
+        userDAO = new UserDAOImpl();
     }
 
     @Override

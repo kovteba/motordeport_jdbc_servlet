@@ -21,8 +21,8 @@ public class LogOut extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        tokenDAO = new TokenDAOImpl();
         super.init(config);
+        tokenDAO = new TokenDAOImpl();
     }
 
     @Override

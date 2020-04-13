@@ -32,9 +32,9 @@ public class CreateCar extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         carDAO = new CarDAOImpl();
         carBrandDAO = new CarBrandDAOImpl();
-        super.init(config);
     }
 
     @Override

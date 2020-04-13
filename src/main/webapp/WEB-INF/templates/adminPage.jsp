@@ -3,6 +3,13 @@
 <%@ page import="ua.nure.kovteba.finaltask.enumlist.CarClass" %>
 <%@ page import="ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus" %>
 <%@ page import="ua.nure.kovteba.finaltask.enumlist.CarStatus" %>
+<%@ page import="java.net.http.HttpHeaders" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<fmt:setBundle basename="MessagesBundle_ru_RU"/>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -79,15 +86,15 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link <%=flightBtn%>> btn-light" id="v-pills-flights-tab" data-toggle="pill"
                    href="#v-pills-flights"
-                   role="tab" aria-controls="v-pills-flights" aria-selected="true">Flights</a>
+                   role="tab" aria-controls="v-pills-flights" aria-selected="true"><fmt:message key="label.requests"/></a>
                 <a class="nav-link <%=dispatcherBtn%> btn-light" id="v-pills-dispatchers-tab" data-toggle="pill"
-                   href="#v-pills-dispatchers" role="tab" aria-controls="v-pills-dispatchers" aria-selected="false">Dispatchers</a>
+                   href="#v-pills-dispatchers" role="tab" aria-controls="v-pills-dispatchers" aria-selected="false"><fmt:message key="label.dispatchers"/></a>
                 <a class="nav-link <%=driverBtn%> btn-light" id="v-pills-drivers-tab" data-toggle="pill"
                    href="#v-pills-drivers"
-                   role="tab" aria-controls="v-pills-drivers" aria-selected="false">Drivers</a>
+                   role="tab" aria-controls="v-pills-drivers" aria-selected="false"><fmt:message key="label.drivers"/></a>
                 <a class="nav-link <%=carBtn%> btn-light" id="v-pills-cars-tab" data-toggle="pill" href="#v-pills-cars"
                    role="tab"
-                   aria-controls="v-pills-cars" aria-selected="false">Cars</a>
+                   aria-controls="v-pills-cars" aria-selected="false"><fmt:message key="label.cars"/></a>
             </div>
         </div>
         <!--    main container    -->
@@ -100,12 +107,12 @@
                     <table class="table-hover table-dark tableFlights">
                         <thead>
                         <tr>
-                            <th scope="col">NUMBER</th>
-                            <th scope="col">START DATE</th>
-                            <th scope="col">END DATE</th>
+                            <th scope="col"><fmt:message key="label.number.flight"/></th>
+                            <th scope="col"><fmt:message key="label.startDate"/></th>
+                            <th scope="col"><fmt:message key="label.endDate"/></th>
                             <th scope="col">
                                 <div class="navbar">
-                                    <div class="tableFlights" data-toggle="dropdown">STATUS</div>
+                                    <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
                                     <ul class="dropdown-menu tableFlights">
                                         <li>
                                             <form action="admin">
@@ -134,7 +141,7 @@
                                     </ul>
                                 </div>
                             </th>
-                            <th scope="col">CAR INFO</th>
+                            <th scope="col"><fmt:message key="label.carInfo"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -163,7 +170,7 @@
                             <div class="card-header" id="headingWorkWithRequest">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseWorkWithRequest"
-                                            aria-expanded="true" aria-controls="collapseWorkWithRequest">Requests
+                                            aria-expanded="true" aria-controls="collapseWorkWithRequest"><fmt:message key="label.requests"/>
                                     </button>
                                 </h5>
                             </div>
@@ -171,16 +178,16 @@
                                 <div class="card-body">
                                     <ul class="nav nav-tabs" id="myTabRequest" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="allRequests-tab" data-toggle="tab" href="#allRequests" role="tab" aria-controls="allRequests" aria-selected="true">All Request</a>
+                                            <a class="nav-link active" id="allRequests-tab" data-toggle="tab" href="#allRequests" role="tab" aria-controls="allRequests" aria-selected="true"><fmt:message key="label.allRequests"/></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="openRequests-tab" data-toggle="tab" href="#openRequests" role="tab" aria-controls="openRequests" aria-selected="false">Open Request</a>
+                                            <a class="nav-link" id="openRequests-tab" data-toggle="tab" href="#openRequests" role="tab" aria-controls="openRequests" aria-selected="false"><fmt:message key="label.openRequests"/></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="closedRequests-tab" data-toggle="tab" href="#closedRequests" role="tab" aria-controls="closedRequests" aria-selected="false">Closed Request</a>
+                                            <a class="nav-link" id="closedRequests-tab" data-toggle="tab" href="#closedRequests" role="tab" aria-controls="closedRequests" aria-selected="false"><fmt:message key="label.closedRequests"/></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="createRequests-tab" data-toggle="tab" href="#createRequests" role="tab" aria-controls="createRequests" aria-selected="false">Create Request</a>
+                                            <a class="nav-link" id="createRequests-tab" data-toggle="tab" href="#createRequests" role="tab" aria-controls="createRequests" aria-selected="false"><fmt:message key="label.createRequest"/></a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
@@ -190,14 +197,14 @@
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Driver</th>
-                                                    <th scope="col">Car Class</th>
-                                                    <th scope="col">Load Copacity</th>
-                                                    <th scope="col">Seats</th>
-                                                    <th scope="col">Luggage</th>
-                                                    <th scope="col">Air</th>
-                                                    <th scope="col">Navigator</th>
-                                                    <th scope="col">Status</th>
+                                                    <th scope="col"><fmt:message key="label.driver"/></th>
+                                                    <th scope="col"><fmt:message key="label.carClass"/></th>
+                                                    <th scope="col"><fmt:message key="label.loadCopacity"/></th>
+                                                    <th scope="col"><fmt:message key="label.seats"/></th>
+                                                    <th scope="col"><fmt:message key="label.luggage"/></th>
+                                                    <th scope="col"><fmt:message key="label.air"/></th>
+                                                    <th scope="col"><fmt:message key="label.navigatorInCar"/></th>
+                                                    <th scope="col"><fmt:message key="label.status.request"/></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -250,15 +257,15 @@
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Driver</th>
-                                                    <th scope="col">Car Class</th>
-                                                    <th scope="col">Load Copacity</th>
-                                                    <th scope="col">Seats</th>
-                                                    <th scope="col">Luggage</th>
-                                                    <th scope="col">Air</th>
-                                                    <th scope="col">Navigator</th>
-                                                    <th scope="col">List Car</th>
-                                                    <th scope="col">Approve</th>
+                                                    <th scope="col"><fmt:message key="label.driver"/></th>
+                                                    <th scope="col"><fmt:message key="label.carClass"/></th>
+                                                    <th scope="col"><fmt:message key="label.loadCopacity"/></th>
+                                                    <th scope="col"><fmt:message key="label.seats"/></th>
+                                                    <th scope="col"><fmt:message key="label.luggage"/></th>
+                                                    <th scope="col"><fmt:message key="label.air"/></th>
+                                                    <th scope="col"><fmt:message key="label.navigatorInCar"/></th>
+                                                    <th scope="col"><fmt:message key="label.listCar"/></th>
+                                                    <th scope="col"><fmt:message key="label.actionApprove"/></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -300,7 +307,7 @@
                                                         <td style="padding: 10px"><input type="checkbox" <%=navigator%> disabled></td>
                                                         <td style="padding: 10px">
                                                             <select name="carValueId" required>
-                                                                <option selected disabled="disabled">Choose car</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.chooseCar"/></option>
                                                                 <%
                                                                     if (carsListForRequest != null) {
                                                                         for (Car car : carsListForRequest) {
@@ -314,27 +321,27 @@
                                                                 %>
                                                             </select>
                                                         </td>
-                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success">APPROVE</button></td>
+                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success"><fmt:message key="label.approve"/></button></td>
                                                     </tr>
                                                     <tr>
                                                         <td  colspan="2">
-                                                            <label for="flightNumberInReq">Flight number</label>
+                                                            <label for="flightNumberInReq"><fmt:message key="label.flightNumber"/></label>
                                                             <input type="text" id="flightNumberInReq" name="numbreFlightInReq" placeholder="Flight Number" required>
                                                         </td>
                                                         <td style="padding: 10px" colspan="2">
-                                                            <label for="startDateInReq">Start date</label>
+                                                            <label for="startDateInReq"><fmt:message key="label.startDateIn"/></label>
                                                             <input type="date" id="startDateInReq" name="startDateInReq" placeholder="Start date" required>
                                                         </td>
                                                         <td style="padding: 10px">
-                                                            <label for="startTimeInReq">Start Time</label>
+                                                            <label for="startTimeInReq"><fmt:message key="label.startTimeIn"/></label>
                                                             <input type="time" id="startTimeInReq" name="startTimeInReq" placeholder="Start time" required>
                                                         </td>
                                                         <td style="padding: 10px" colspan="2">
-                                                            <label for="endDateInReq">End date</label>
+                                                            <label for="endDateInReq"><fmt:message key="label.endDateIn"/></label>
                                                             <input type="date" id="endDateInReq" name="endDateInReq" placeholder="End date" required>
                                                         </td>
                                                         <td style="padding: 10px">
-                                                            <label for="endTimeInReq">End Time</label>
+                                                            <label for="endTimeInReq"><fmt:message key="label.endTimeIn"/></label>
                                                             <input type="time" id="endTimeInReq" name="endTimeInReq" placeholder="End time" required>
                                                         </td>
                                                     </tr>
@@ -354,14 +361,14 @@
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Driver</th>
-                                                    <th scope="col">Car Class</th>
-                                                    <th scope="col">Load Copacity</th>
-                                                    <th scope="col">Seats</th>
-                                                    <th scope="col">Luggage</th>
-                                                    <th scope="col">Air</th>
-                                                    <th scope="col">Navigator</th>
-                                                    <th scope="col">Status</th>
+                                                    <th scope="col"><fmt:message key="label.driver"/></th>
+                                                    <th scope="col"><fmt:message key="label.carClass"/></th>
+                                                    <th scope="col"><fmt:message key="label.loadCopacity"/></th>
+                                                    <th scope="col"><fmt:message key="label.seats"/></th>
+                                                    <th scope="col"><fmt:message key="label.luggage"/></th>
+                                                    <th scope="col"><fmt:message key="label.air"/></th>
+                                                    <th scope="col"><fmt:message key="label.navigatorInCar"/></th>
+                                                    <th scope="col"><fmt:message key="label.status.request"/></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -413,13 +420,13 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th scope="col">Driver</th>
-                                                    <th scope="col">Car Class</th>
-                                                    <th scope="col">Load Copacity</th>
-                                                    <th scope="col">Seats</th>
-                                                    <th scope="col">Luggage</th>
-                                                    <th scope="col">Air</th>
-                                                    <th scope="col">Navigator</th>
+                                                    <th scope="col"><fmt:message key="label.driver"/></th>
+                                                    <th scope="col"><fmt:message key="label.carClass"/></th>
+                                                    <th scope="col"><fmt:message key="label.loadCopacity"/></th>
+                                                    <th scope="col"><fmt:message key="label.seats"/></th>
+                                                    <th scope="col"><fmt:message key="label.luggage"/></th>
+                                                    <th scope="col"><fmt:message key="label.air"/></th>
+                                                    <th scope="col"><fmt:message key="label.navigatorInCar"/></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -429,7 +436,7 @@
                                                         <input type="hidden" name="token" value="<%=token%>">
                                                         <td style="padding: 10px">
                                                             <select name="freeDriversId" required>
-                                                                <option selected disabled="disabled">Choose driver</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.chooseDriver"/></option>
                                                                 <%
                                                                     if (freeDrivers != null) {
                                                                         for (User driver : freeDrivers) {
@@ -445,7 +452,7 @@
                                                         </td>
                                                         <td style="padding: 10px">
                                                             <select name="carClassForRequest" required>
-                                                                <option selected disabled="disabled">Choose carClass</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.chooseCarClass"/></option>
                                                                 <%
                                                                     if (carClassList != null) {
                                                                         for (CarClass carClass : carClassList) {
@@ -459,12 +466,12 @@
                                                                 %>
                                                             </select>
                                                         </td>
-                                                        <td style="padding: 10px"><input type="text" placeholder="LoadCapacity" name="loadCapacityForRequest" required></td>
-                                                        <td style="padding: 10px"><input type="text" placeholder="Seats" name="seatsForRequest" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="<fmt:message key="label.loadCopacity"/>" name="loadCapacityForRequest" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="<fmt:message key="label.seats"/>" name="seatsForRequest" required></td>
                                                         <td style="padding: 10px"><input type="checkbox" name="luggageCompartmentForRequest"></td>
                                                         <td style="padding: 10px"><input type="checkbox" name="airConditioningForRequest"></td>
                                                         <td style="padding: 10px"><input type="checkbox" name="navigatorForRequest"></td>
-                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success">Add New request</button></td>
+                                                        <td style="padding: 10px" rowspan="2"><button class="btn btn-success"><fmt:message key="label.addNewRequest"/></button></td>
                                                     </tr>
                                                 </form>
                                                 </tbody>
@@ -487,10 +494,10 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">FIRST NAME</th>
-                            <th scope="col">LAST NAME</th>
-                            <th scope="col">PHONE NUMBER</th>
-                            <th scope="col">ACTION</th>
+                            <th scope="col"><fmt:message key="label.firstName.table"/></th>
+                            <th scope="col"><fmt:message key="label.lastName.table"/></th>
+                            <th scope="col"><fmt:message key="label.phoneNumber.table"/></th>
+                            <th scope="col"><fmt:message key="label.actionWithUser"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -508,7 +515,7 @@
                                 <form method="post" action="deleteUser">
                                     <input type="hidden" name="token" value="<%=token%>">
                                     <input type="hidden" name="idDriver" value="<%=driver.getId()%>">
-                                    <input type="submit" class="btn btn-danger" value="DELETE">
+                                    <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
                                 </form>
                             </td>
                         </tr>
@@ -527,7 +534,7 @@
                             <div class="card-header" id="headingCreateNewDispatcher">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCreateNewDispatcher" aria-expanded="true"
-                                            aria-controls="collapseCreateNewDispatcher">Add dispatcher
+                                            aria-controls="collapseCreateNewDispatcher"><fmt:message key="label.addDispatcher"/>
                                     </button>
                                 </h2>
                             </div>
@@ -536,15 +543,15 @@
                                 <div class="card-body">
                                     <form method="post" action="createDispatcher">
                                         <input type="hidden" name="token" value="<%=token%>">
-                                        <label for="firstNameDispatcher">First name</label>
+                                        <label for="firstNameDispatcher"><fmt:message key="label.firstName.forCreate"/></label>
                                         <input id="firstNameDispatcher" name="firstNameDispatcher">
-                                        <label for="lastNameDispatcher">Last name</label>
+                                        <label for="lastNameDispatcher"><fmt:message key="label.lastName.forCerate"/></label>
                                         <input id="lastNameDispatcher" name="lastNameDispatcher">
-                                        <label for="phoneNumberDispatcher">Phone number</label>
+                                        <label for="phoneNumberDispatcher"><fmt:message key="label.phoneNumber.forCreate"/></label>
                                         <input id="phoneNumberDispatcher" name="phoneNumberDispatcher">
-                                        <label for="passwordDispatcher">Password</label>
+                                        <label for="passwordDispatcher"><fmt:message key="label.password.forCreate"/></label>
                                         <input id="passwordDispatcher" name="passwordDispatcher">
-                                        <input type="submit" class="btn btn-success">
+                                        <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
                                     </form>
                                 </div>
                             </div>
@@ -560,10 +567,10 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">FIRST NAME</th>
-                            <th scope="col">LAST NAME</th>
-                            <th scope="col">PHONE NUMBER</th>
-                            <th scope="col">ACTION</th>
+                            <th scope="col"><fmt:message key="label.firstName.table"/></th>
+                            <th scope="col"><fmt:message key="label.lastName.table"/></th>
+                            <th scope="col"><fmt:message key="label.phoneNumber.table"/></th>
+                            <th scope="col"><fmt:message key="label.actionWithUser"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -581,7 +588,7 @@
                                 <form method="post" action="deleteUser">
                                     <input type="hidden" name="token" value="<%=token%>">
                                     <input type="hidden" name="idDriver" value="<%=driver.getId()%>">
-                                    <input type="submit" class="btn btn-danger" value="DELETE">
+                                    <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
                                 </form>
                             </td>
                         </tr>
@@ -600,7 +607,7 @@
                             <div class="card-header" id="headingCreateNewUser">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCreateNewUser" aria-expanded="true"
-                                            aria-controls="collapseCreateNewUser">add driver
+                                            aria-controls="collapseCreateNewUser"><fmt:message key="label.addDriver"/>
                                     </button>
                                 </h2>
                             </div>
@@ -613,27 +620,27 @@
                                             <tbody>
                                             <tr>
                                                 <td style="padding: 10px">
-                                                    <label for="firstNameDriver">First name</label>
+                                                    <label for="firstNameDriver"><fmt:message key="label.firstName.forCreate"/></label>
                                                     <input id="firstNameDriver" name="firstNameDriver">
                                                 </td>
                                                 <td style="padding: 10px">
-                                                    <label for="lastNameDriver">Last name</label>
+                                                    <label for="lastNameDriver"><fmt:message key="label.lastName.forCerate"/></label>
                                                     <input id="lastNameDriver" name="lastNameDriver">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="padding: 10px">
-                                                    <label for="phoneNumberDriver">Phone number</label>
+                                                    <label for="phoneNumberDriver"><fmt:message key="label.phoneNumber.forCreate"/></label>
                                                     <input id="phoneNumberDriver" name="phoneNumberDriver">
                                                 </td>
                                                 <td style="padding: 10px">
-                                                    <label for="passwordDriver">Password</label>
+                                                    <label for="passwordDriver"><fmt:message key="label.password.forCreate"/></label>
                                                     <input id="passwordDriver" name="passwordDriver">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" style="padding: 10px">
-                                                    <input type="submit" class="btn btn-success" value="Add">
+                                                    <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -653,16 +660,16 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Car Brand</th>
-                            <th scope="col">Car Class</th>
-                            <th scope="col">Car Number</th>
-                            <th scope="col">Load Capacity</th>
-                            <th scope="col">Seats</th>
-                            <th scope="col">Luggage Compartment</th>
-                            <th scope="col">Air Conditioning</th>
-                            <th scope="col">Navigator</th>
-                            <th scope="col">Car Technical Status</th>
-                            <th scope="col">Car Status</th>
+                            <th scope="col"><fmt:message key="label.carBrand"/></th>
+                            <th scope="col"><fmt:message key="label.carClass"/></th>
+                            <th scope="col"><fmt:message key="label.carNumber"/></th>
+                            <th scope="col"><fmt:message key="label.loadCopacity"/></th>
+                            <th scope="col"><fmt:message key="label.seats"/></th>
+                            <th scope="col"><fmt:message key="label.luggageCompartment"/></th>
+                            <th scope="col"><fmt:message key="label.airConditioning"/></th>
+                            <th scope="col"><fmt:message key="label.navigatorInCar"/></th>
+                            <th scope="col"><fmt:message key="label.carTechnicalStatus"/></th>
+                            <th scope="col"><fmt:message key="label.carStatus"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -770,15 +777,15 @@
                             <div class="card-header" id="headingCarAndBrand">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCarAndBrand" aria-expanded="false"
-                                            aria-controls="collapseCarAndBrand">Add car
+                                            aria-controls="collapseCarAndBrand"><fmt:message key="label.addCar"/>
                                     </button>
                                 </h2>
                             </div>
                             <div id="collapseCarAndBrand" class="collapse" aria-labelledby="headingCarAndBrand" data-parent="#accordionExampleCarAndBrand">
                                 <div class="card-body">
                                     <ul class="nav nav-tabs" id="myTabCar" role="tablist">
-                                        <li class="nav-item"><a class="nav-link active" id="addNewCar-tab" data-toggle="tab" href="#addNewCar" role="tab" aria-controls="addNewCar" aria-selected="true">Add car</a></li>
-                                        <li class="nav-item"><a class="nav-link" id="addNewCarBrand-tab" data-toggle="tab" href="#addNewCarBrand" role="tab" aria-controls="addNewCarBrand" aria-selected="false">Add car Brand</a></li>
+                                        <li class="nav-item"><a class="nav-link active" id="addNewCar-tab" data-toggle="tab" href="#addNewCar" role="tab" aria-controls="addNewCar" aria-selected="true"><fmt:message key="label.addCar"/></a></li>
+                                        <li class="nav-item"><a class="nav-link" id="addNewCarBrand-tab" data-toggle="tab" href="#addNewCarBrand" role="tab" aria-controls="addNewCarBrand" aria-selected="false"><fmt:message key="label.addCarBrand"/></a></li>
                                     </ul>
                                     <div class="tab-content" id="myTabContentCar">
                                         <div class="tab-pane fade show active" id="addNewCar" role="tabpanel" aria-labelledby="home-tab">
@@ -789,7 +796,7 @@
                                                     <tr>
                                                         <td style="padding: 10px">
                                                             <select name="carBrandId" required>
-                                                                <option selected disabled="disabled">Choose brand</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.chooseBrand"/></option>
                                                                 <%
                                                                     if (carBrandList != null) {
                                                                         for (CarBrand carBrand : carBrandList) {
@@ -803,7 +810,7 @@
                                                         </td>
                                                         <td style="padding: 10px">
                                                             <select name="carClassValue" required>
-                                                                <option selected disabled="disabled">Choose Class</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.chooseCarClass"/></option>
                                                                 <%
 
                                                                     if (carClassList != null) {
@@ -818,7 +825,7 @@
                                                         </td>
                                                         <td style="padding: 10px">
                                                             <select name="carTechnicalStatusValue" required>
-                                                                <option selected disabled="disabled">Choose Techn Status</option>
+                                                                <option selected disabled="disabled"><fmt:message key="label.ChooseTechnStatus"/></option>
                                                                 <%
                                                                     if (carTechnicalStatusList != null) {
                                                                         for (CarTechnicalStatus carTechnicalStatus : carTechnicalStatusList) {
@@ -832,29 +839,29 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="padding: 10px"><input type="text" placeholder="Car Number" name="carNumber" required></td>
-                                                        <td style="padding: 10px"><input type="text" placeholder="Load Capacity" name="loadCapacity" required></td>
-                                                        <td style="padding: 10px"><input type="text" placeholder="Seats" name="seats" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="<fmt:message key="label.carNumber"/>" name="carNumber" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="<fmt:message key="label.loadCopacity"/>" name="loadCapacity" required></td>
+                                                        <td style="padding: 10px"><input type="text" placeholder="<fmt:message key="label.seats"/>" name="seats" required></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding: 10px">
-                                                            <label for="luggageCompartment">Luggage Compartment
+                                                            <label for="luggageCompartment"><fmt:message key="label.luggageCompartment"/>
                                                                 <input type="checkbox" placeholder="Car Number" id="luggageCompartment" name="luggageCompartment">
                                                             </label>
                                                         </td>
                                                         <td style="padding: 10px">
-                                                            <label for="airConditioning">Air Conditioning
+                                                            <label for="airConditioning"><fmt:message key="label.airConditioning"/>
                                                                 <input type="checkbox" placeholder="Load Capacity" id="airConditioning" name="airConditioning">
                                                             </label>
                                                         </td>
                                                         <td style="padding: 10px">
-                                                            <label for="navigator">Navigator
+                                                            <label for="navigator"><fmt:message key="label.navigatorInCar"/>
                                                                 <input type="checkbox" placeholder="Seats" id="navigator" name="navigator">
                                                             </label>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="3" style="padding: 10px"><input class="btn btn-success" type="submit" value="ADD"></td>
+                                                        <td colspan="3" style="padding: 10px"><input class="btn btn-success" type="submit" value="<fmt:message key="label.addCar"/>"></td>
                                                     </tr>
                                                 </form>
                                                 </tbody>
@@ -877,7 +884,7 @@
                                                                 <form method="post" action="deleteCarBrand">
                                                                     <input type="hidden" name="token" value="<%=token%>">
                                                                     <input type="hidden" value="<%=carBrand.getId()%>" name="carBrandId">
-                                                                    <input type="submit" value="delete" class="btn btn-danger">
+                                                                    <input type="submit" value="<fmt:message key="label.deleteUser"/>" class="btn btn-danger">
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -896,13 +903,13 @@
                                                             <input type="hidden" name="token" value="<%=token%>">
                                                             <tr>
                                                                 <td style="padding: 10px">
-                                                                    <label for="carBrandName">Car Brand Name</label>
+                                                                    <label for="carBrandName"><fmt:message key="label.carBrandName"/></label>
                                                                     <input type="text" id="carBrandName" name="carBrandName">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px">
-                                                                    <input class="btn btn-success" type="submit" value="AddNewBrand">
+                                                                    <input class="btn btn-success" type="submit" value="<fmt:message key="label.addCarBrand"/>">
                                                                 </td>
                                                             </tr>
                                                         </form>

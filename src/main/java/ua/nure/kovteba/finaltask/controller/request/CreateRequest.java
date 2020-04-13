@@ -30,9 +30,9 @@ public class CreateRequest extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         requestDAO = new RequestDAOImpl();
         userDAO = new UserDAOImpl();
-        super.init(config);
     }
 
     @Override
