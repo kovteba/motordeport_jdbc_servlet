@@ -39,6 +39,11 @@ public class Index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        System.out.println(req.getSession().getAttribute("i18n"));
+        if (req.getSession().getAttribute("i18n") == null){
+            req.getSession().setAttribute("i18n", "MessagesBundle_en_US");
+        }
+
         //flights and requests section
         req.setAttribute("flightsList", flightDAO.getAllFlight());
 
