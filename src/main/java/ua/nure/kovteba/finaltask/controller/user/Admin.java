@@ -64,6 +64,7 @@ public class Admin extends HttpServlet {
 
         //get token from HTML
         String tokenFromHTML = req.getParameter("token");
+
         Token token = tokenDAO.getTokenByToken(tokenFromHTML);
         if (token != null && userDAO.getUserById(token.getUser()).getRole().getRoleValue().equals("ADMIN")) {
             LOG.info(this.getClass() + "\n Token value --> " + tokenFromHTML);
@@ -98,7 +99,9 @@ public class Admin extends HttpServlet {
             req.setAttribute("flightsList", flightDAO.getAllFlight());
             //set requests with status OPEN
             req.setAttribute("requestsListOpen", requestDAO.getAllRequestByStatus(RequestStatus.OPEN));
+            //set requests all
             req.setAttribute("requestsListAll", requestDAO.getAllRequest());
+            //set requests with status CLOSED
             req.setAttribute("requestsListClosed", requestDAO.getAllRequestByStatus(RequestStatus.CLOSED));
 
             //set car with status FREE
@@ -127,14 +130,11 @@ public class Admin extends HttpServlet {
                     "/WEB-INF/templates/adminPage.jsp");
             dispatcher.forward(req, resp);
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher(
-                    "/WEB-INF/templates/index.jsp");
-            dispatcher.forward(req, resp);
+            resp.sendRedirect("");
         }
 
 
     }
-
 
     private HttpServletRequest chooseTab(HttpServletRequest request,
                                          String flightShow, String dispatcherShow, String driversShow, String carsShow,
@@ -149,5 +149,4 @@ public class Admin extends HttpServlet {
         request.setAttribute("carBtn", carBtn);
         return request;
     }
-
 }

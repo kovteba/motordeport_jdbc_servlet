@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 public class Index extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(Index.class.getName());
+    private static Logger log = Logger.getLogger(Index.class.getName());
 
     private static UserDAOImpl userDAO;
     private static TokenDAOImpl tokenDAO;
@@ -39,17 +40,22 @@ public class Index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println(req.getSession().getAttribute("i18n"));
+
+
+        log.info("doGet " + this.getClass() + "...");
+
+        //install default i18n with value US
         if (req.getSession().getAttribute("i18n") == null){
             req.getSession().setAttribute("i18n", "MessagesBundle_en_US");
         }
 
-        //flights and requests section
+        //set flights list
         req.setAttribute("flightsList", flightDAO.getAllFlight());
 
-        System.out.println("FROM INDEX");
         //set token
         req.setAttribute("token", "null");
+
+        //open index page
         RequestDispatcher dispatcher = req.getRequestDispatcher(
                 "/WEB-INF/templates/index.jsp");
         dispatcher.forward(req, resp);
@@ -60,15 +66,17 @@ public class Index extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("FROM INDEX POST");
+        log.info("doPost " + this.getClass() + "...");
 
+        //get value "phoneNumber", "password" from logIn from
         String phoneNumber = req.getParameter("phoneNumber");
         String password = req.getParameter("password");
 
-        String token = null;
+        //find user by phone
         User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
-
+        String token = null;
         if (user != null){
+            log.info("User with phoneNumber --> " + phoneNumber + "found successfully!");
             if (user.getPassword().equals(password)) {
                 token = tokenDAO.createToken(user.getId());
                 String role = user.getRole().getRoleValue();
@@ -82,13 +90,14 @@ public class Index extends HttpServlet {
             }
         } else {
             resp.setHeader("user", "user with phone number dont find");
-            LOG.info("User with --> " + phoneNumber +" dont find.");
+            log.warning("User with --> " + phoneNumber +" dont found!!");
+//
+//            String i18n = String.valueOf(req.getSession().getAttribute("i18n"));
+//            ResourceBundle messages = ResourceBundle.getBundle(i18n);
+//            req.getSession().setAttribute("user", messages.getString("wrongNumberOrPassword"));
+
+            resp.sendRedirect("");
         }
 
-
-
-
     }
-
-
 }

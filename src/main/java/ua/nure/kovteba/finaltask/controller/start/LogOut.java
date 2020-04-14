@@ -33,8 +33,7 @@ public class LogOut extends HttpServlet {
         tokenDAO.deleteTokenByToken(token);
         token = null;
 
-
         req.setAttribute("token", null);
-        resp.sendRedirect("index?token=" + token);
+        resp.sendRedirect("?token=" + token);
     }
 }

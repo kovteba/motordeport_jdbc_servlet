@@ -18,6 +18,9 @@
 <div class="container-fluid html perent">
   <%String token = (String) request.getAttribute("token");%>
   <input type="hidden" name="token" id="token" value="<%=token%>">
+
+  <input type="hidden" name="pageName" value="admin">
+
   <%--CHOOSE ACTIVE TAB--%>
   <%String flightShow = (String) request.getAttribute("flightShow");%>
   <%String dispatcherShow = (String) request.getAttribute("dispatcherShow");%>
@@ -31,29 +34,57 @@
 
   <div class="row header">
     <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
-
-    <div class="col-md-4 time">TIME
-      <form method="post" action="ru">
-        <input type="hidden" name="token" value="<%=token%>">
-        <input style="width: 50px" type="image" src="webresources/img/ru.png" alt="ОК">
-      </form>
-      <form method="post" action="ua">
-        <input type="hidden" name="token" value="<%=token%>">
-        <input style="width: 50px" type="image" src="webresources/img/ua.png" alt="ОК">
-      </form>
-      <form method="post" action="us">
-        <input type="hidden" name="token" value="<%=token%>">
-        <input style="width: 50px" type="image" src="webresources/img/usa.png" alt="ОК">
-      </form>
+    <div class="col-md-4 time">
+      <span id="time" style="color: white">00:00:00</span>
     </div>
-
-    <div class="col-md-4 logIn" id="logIn">LOG IN</div>
-
-    <div class="col-md-4 logIn" id="logOut">
-      <form method="post" action="logOut">
+    <div class="col-md-4">
+      <form method="post" action="logOut" id="logOut">
         <input type="hidden" name="token" value="<%=token%>">
         <input type="submit" value="log out">
       </form>
+      <div class="container changeLanguage navBox">
+        <div class="box">
+          <div>
+            <form method="post" action="ru">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
+              <input style="height: 20px" type="image" src="webresources/img/ru.png" alt="ОК">
+            </form>
+          </div>
+          <div>
+            <form method="post" action="ua">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
+              <input style="height: 20px" type="image" src="webresources/img/ua.png" alt="ОК">
+            </form>
+          </div>
+          <div>
+            <form method="post" action="us">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
+              <input style="height: 20px" type="image" src="webresources/img/usa.png" alt="ОК">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="navbar logIn" id="logIn">
+        <div data-toggle="dropdown" class="navBox">
+          <div><fmt:message key="label.logIn"/></div>
+        </div>
+        <form method="post" class="dropdown-menu">
+          <div class="col-md-12">
+            <div class="row phoneNumber">
+              <input type="text" class="phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+            </div>
+            <div class="row password">
+              <input type="password" class="password" id="password" name="password" placeholder="Password">
+            </div>
+            <button type="submit" id="logInBtn" class="logInBtn btn btn-success">
+              <fmt:message key="label.logIn"/>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
   </div>
@@ -63,7 +94,7 @@
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link <%=flightBtn%>> btn-light" id="v-pills-flights-tab" data-toggle="pill"
            href="#v-pills-flights" role="tab" aria-controls="v-pills-flights" aria-selected="true">
-          <fmt:message key="label.requests"/>
+          <fmt:message key="label.flights"/>
         </a>
         <a class="nav-link <%=dispatcherBtn%> btn-light" id="v-pills-dispatchers-tab" data-toggle="pill"
            href="#v-pills-dispatchers" role="tab" aria-controls="v-pills-dispatchers" aria-selected="false">

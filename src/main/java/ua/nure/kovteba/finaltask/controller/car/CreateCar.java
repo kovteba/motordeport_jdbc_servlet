@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.LinkOption;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -25,7 +24,7 @@ import java.util.logging.Logger;
 public class CreateCar extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(Admin.class.getName());
+    private static Logger log = Logger.getLogger(Admin.class.getName());
 
     private static CarDAOImpl carDAO;
     private static CarBrandDAOImpl carBrandDAO;
@@ -40,7 +39,7 @@ public class CreateCar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LOG.info("Create Car doPost .....");
+        log.info("Create Car doPost .....");
         Car car = new Car();
         car.setCarBrand(carBrandDAO.getCarBrandById(Long.valueOf(req.getParameter("carBrandId"))));
         car.setCarClass(CarClass.findCarClass(req.getParameter("carClassValue")));
@@ -65,11 +64,10 @@ public class CreateCar extends HttpServlet {
         car.setSeats(Integer.parseInt(req.getParameter("seats")));
         car.setCarStatus(CarStatus.FREE);
         //add new car
-        LOG.info("Add new car --> " + car.toString());
+        log.info("Add new car --> " + car.toString());
         carDAO.createCar(car);
 
         String token = req.getParameter("token");
-        System.out.println("DRIVER : " + token);
         resp.sendRedirect("admin?token=" + token + "&value=CAR");
     }
 }

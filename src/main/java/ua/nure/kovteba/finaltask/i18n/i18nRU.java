@@ -17,10 +17,11 @@ public class i18nRU extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String token = req.getParameter("token");
+        String pageName = req.getParameter("pageName");
 
         req.getSession().setAttribute("i18n", "MessagesBundle_ru_RU");
 
-        resp.sendRedirect("admin?token=" + token);
+        resp.sendRedirect(pageName + "?token=" + token);
 
     }
 

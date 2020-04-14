@@ -15,9 +15,9 @@ public class i18nUA extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
+        String pageName = req.getParameter("pageName");
 
         req.getSession().setAttribute("i18n", "MessagesBundle_ua_UA");
 
-        resp.sendRedirect("admin?token=" + token);
-    }
+        resp.sendRedirect(pageName + "?token=" + token);    }
 }
