@@ -16,7 +16,11 @@
 <body>
 <!--parent container-->
 <div class="container-fluid html perent">
+  <%String token = (String) request.getAttribute("token");%>
+  <input type="hidden" name="token" id="token" value="<%=token%>">
+
   <input type="hidden" name="pageName" value="admin">
+
   <%--CHOOSE ACTIVE TAB--%>
   <%String flightShow = (String) request.getAttribute("flightShow");%>
   <%String dispatcherShow = (String) request.getAttribute("dispatcherShow");%>
@@ -34,35 +38,40 @@
       <span id="time" style="color: white">00:00:00</span>
     </div>
     <div class="col-md-4">
+      <form method="post" action="logOut" id="logOut">
+        <input type="hidden" name="token" value="<%=token%>">
+        <input type="submit" value="log out">
+      </form>
       <div class="container changeLanguage navBox">
         <div class="box">
           <div>
             <form method="post" action="ru">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
               <input style="height: 20px" type="image" src="webresources/img/ru.png" alt="ОК">
             </form>
           </div>
           <div>
             <form method="post" action="ua">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
               <input style="height: 20px" type="image" src="webresources/img/ua.png" alt="ОК">
             </form>
           </div>
           <div>
             <form method="post" action="us">
+              <input type="hidden" name="pageName" value="admin">
+              <input type="hidden" name="token" value="<%=token%>">
               <input style="height: 20px" type="image" src="webresources/img/usa.png" alt="ОК">
             </form>
           </div>
         </div>
       </div>
-      <div id="logOut" class="logOut">
-        <form method="post" action="logOut">
-          <input type="submit" value="<fmt:message key="label.logOut"/>">
-        </form>
-      </div>
       <div class="navbar logIn" id="logIn">
         <div data-toggle="dropdown" class="navBox">
           <div><fmt:message key="label.logIn"/></div>
         </div>
-        <form method="post" class="dropdown-menu" accept-charset="ISO-8859-1">
+        <form method="post" class="dropdown-menu">
           <div class="col-md-12">
             <div class="row phoneNumber">
               <input type="text" class="phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
@@ -281,9 +290,10 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${requestScope.requestsListOpen}" var="requestsListOpen" varStatus="counter">
-                          <form action="createFlight" method="post" accept-charset="ISO-8859-1">
+                          <form action="createFlight" method="post">
                             <tr>
                               <input type="hidden" name="idRequest" value="${requestsListOpen.id}">
+                              <input type="hidden" name="token" value="<%=token%>">
                               <input type="hidden" name="idDriverInReq" value="${requestsListOpen.driver.id}">
                               <th rowspan="2">${counter.count}</th>
                               <td>${requestsListOpen.driver.lastName}</td>
@@ -430,8 +440,9 @@
                         </thead>
                         <tbody>
 
-                        <form action="createRequest" method="post" accept-charset="ISO-8859-1">
+                        <form action="createRequest" method="post">
                           <tr>
+                            <input type="hidden" name="token" value="<%=token%>">
                             <td style="padding: 10px">
                               <select name="freeDriversId" required>
                                 <option selected disabled="disabled"><fmt:message key="label.chooseDriver"/></option>
@@ -502,8 +513,9 @@
                 <td>${dispatcherList.lastName}</td>
                 <td>${dispatcherList.phoneNumber}</td>
                 <td>
-                  <form method="post" action="deleteUser" accept-charset="ISO-8859-1">
-                    <input type="hidden" name="idUserForDelete" value="${dispatcherList.id}">
+                  <form method="post" action="deleteUser">
+                    <input type="hidden" name="token" value="<%=token%>">
+                    <input type="hidden" name="idDriver" value="${dispatcherList.id}">
                     <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
                   </form>
                 </td>
@@ -529,7 +541,8 @@
                    aria-labelledby="headingCreateNewDispatcher"
                    data-parent="#accordionExampleCreateNewDispatcher">
                 <div class="card-body">
-                  <form method="post" action="createDispatcher" accept-charset="ISO-8859-1">
+                  <form method="post" action="createDispatcher">
+                    <input type="hidden" name="token" value="<%=token%>">
                     <label for="firstNameDispatcher"><fmt:message key="label.firstName.forCreate"/></label>
                     <input id="firstNameDispatcher" name="firstNameDispatcher">
                     <label for="lastNameDispatcher"><fmt:message key="label.lastName.forCerate"/></label>
@@ -569,8 +582,9 @@
                 <td>${driverList.lastName}</td>
                 <td>${driverList.phoneNumber}</td>
                 <td>
-                  <form method="post" action="deleteUser" accept-charset="ISO-8859-1">
-                    <input type="hidden" name="idUserForDelete" value="${driverList.id}">
+                  <form method="post" action="deleteUser">
+                    <input type="hidden" name="token" value="<%=token%>">
+                    <input type="hidden" name="idDriver" value="${driverList.id}">
                     <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
                   </form>
                 </td>
@@ -595,7 +609,8 @@
                    data-parent="#accordionExampleCreateNewUser">
                 <div class="card-body">
                   <table class="table table-bordered">
-                    <form method="post" action="createDriver" accept-charset="ISO-8859-1">
+                    <form method="post" action="createDriver">
+                      <input type="hidden" name="token" value="<%=token%>">
                       <tbody>
                       <tr>
                         <td style="padding: 10px">
@@ -693,7 +708,8 @@
                     <ul class="dropdown-menu">
                       <c:forEach items="${requestScope.carTechnicalStatusList}" var="carTechnicalStatusList">
                         <li>
-                          <form action="changeTechnicalStatus" method="post" class="navBox" accept-charset="ISO-8859-1">
+                          <form action="changeTechnicalStatus" method="post" class="navBox">
+                            <input type="hidden" name="token" value="<%=token%>">
                             <input type="hidden" value="${carsList.id}" name="carId">
                             <input class="dropdown-item" type="submit" name="technicalValue"
                                    value="${carTechnicalStatusList.carTechnicalStatusValue}">
@@ -711,7 +727,8 @@
                     <ul class="dropdown-menu">
                       <c:forEach items="${requestScope.carStatus}" var="carStatus">
                         <li>
-                          <form action="changeStatus" method="post" class="navBox" accept-charset="ISO-8859-1">
+                          <form action="changeStatus" method="post" class="navBox">
+                            <input type="hidden" name="token" value="<%=token%>">
                             <input type="hidden" value="${carsList.id}" name="carId">
                             <input class="dropdown-item" type="submit" name="carStatusValue"
                                    value="${carStatus.carStatusValue}">
@@ -761,7 +778,8 @@
                       <%---------------START BLOCK CREATE NEW CAR--------------------%>
                       <table class="table table-bordered">
                         <tbody>
-                        <form action="createCar" method="post" accept-charset="ISO-8859-1">
+                        <form action="createCar" method="post">
+                          <input type="hidden" name="token" value="<%=token%>">
                           <tr>
                             <td style="padding: 10px">
                               <select name="carBrandId" required>
@@ -840,7 +858,8 @@
                               <tr>
                                 <td>${carBrandList.brandName}</td>
                                 <td>
-                                  <form method="post" action="deleteCarBrand" accept-charset="ISO-8859-1">
+                                  <form method="post" action="deleteCarBrand">
+                                    <input type="hidden" name="token" value="<%=token%>">
                                     <input type="hidden" value="${carBrandList.id}" name="carBrandId">
                                     <input type="submit" value="<fmt:message key="label.deleteUser"/>"
                                            class="btn btn-danger">
@@ -851,10 +870,12 @@
                           </table>
                           <%--------------END BLOCK SHOW ALL CAR BRAND--------------%>
                         </div>
+
                         <div class="col-md-6">
                           <%--------------START BLOCK ADD NEW CAR BRAND--------------%>
                           <table class="table table-bordered">
-                            <form method="post" action="createCarBrand" accept-charset="ISO-8859-1">
+                            <form method="post" action="createCarBrand">
+                              <input type="hidden" name="token" value="<%=token%>">
                               <tr>
                                 <td style="padding: 10px">
                                   <label for="carBrandName"><fmt:message key="label.carBrandName"/></label>

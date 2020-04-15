@@ -1,3 +1,6 @@
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+
+
 <%--<%@ page import="ua.nure.kovteba.finaltask.entity.User" %>--%>
 <%--<%@ page import="ua.nure.kovteba.finaltask.entity.Flight" %>--%>
 <%--<%@ page import="ua.nure.kovteba.finaltask.entity.Request" %>--%>

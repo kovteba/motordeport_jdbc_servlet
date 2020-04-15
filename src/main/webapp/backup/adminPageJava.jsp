@@ -15,11 +15,11 @@
 <head>
     <meta charset="UTF-8">
     <title>ADMIN PAGE</title>
-    <link type="text/css" rel="stylesheet" href="webresources/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-grid.css">
-    <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-reboot.css">
-    <link type="text/css" rel="stylesheet" href="webresources/css/style.css">
+    <link type="text/css" rel="stylesheet" href="../webresources/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="../webresources/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="../webresources/bootstrap/css/bootstrap-grid.css">
+    <link type="text/css" rel="stylesheet" href="../webresources/bootstrap/css/bootstrap-reboot.css">
+    <link type="text/css" rel="stylesheet" href="../webresources/css/style.css">
 </head>
 <body>
 <!--parent container-->
@@ -68,7 +68,7 @@
 
 
     <div class="row header">
-        <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
+        <div class="col-md-4"><img src="../webresources/img/logo.png" class="logo"></div>
 
         <div class="col-md-4 time">TIME</div>
 
@@ -1090,9 +1090,9 @@
         </div>
     </div>
 </div>
-<script src="webresources/jquery/jquery.js"></script>
-<script src="webresources/bootstrap/js/bootstrap.js"></script>
-<script src="webresources/bootstrap/js/bootstrap.bundle.js"></script>
-<script src="webresources/js/script.js"></script>
+<script src="../webresources/jquery/jquery.js"></script>
+<script src="../webresources/bootstrap/js/bootstrap.js"></script>
+<script src="../webresources/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../webresources/js/script.js"></script>
 </body>
 </html>

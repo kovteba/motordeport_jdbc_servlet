@@ -1,8 +1,11 @@
 package ua.nure.kovteba.finaltask.controller.carbrand;
 
-import ua.nure.kovteba.finaltask.controller.user.Admin;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
+import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.CarBrand;
+import ua.nure.kovteba.finaltask.entity.User;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,30 +23,46 @@ import java.util.logging.Logger;
 public class CreateCarBrand extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(CreateCarBrand.class.getName());
+    private static Logger log = Logger.getLogger(CreateCarBrand.class.getName());
 
     private static CarBrandDAOImpl carBrandDAO;
+    private static TokenDAO tokenDAO;
+    private static UserDAOImpl userDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         carBrandDAO = new CarBrandDAOImpl();
+        tokenDAO = new TokenDAOImpl();
+        userDAO = new UserDAOImpl();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LOG.info("doPost in createCarBrand servlet");
-        CarBrand carBrand = new CarBrand();
-        if (req.getParameter("carBrandName") != null){
-            carBrand.setBrandName(req.getParameter("carBrandName"));
-            //add new car brand in DB
-            carBrandDAO.createCarBrand(carBrand);
-        }
-        LOG.info("Add new car brand with value == " + carBrand.getBrandName());
+        String userToken = "0";
 
-        String token = req.getParameter("token");
-        LOG.info("Token --> \"" + token + "\" in " + this.getClass() + " servlet");
-        resp.sendRedirect("admin?token=" + token + "&value=CAR");
+        if (req.getSession().getAttribute("userToken") != null){
+            userToken = String.valueOf(req.getSession().getAttribute("userToken"));
+        }
+
+        log.info("user token session--> " + userToken + ", class: " + this.getClass());
+
+        User user = null;
+        if (!userToken.equals("0")){
+            user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
+
+        if (user != null && user.getRole().getRoleValue().equals("ADMIN")){
+            CarBrand carBrand = new CarBrand();
+            if (req.getParameter("carBrandName") != null){
+                carBrand.setBrandName(req.getParameter("carBrandName"));
+                //add new car brand in DB
+                carBrandDAO.createCarBrand(carBrand);
+            }
+        }
+
+        resp.sendRedirect("admin?value=CAR");
+
     }
 }

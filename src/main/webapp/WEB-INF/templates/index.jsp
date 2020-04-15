@@ -1,13 +1,9 @@
-<%@ page import="ua.nure.kovteba.finaltask.entity.User" %>
-<%@ page import="ua.nure.kovteba.finaltask.entity.Flight" %>
-<%@ page import="ua.nure.kovteba.finaltask.entity.Request" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <fmt:setBundle basename="${sessionScope.i18n}"/>
-
 
 <html lang="en">
 <head>
@@ -33,34 +29,30 @@
           <span id="time" style="color: white">00:00:00</span>
         </div>
         <div class="col-md-4">
-          <form method="post" action="logOut" id="logOut">
-            <input type="hidden" name="token" value="<%=token%>">
-            <input type="submit" value="log out">
-          </form>
           <div class="container changeLanguage navBox">
             <div class="box">
               <div>
                 <form method="post" action="ru">
-                  <input type="hidden" name="pageName" value="">
-                  <input type="hidden" name="token" value="<%=token%>">
                   <input style="height: 20px" type="image" src="webresources/img/ru.png" alt="ОК">
                 </form>
               </div>
               <div>
                 <form method="post" action="ua">
-                  <input type="hidden" name="pageName" value="">
-                  <input type="hidden" name="token" value="<%=token%>">
                   <input style="height: 20px" type="image" src="webresources/img/ua.png" alt="ОК">
                 </form>
               </div>
               <div>
                 <form method="post" action="us">
-                  <input type="hidden" name="pageName" value="">
-                  <input type="hidden" name="token" value="<%=token%>">
                   <input style="height: 20px" type="image" src="webresources/img/usa.png" alt="ОК">
                 </form>
               </div>
             </div>
+          </div>
+          <div id="logOut" class="logOut">
+            <form method="post" action="logOut">
+              <input type="hidden" name="token" value="<%=token%>">
+              <input type="submit" value="log out">
+            </form>
           </div>
           <div class="navbar logIn" id="logIn">
             <div data-toggle="dropdown" class="navBox">

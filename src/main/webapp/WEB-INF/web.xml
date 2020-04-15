@@ -17,6 +17,11 @@
 <!--        <welcome-file>index.jsp</welcome-file>-->
 <!--    </welcome-file-list>-->
 
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
+
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/webresources/*</url-pattern>

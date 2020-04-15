@@ -66,7 +66,6 @@ public class Admin extends HttpServlet {
 
         Token token = tokenDAO.getTokenByToken(userToken);
         if (token != null && userDAO.getUserById(token.getUser()).getRole().getRoleValue().equals("ADMIN")) {
-
             //choose tab for open
             String value = req.getParameter("value");
             if (value == null) {

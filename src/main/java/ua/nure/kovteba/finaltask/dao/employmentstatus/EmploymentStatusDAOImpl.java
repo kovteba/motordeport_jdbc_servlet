@@ -49,7 +49,7 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
             if (resultSet.next()) {
                 idNewEmploymentStatus = resultSet.getLong(1);
             }
-            LOG.info("New user with id == " + idNewEmploymentStatus + ", added successfully!");
+            LOG.info("New user with id == " + idNewEmploymentStatus + "in EmploymentStatus added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
             LOG.warning("Some problem in method \"createEmploymentStatus\" with idDriver == " + idDriver + ", with value--> \"" + employmentValue.getEmploymentStatusValue()

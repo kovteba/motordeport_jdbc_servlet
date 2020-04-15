@@ -2,7 +2,12 @@ package ua.nure.kovteba.finaltask.controller.car;
 
 import ua.nure.kovteba.finaltask.controller.user.Admin;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
+import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
+import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
+import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,27 +25,48 @@ import java.util.logging.Logger;
 public class ChangeCarStatus extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(Admin.class.getName());
+    private static Logger log = Logger.getLogger(Admin.class.getName());
 
     private static CarDAOImpl carDAO;
+    private static TokenDAO tokenDAO;
+    private static UserDAOImpl userDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         carDAO = new CarDAOImpl();
+        tokenDAO = new TokenDAOImpl();
+        userDAO = new UserDAOImpl();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long idCar = Long.valueOf(req.getParameter("carId"));
-        String carStatusValue = req.getParameter("carStatusValue");
-        System.out.println(idCar + carStatusValue + "!!!!!!!!!!!!!!!!!!!!!!!");
-        if (idCar != null && carStatusValue != null){
-            carDAO.changeCarStatus(idCar, CarStatus.findCarStatus(carStatusValue));
+
+        String userToken = "0";
+
+        if (req.getSession().getAttribute("userToken") != null) {
+            userToken = String.valueOf(req.getSession().getAttribute("userToken"));
         }
 
-        String token = req.getParameter("token");
-        LOG.info("Token --> \"" + token + "\" in " + this.getClass() + " servlet");
-        resp.sendRedirect("admin?token=" + token + "&value=CAR");
+        log.info("user token session--> " + userToken + ", class: " + this.getClass());
+
+        User user = null;
+        if (!userToken.equals("0")) {
+            user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
+
+        if (user != null && user.getRole().getRoleValue().equals("ADMIN")) {
+            //create new user with role "Dispatcher"
+            Long idCar = Long.valueOf(req.getParameter("carId"));
+            if (req.getParameter("carStatusValue") != null) {
+                String carStatusValue = req.getParameter("carStatusValue");
+                carDAO.changeCarStatus(idCar, CarStatus.findCarStatus(carStatusValue));
+            }
+        } else {
+            resp.sendRedirect("");
+        }
+
+        resp.sendRedirect("admin?value=CAR");
+
     }
 }

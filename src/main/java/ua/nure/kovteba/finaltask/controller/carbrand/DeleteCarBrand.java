@@ -1,6 +1,10 @@
 package ua.nure.kovteba.finaltask.controller.carbrand;
 
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
+import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
+import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
+import ua.nure.kovteba.finaltask.entity.User;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,25 +22,42 @@ import java.util.logging.Logger;
 public class DeleteCarBrand extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(DeleteCarBrand.class.getName());
+    private static Logger log = Logger.getLogger(DeleteCarBrand.class.getName());
 
     private static CarBrandDAOImpl carBrandDAO;
+    private static TokenDAO tokenDAO;
+    private static UserDAOImpl userDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         carBrandDAO = new CarBrandDAOImpl();
+        tokenDAO = new TokenDAOImpl();
+        userDAO = new UserDAOImpl();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (req.getParameter("carBrandId") != null){
-            carBrandDAO.deleteCarBrand(Long.valueOf(req.getParameter("carBrandId")));
+        String userToken = "0";
+
+        if (req.getSession().getAttribute("userToken") != null){
+            userToken = String.valueOf(req.getSession().getAttribute("userToken"));
         }
 
-        String token = req.getParameter("token");
-        LOG.info("Token --> \"" + token + "\" in " + this.getClass() + " servlet");
-        resp.sendRedirect("admin?token=" + token + "&value=CAR");
+        log.info("user token session--> " + userToken + ", class: " + this.getClass());
+
+        User user = null;
+        if (!userToken.equals("0")){
+            user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
+
+        if (user != null && user.getRole().getRoleValue().equals("ADMIN")){
+            if (req.getParameter("carBrandId") != null){
+                carBrandDAO.deleteCarBrand(Long.valueOf(req.getParameter("carBrandId")));
+            }
+        }
+
+        resp.sendRedirect("admin?value=CAR");
     }
 }

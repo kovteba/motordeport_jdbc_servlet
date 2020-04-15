@@ -13,7 +13,7 @@
     color: white;
 }
 
-.logIn {
+.logIn, .logOut{
     position: absolute;
     top: 20%;
     right: 15%;

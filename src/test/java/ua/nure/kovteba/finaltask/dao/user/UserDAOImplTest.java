@@ -28,13 +28,15 @@ class UserDAOImplTest {
     @Test
     void createUser() {
         User user = new User();
+        String firstName = dataFactory.getFirstName();
         String lastName = dataFactory.getLastName();
-        user.setFirstName(dataFactory.getFirstName());
-        user.setLastName(lastName);
-        user.setPhoneNumber("050986532541");
+        user.setFirstName("ДИМА1");
+        user.setLastName("Дима1");
+        user.setPhoneNumber("050975465541");
         user.setRole(Role.DRIVER);
         user.setPassword(lastName);
         Long idNewUser = userDAO.createUser(user);
+        System.out.println(idNewUser);
     }
 
     @Test
@@ -75,4 +77,6 @@ class UserDAOImplTest {
             System.out.println(user.toString());
         }
     }
+
+
 }
