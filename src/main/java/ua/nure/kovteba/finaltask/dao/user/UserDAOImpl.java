@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class UserDAOImpl implements UserDAO {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(UserDAOImpl.class.getName());
+    private static Logger log = Logger.getLogger(UserDAOImpl.class.getName());
 
     //set connection
     private static Connection conn = Connect.connect();
@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public Long createUser(User user) {
-        LOG.info("Create user with role --> \"" + user.getRole().getRoleValue() + "\" ....");
+        log.info("Create user with role --> \"" + user.getRole().getRoleValue() + "\" ....");
         Long idNewUser = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -57,10 +57,10 @@ public class UserDAOImpl implements UserDAO {
             if (resultSet.next()) {
                 idNewUser = resultSet.getLong(1);
             }
-            LOG.info("New user with id == " + idNewUser + ", added successfully!");
+            log.info("New user with id == " + idNewUser + ", added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"createUser\" with role --> \"" + user.getRole().getRoleValue()
+            log.warning("Some problem in method \"createUser\" with role --> \"" + user.getRole().getRoleValue()
                     + ", " + e.toString());
         }
         return idNewUser;
@@ -74,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getUserByRole(Role role) {
-        LOG.info("Find users list by role --> \"" + role.getRoleValue() + "\" ....");
+        log.info("Find users list by role --> \"" + role.getRoleValue() + "\" ....");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -93,7 +93,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getUserByRole\" with role --> \"" + role.getRoleValue()
+            log.warning("Some problem in method \"getUserByRole\" with role --> \"" + role.getRoleValue()
                     + "\", " + e.toString());
         }
         //return all users by role
@@ -106,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserById(Long id) {
-        LOG.info("Find user by id == " + id + " ....");
+        log.info("Find user by id == " + id + " ....");
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -123,7 +123,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getUserById\" with id == " + id + ", " + e.toString());
+            log.warning("Some problem in method \"getUserById\" with id == " + id + ", " + e.toString());
         }
         //return user by id
         return user;
@@ -135,7 +135,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserByUserPhoneNumber(String phoneNumber) {
-        LOG.info("Find user by phone number --> " + phoneNumber + " ....");
+        log.info("Find user by phone number --> " + phoneNumber + " ....");
         User user = null;
         //SQL query for select users by id
         String selectUserById = "SELECT * FROM users " +
@@ -153,7 +153,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getUserByUserPhoneNumber\" with phone == " + phoneNumber + ", " + e.toString());
+            log.warning("Some problem in method \"getUserByUserPhoneNumber\" with phone == " + phoneNumber + ", " + e.toString());
         }
         //return user by id
         return user;
@@ -164,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<User> getAllUsers() {
-        LOG.info("Get all users ....");
+        log.info("Get all users ....");
         //create return list
         List<User> allUsersByRole = new ArrayList();
         //SQL query for select users by role
@@ -182,7 +182,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllUsers\"");
+            log.warning("Some problem in method \"getAllUsers\"");
         }
         //return all users by role
         return allUsersByRole;
@@ -190,11 +190,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUserById(Long id) {
-        LOG.info("Delete user with id == " + id + " ....");
+        log.info("Delete user with id == " + id + " ....");
         String deleteUserById = "DELETE FROM users where id=" + id;
         try (Statement stmt = conn.createStatement();) {
             stmt.executeUpdate(deleteUserById);
-            LOG.info("User with id == " + id + ", deleted successfully!");
+            log.info("User with id == " + id + ", deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -217,7 +217,7 @@ public class UserDAOImpl implements UserDAO {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                LOG.warning("Some problem in method \"getAllUsers\"");
+                log.warning("Some problem in method \"getAllUsers\"");
             }
         }
         return getAllUsersByListId;

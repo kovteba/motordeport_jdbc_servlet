@@ -33,9 +33,9 @@ class CarDAOImplTest {
         car.setSeats(20);
         car.setLuggageCompartment(true);
         car.setAirConditioning(true);
-        car.setNavigator(true);
+        car.setNavigator(false);
         car.setCarTechnicalStatus(CarTechnicalStatus.GOOD);
-        car.setCarStatus(CarStatus.FREE);
+        car.setCarStatus(CarStatus.BUSY);
         Long idNewCar = carDAO.createCar(car);
     }
 
@@ -64,5 +64,27 @@ class CarDAOImplTest {
         for (Car car : list){
             System.out.println(car.toString());
         }
+    }
+
+    @Test
+    void changeCarInformation() {
+        Car car = new Car();
+        car.setId(1L);
+        car.setCarBrand(carBrandDAO.getCarBrandByBrandValue("MAN"));
+        car.setCarClass(CarClass.COMFORT);
+        car.setCarNumber("!!!!!!!!!!!!");
+        car.setLoadCapacity(1000);
+        car.setSeats(20);
+        car.setLuggageCompartment(true);
+        car.setAirConditioning(true);
+        car.setNavigator(false);
+        car.setCarTechnicalStatus(CarTechnicalStatus.GOOD);
+        car.setCarStatus(CarStatus.BUSY);
+        carDAO.changeCarInformation(car);
+
+    }
+
+    @Test
+    void deleteCarById() {
     }
 }

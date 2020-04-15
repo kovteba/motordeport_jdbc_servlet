@@ -64,12 +64,11 @@
 <%--    </div>--%>
 
 
-
-
-
 <%--<script src="webresources/jquery/jquery.js"></script>--%>
 <%--<script src="webresources/bootstrap/js/bootstrap.js"></script>--%>
 <%--<script src="webresources/bootstrap/js/bootstrap.bundle.js"></script>--%>
 <%--<script src="webresources/js/script.js"></script>--%>
 <%--</body>--%>
 <%--</html>--%>
+
+

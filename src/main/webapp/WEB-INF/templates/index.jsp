@@ -15,21 +15,19 @@
   <link type="text/css" rel="stylesheet" href="webresources/css/style.css">
 </head>
 <body>
-
-<%String token = (String) request.getAttribute("token");%>
-<input type="hidden" name="token" id="token" value="<%=token%>">
-<input type="hidden" name="pageName" value="">
+<input type="hidden" id="userToken" name="userToken" value="${sessionScope.userToken}">
+<input type="hidden" id="pageName" name="pageName" value="">
 
 <div class="container-fluid perent">
   <div class="row">
     <div class="col-md-12">
       <div class="row header">
         <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
-        <div class="col-md-4 time">
+        <div class="col-md-4 time ">
           <span id="time" style="color: white">00:00:00</span>
         </div>
-        <div class="col-md-4">
-          <div class="container changeLanguage navBox">
+        <div class="col-md-4 link">
+          <div class="changeLanguage">
             <div class="box">
               <div>
                 <form method="post" action="ru">
@@ -50,7 +48,6 @@
           </div>
           <div id="logOut" class="logOut">
             <form method="post" action="logOut">
-              <input type="hidden" name="token" value="<%=token%>">
               <input type="submit" value="log out">
             </form>
           </div>

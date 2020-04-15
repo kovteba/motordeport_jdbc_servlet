@@ -45,11 +45,6 @@ public class LogOut extends HttpServlet {
 
         log.info("user token session--> " + userToken + ", class: " + this.getClass());
 
-        User user = null;
-        if (!userToken.equals("0")){
-            user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
-        }
-
         if (!userToken.equals("0")){
             tokenDAO.deleteTokenByToken(userToken);
             req.getSession().setAttribute("userToken", "");

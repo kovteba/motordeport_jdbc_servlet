@@ -1,13 +1,13 @@
 $(document).ready(function () {
 
 
-    var token = document.getElementById("token");
+    var userToken = document.getElementById("userToken");
 
     var logIn = document.getElementById("logIn");
+
     var logOut = document.getElementById("logOut");
 
-
-    if (token.value !== "null") {
+    if (userToken.value !== "") {
         logIn.style.display = "none";
         logOut.style.display = "block";
     } else {

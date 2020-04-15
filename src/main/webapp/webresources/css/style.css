@@ -11,6 +11,9 @@
 /******START PAGE******/
 .time {
     color: white;
+    text-align: center;
+    vertical-align: center;
+    margin-top: 2%;
 }
 
 .logIn, .logOut{
@@ -32,14 +35,23 @@
     color: white;
 }
 
+.link{
+    position: absolute;
+    top: 20%;
+    right: 2%;
+}
+
 .phoneNumber, .password {
     padding: 0.5rem 0;
+    margin-left: 0.1rem ;
+    margin-right: 0.1rem ;
 }
 
 .logInBtn {
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
+    margin-bottom: 0.5rem ;
 }
 
 .container {
@@ -48,7 +60,8 @@
 }
 
 .box {
-    white-space: nowrap
+    white-space: nowrap;
+    /*width:90px;*/
 }
 
 .box div {

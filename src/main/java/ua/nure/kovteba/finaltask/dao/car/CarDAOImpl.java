@@ -1,5 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.car;
 
+import ua.nure.kovteba.finaltask.entity.CarBrand;
 import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Car;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 public class CarDAOImpl implements CarDAO {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(CarDAOImpl.class.getName());
+    private static Logger log = Logger.getLogger(CarDAOImpl.class.getName());
 
     //set connection
     private static Connection conn = Connect.connect();
@@ -40,7 +41,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public Long createCar(Car car) {
-        LOG.info("Create car --> " + car.toString() + " ....");
+        log.info("Create car --> " + car.toString() + " ....");
         Long idNewCar = null;
         //SQL query for create new car
         String insert = "INSERT INTO " +
@@ -67,17 +68,17 @@ public class CarDAOImpl implements CarDAO {
             if (resultSet.next()) {
                 idNewCar = resultSet.getLong(1);
             }
-            LOG.info("New car with id == " + idNewCar + ", added successfully!");
+            log.info("New car with id == " + idNewCar + ", added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"changeCarTechnicalStatus\" method");
+            log.warning("Same problem in \"changeCarTechnicalStatus\" method");
         }
         return idNewCar;
     }
 
     @Override
     public Car getCarById(Long id) {
-        LOG.info("Find car by id == " + id + " ....");
+        log.info("Find car by id == " + id + " ....");
         Car car = new Car();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars WHERE id = '" + id + "';";
@@ -98,7 +99,7 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"getCarById\" method with id == " + id);
+            log.warning("Same problem in " + this.getClass() + " method with id == " + id);
         }
         //return car by id
         return car;
@@ -106,7 +107,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public void changeCarTechnicalStatus(Long id, CarTechnicalStatus carTechnicalStatus) {
-        LOG.info("Change car technical status on --> \""
+        log.info("Change car technical status on --> \""
                 + carTechnicalStatus.getCarTechnicalStatusValue() + "\", by id == " + id + " ....");
         //SQL query for update car_technical_status request by id
         String changeCarTechnicelStatusById =
@@ -119,13 +120,13 @@ public class CarDAOImpl implements CarDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"changeCarTechnicalStatus\" method");
+            log.warning("Same problem in \"changeCarTechnicalStatus\" method");
         }
     }
 
     @Override
     public void changeCarStatus(Long id, CarStatus carStatus) {
-        LOG.info("Change car status on --> \"" + carStatus.getCarStatusValue() + "\", by id == " + id + " ....");
+        log.info("Change car status on --> \"" + carStatus.getCarStatusValue() + "\", by id == " + id + " ....");
         //SQL query for update car_status car by id
         String changeCarTechnicelStatusById =
                 "UPDATE cars SET car_status = ? WHERE id = ?;";
@@ -137,13 +138,13 @@ public class CarDAOImpl implements CarDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"changeCarStatus\" method");
+            log.warning("Same problem in \"changeCarStatus\" method");
         }
     }
 
     @Override
     public List<Car> getListCarFreeAndGood() {
-        LOG.info("Get car list with status --> \'FREE\', technical status --> \"GOOD\" ....");
+        log.info("Get car list with status --> \'FREE\', technical status --> \"GOOD\" ....");
         List<Car> listCars = new ArrayList<>();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars WHERE car_technical_status = '" + CarTechnicalStatus.GOOD.getCarTechnicalStatusValue() + "'" +
@@ -167,14 +168,14 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"getListCarFreeAndGood\" method");
+            log.warning("Same problem in \"getListCarFreeAndGood\" method");
         }
         return listCars;
     }
 
     @Override
     public List<Car> getAllCars() {
-        LOG.info("Get all cars ....");
+        log.info("Get all cars ....");
         List<Car> listCars = new ArrayList<>();
         //SQL query for select car by id
         String selectCarById = "SELECT * FROM cars;";
@@ -197,8 +198,51 @@ public class CarDAOImpl implements CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"getAllCars\" method");
+            log.warning("Same problem in \"getAllCars\" method");
         }
         return listCars;
+    }
+
+    @Override
+    public void changeCarInformation(Car car) {
+        log.info("Change car information on ....");
+        //SQL query for update car_status car by id
+        String changeCarTechnicelStatusById =
+                "UPDATE cars SET car_status = ?, seats = ?, load_capacity = ?, luggage_compartment = ?," +
+                        "navigator = ?, air_conditioning = ?, car_brand = ?, car_number = ?," +
+                        "car_class = ?, car_technical_status = ?, car_status = ? WHERE id = ?;";
+        PreparedStatement preparedStmt = null;
+        try {
+            preparedStmt = conn.prepareStatement(changeCarTechnicelStatusById);
+            preparedStmt.setString(1, car.getCarStatus().getCarStatusValue());
+            preparedStmt.setInt(2, car.getSeats());
+            preparedStmt.setInt(3, car.getLoadCapacity());
+            preparedStmt.setBoolean(4, car.getLuggageCompartment());
+            preparedStmt.setBoolean(5, car.getNavigator());
+            preparedStmt.setBoolean(6, car.getAirConditioning());
+            preparedStmt.setString(7, car.getCarBrand().getBrandName());
+            preparedStmt.setString(8, car.getCarNumber());
+            preparedStmt.setString(9, car.getCarClass().getClassValue());
+            preparedStmt.setString(10, car.getCarTechnicalStatus().getCarTechnicalStatusValue());
+            preparedStmt.setString(11, car.getCarStatus().getCarStatusValue());
+            preparedStmt.setLong(12, car.getId());
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.warning("Same problem in " + this.getClass() + " method");
+        }
+    }
+
+
+    @Override
+    public void deleteCarById(Long id) {
+        log.info("Delete car with id == " + id + " ....");
+        String deleteUserById = "DELETE FROM cars where id=" + id;
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteUserById);
+            log.info("Car with id == " + id + ", deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

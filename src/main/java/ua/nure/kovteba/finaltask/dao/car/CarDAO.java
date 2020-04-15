@@ -1,6 +1,8 @@
 package ua.nure.kovteba.finaltask.dao.car;
 
 import ua.nure.kovteba.finaltask.entity.Car;
+import ua.nure.kovteba.finaltask.entity.CarBrand;
+import ua.nure.kovteba.finaltask.enumlist.CarClass;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
 import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 
@@ -19,5 +21,9 @@ public interface CarDAO {
     List<Car> getListCarFreeAndGood();
 
     List<Car> getAllCars();
+
+    void changeCarInformation(Car car);
+
+    void deleteCarById(Long id);
 
 }
