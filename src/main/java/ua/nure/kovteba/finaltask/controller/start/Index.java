@@ -7,6 +7,7 @@ import ua.nure.kovteba.finaltask.entity.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,8 @@ import java.util.logging.Logger;
 
 @WebServlet(
         name = "index",
-        urlPatterns = "/index"
+        urlPatterns = "/index",
+        loadOnStartup = 1
 )
 public class Index extends HttpServlet {
 
@@ -39,8 +41,6 @@ public class Index extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
 
         log.info("doGet " + this.getClass() + "...");
 
@@ -79,25 +79,23 @@ public class Index extends HttpServlet {
             log.info("User with phoneNumber --> " + phoneNumber + "found successfully!");
             if (user.getPassword().equals(password)) {
                 token = tokenDAO.createToken(user.getId());
+                req.getSession().setAttribute("userToken", token);
                 String role = user.getRole().getRoleValue();
                 if (role.equals("ADMIN")) {
-                    resp.sendRedirect("admin?token=" + token);
+                    resp.sendRedirect("admin");
                 } else if (role.equals("DISPATCHER")){
                     resp.sendRedirect("dispatcher?token=" + token);
                 } else if (role.equals("DRIVER")){
                     resp.sendRedirect("driver?token=" + token);
                 }
+            } else {
+                resp.sendRedirect("");
             }
         } else {
             resp.setHeader("user", "user with phone number dont find");
             log.warning("User with --> " + phoneNumber +" dont found!!");
-//
-//            String i18n = String.valueOf(req.getSession().getAttribute("i18n"));
-//            ResourceBundle messages = ResourceBundle.getBundle(i18n);
-//            req.getSession().setAttribute("user", messages.getString("wrongNumberOrPassword"));
-
             resp.sendRedirect("");
         }
-
     }
+
 }

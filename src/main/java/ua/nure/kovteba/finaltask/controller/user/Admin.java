@@ -23,11 +23,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -37,7 +34,7 @@ import java.util.logging.Logger;
 public class Admin extends HttpServlet {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(Admin.class.getName());
+    private static Logger log = Logger.getLogger(Admin.class.getName());
 
     private static UserDAO userDAO;
     private static FlightDAO flightDAO;
@@ -62,12 +59,14 @@ public class Admin extends HttpServlet {
     @Override()
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //get token from HTML
-        String tokenFromHTML = req.getParameter("token");
+        //get user token from session
+        String userToken = String.valueOf(req.getSession().getAttribute("userToken"));
 
-        Token token = tokenDAO.getTokenByToken(tokenFromHTML);
+        log.info("user token session--> " + userToken + ", class: " + this.getClass());
+
+        Token token = tokenDAO.getTokenByToken(userToken);
         if (token != null && userDAO.getUserById(token.getUser()).getRole().getRoleValue().equals("ADMIN")) {
-            LOG.info(this.getClass() + "\n Token value --> " + tokenFromHTML);
+
             //choose tab for open
             String value = req.getParameter("value");
             if (value == null) {
@@ -125,14 +124,14 @@ public class Admin extends HttpServlet {
             req.setAttribute("carStatus", CarStatus.getListCarStatus());
 
             //set token
-            req.setAttribute("token", tokenFromHTML);
+            req.setAttribute("token", userToken);
             RequestDispatcher dispatcher = req.getRequestDispatcher(
                     "/WEB-INF/templates/adminPage.jsp");
             dispatcher.forward(req, resp);
         } else {
+            //if token == null or userRole ton ADMIN redirect to index page
             resp.sendRedirect("");
         }
-
 
     }
 
