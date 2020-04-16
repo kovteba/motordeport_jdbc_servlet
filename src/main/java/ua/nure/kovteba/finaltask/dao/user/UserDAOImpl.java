@@ -1,5 +1,7 @@
 package ua.nure.kovteba.finaltask.dao.user;
 
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
+import ua.nure.kovteba.finaltask.enumlist.Employment;
 import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Role;
@@ -19,8 +21,10 @@ public class UserDAOImpl implements UserDAO {
 
     //create statement
     private static Statement smtp;
+    private static EmploymentStatusDAOImpl employmentStatusDAO;
 
     static {
+        employmentStatusDAO = new EmploymentStatusDAOImpl();
         try {
             smtp = conn.createStatement();
         } catch (SQLException e) {
@@ -56,6 +60,9 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 idNewUser = resultSet.getLong(1);
+            }
+            if (user.getRole().getRoleValue().equals("DRIVER")){
+                employmentStatusDAO.createEmploymentStatus(idNewUser, Employment.FREE);
             }
             log.info("New user with id == " + idNewUser + ", added successfully!");
         } catch (SQLException e) {
