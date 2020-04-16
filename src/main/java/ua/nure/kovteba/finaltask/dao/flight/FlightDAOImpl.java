@@ -120,7 +120,8 @@ public class FlightDAOImpl implements FlightDAO {
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectAll);) {
             while (rs.next()) {
-                if (driver.equals((User) serialization.fromString(rs.getString(7)))){
+                User user = (User) serialization.fromString(rs.getString(7));
+                if (driver.getId().equals(user.getId())){
                     Flight newFlight = new Flight();
                     newFlight.setId(rs.getLong(1));
                     newFlight.setEndDate(ZonedDateTime.parse(rs.getString(2)));
