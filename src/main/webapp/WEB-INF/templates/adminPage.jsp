@@ -31,10 +31,8 @@
   <%String carBtn = (String) request.getAttribute("carBtn");%>
 
   <div class="row header">
-    <div class="col-md-4"><img src="webresources/img/logo.png" class="logo"></div>
-    <div class="col-md-4 time navBox">
-      <span id="time" style="color: white">00:00:00</span>
-    </div>
+    <div class="col-md-4"><img src="webresources/img/logo.png" class="logo" alt=""></div>
+    <div class="col-md-4 time navBox"><span id="time" style="color: white">00:00:00</span></div>
     <div class="col-md-4">
       <div class="container changeLanguage navBox">
         <div class="box">
@@ -118,9 +116,7 @@
               <th scope="col"><fmt:message key="label.endDate"/></th>
               <th scope="col">
                 <div class="navbar">
-                  <div class="tableFlights" data-toggle="dropdown">
-                    <fmt:message key="label.status.flight"/>
-                  </div>
+                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
                   <ul class="dropdown-menu tableFlights">
                     <li>
                       <form action="admin">
@@ -320,7 +316,8 @@
                                 <select name="carValueId" required>
                                   <option selected disabled="disabled"><fmt:message key="label.chooseCar"/></option>
                                   <c:forEach items="${requestScope.carsListForRequest}" var="carsListForRequest">
-                                    <option value="${carsListForRequest.id}" title="${carsListForRequest.toString()}">
+                                    <option value="${carsListForRequest.id}"
+                                            title="<fmt:message key="label.carClass"/>: ${carsListForRequest.carClass};<fmt:message key="label.loadCopacity"/>: ${carsListForRequest.loadCapacity};<fmt:message key="label.seats"/>: ${carsListForRequest.seats};<fmt:message key="label.luggage"/>: ${carsListForRequest.luggageCompartment};<fmt:message key="label.air"/>: ${carsListForRequest.airConditioning};<fmt:message key="label.navigatorInCar"/>: ${carsListForRequest.navigator};">
                                         ${carsListForRequest.carNumber}
                                     </option>
                                   </c:forEach>
@@ -567,13 +564,21 @@
             <c:forEach items="${requestScope.driversList}" var="driverList" varStatus="counter">
               <tr>
                 <th scope="row">${counter.count}</th>
-                <td>${driverList.firstName}</td>
-                <td>${driverList.lastName}</td>
-                <td>${driverList.phoneNumber}</td>
+                <td>${driverList.key.firstName}</td>
+                <td>${driverList.key.lastName}</td>
+                <td>${driverList.key.phoneNumber}</td>
                 <td>
                   <form method="post" action="deleteUser" accept-charset="ISO-8859-1">
-                    <input type="hidden" name="idUserForDelete" value="${driverList.id}">
-                    <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
+                    <input type="hidden" name="idUserForDelete" value="${driverList.key.id}">
+                    <c:choose>
+                      <c:when test="${driverList.value == 'BUSY'}">
+                        <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>"
+                               disabled>
+                      </c:when>
+                      <c:otherwise>
+                        <input type="submit" class="btn btn-danger" value="<fmt:message key="label.deleteUser"/>">
+                      </c:otherwise>
+                    </c:choose>
                   </form>
                 </td>
               </tr>
@@ -656,7 +661,6 @@
             </thead>
             <tbody>
             <c:forEach items="${requestScope.carsList}" var="carsList" varStatus="counter">
-
               <tr data-toggle="collapse" data-target="#demo${carsList.id}" class="accordion-toggle">
                 <th scope="row">${counter.count}</th>
                 <td>${carsList.carBrand.brandName}</td>
@@ -665,34 +669,32 @@
                 <td>${carsList.loadCapacity}</td>
                 <td>${carsList.seats}</td>
                 <td style="padding: 10px">
-                  <c:choose>
-                    <c:when test="${carsList.luggageCompartment}">
-                      <input type="checkbox" checked disabled>
-                    </c:when>
-                    <c:otherwise>
-                      <input type="checkbox" disabled>
-                    </c:otherwise>
-                  </c:choose>
+                  <label>
+                    <c:choose>
+                      <c:when test="${carsList.luggageCompartment}">
+                        <input type="checkbox" checked disabled>
+                      </c:when>
+                      <c:otherwise>
+                        <input type="checkbox" disabled>
+                      </c:otherwise>
+                    </c:choose>
+                  </label>
                 </td>
                 <td style="padding: 10px">
-                  <c:choose>
-                    <c:when test="${carsList.airConditioning}">
-                      <input type="checkbox" checked disabled>
-                    </c:when>
-                    <c:otherwise>
-                      <input type="checkbox" disabled>
-                    </c:otherwise>
-                  </c:choose>
+                  <label>
+                    <c:choose>
+                      <c:when test="${carsList.airConditioning}"><input type="checkbox" checked disabled></c:when>
+                      <c:otherwise><input type="checkbox" disabled></c:otherwise>
+                    </c:choose>
+                  </label>
                 </td>
                 <td style="padding: 10px">
-                  <c:choose>
-                    <c:when test="${carsList.navigator}">
-                      <input type="checkbox" checked disabled>
-                    </c:when>
-                    <c:otherwise>
-                      <input type="checkbox" disabled>
-                    </c:otherwise>
-                  </c:choose>
+                  <label>
+                    <c:choose>
+                      <c:when test="${carsList.navigator}"><input type="checkbox" checked disabled></c:when>
+                      <c:otherwise><input type="checkbox" disabled></c:otherwise>
+                    </c:choose>
+                  </label>
                 </td>
                 <td>
                   <div class="navbar">
@@ -732,80 +734,98 @@
                 </td>
               </tr>
               <%----%>
-              <form method="post" action="changeInfoCar" accept-charset="ISO-8859-1">
-                <tr>
+              <tr>
+                <form method="post" action="changeInfoCar" accept-charset="ISO-8859-1">
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">${counter.count}</div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <select name="carBrandId" required>
-                        <option value="${carsList.carBrand.brandName}" selected >${carsList.carBrand.brandName}</option>
-                        <c:forEach items="${requestScope.carBrandList}" var="carBrandList">
-                          <option value="${carBrandList.brandName}">${carBrandList.brandName}</option>
-                        </c:forEach>
-                      </select>
+                      <label>
+                        <select name="carBrandId" required>
+                          <option value="${carsList.carBrand.brandName}"
+                                  selected>${carsList.carBrand.brandName}</option>
+                          <c:forEach items="${requestScope.carBrandList}" var="carBrandList">
+                            <option value="${carBrandList.brandName}">${carBrandList.brandName}</option>
+                          </c:forEach>
+                        </select>
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <select name="carClassValue" required>
-                        <option value="${carsList.carClass.classValue}" selected >${carsList.carClass.classValue}</option>
-                        <c:forEach items="${requestScope.carClassList}" var="carClassList">
-                          <option value="${carClassList.classValue}">${carClassList.classValue}</option>
-                        </c:forEach>
-                      </select>
+                      <label>
+                        <select name="carClassValue" required>
+                          <option value="${carsList.carClass.classValue}"
+                                  selected>${carsList.carClass.classValue}</option>
+                          <c:forEach items="${requestScope.carClassList}" var="carClassList">
+                            <option value="${carClassList.classValue}">${carClassList.classValue}</option>
+                          </c:forEach>
+                        </select>
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <input style="width: 100px" name="carNumber" value="${carsList.carNumber}">
+                      <label>
+                        <input style="width: 100px" name="carNumber" value="${carsList.carNumber}">
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <input style="width: 100px" name="loadCapacity" value="${carsList.loadCapacity}">
+                      <label>
+                        <input style="width: 100px" name="loadCapacity" value="${carsList.loadCapacity}">
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <input style="width: 100px" name="seats" value="${carsList.seats}">
+                      <label>
+                        <input style="width: 100px" name="seats" value="${carsList.seats}">
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <c:choose>
-                        <c:when test="${carsList.luggageCompartment}">
-                          <input type="checkbox" name="luggageCompartment" checked>
-                        </c:when>
-                        <c:otherwise>
-                          <input type="checkbox" name="luggageCompartment">
-                        </c:otherwise>
-                      </c:choose>
+                      <label>
+                        <c:choose>
+                          <c:when test="${carsList.luggageCompartment}">
+                            <input type="checkbox" name="luggageCompartment" checked>
+                          </c:when>
+                          <c:otherwise>
+                            <input type="checkbox" name="luggageCompartment">
+                          </c:otherwise>
+                        </c:choose>
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <c:choose>
-                        <c:when test="${carsList.airConditioning}">
-                          <input type="checkbox" name="airConditioning" checked>
-                        </c:when>
-                        <c:otherwise>
-                          <input type="checkbox" name="airConditioning">
-                        </c:otherwise>
-                      </c:choose>
+                      <label>
+                        <c:choose>
+                          <c:when test="${carsList.airConditioning}">
+                            <input type="checkbox" name="airConditioning" checked>
+                          </c:when>
+                          <c:otherwise>
+                            <input type="checkbox" name="airConditioning">
+                          </c:otherwise>
+                        </c:choose>
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <c:choose>
-                        <c:when test="${carsList.navigator}">
-                          <input type="checkbox" name="navigator" checked>
-                        </c:when>
-                        <c:otherwise>
-                          <input type="checkbox" name="navigator">
-                        </c:otherwise>
-                      </c:choose>
+                      <label>
+                        <c:choose>
+                          <c:when test="${carsList.navigator}">
+                            <input type="checkbox" name="navigator" checked>
+                          </c:when>
+                          <c:otherwise>
+                            <input type="checkbox" name="navigator">
+                          </c:otherwise>
+                        </c:choose>
+                      </label>
                     </div>
                   </td>
                   <td class="hiddenRow">
@@ -813,19 +833,29 @@
                       <button type="submit" class="btn btn-success">ok</button>
                     </div>
                   </td>
-                <input type="hidden" name="carTechnicalStatusValue" value="${carsList.carTechnicalStatus.carTechnicalStatusValue}">
-                <input type="hidden" name="carStatusValue" value="${carsList.carStatus.carStatusValue}">
-                <input type="hidden" name="carIdForChange" value="${carsList.id}">
-              </form>
-              <form method="post" action="deleteCar" accept-charset="ISO-8859-1">
+                  <input type="hidden" name="carTechnicalStatusValue"
+                         value="${carsList.carTechnicalStatus.carTechnicalStatusValue}">
+                  <input type="hidden" name="carStatusValue" value="${carsList.carStatus.carStatusValue}">
+                  <input type="hidden" name="carIdForChange" value="${carsList.id}">
+                </form>
                 <td class="hiddenRow">
-                  <input type="hidden" name="idCarForDelete" value="${carsList.id}">
-                  <div id="demo${carsList.id}" class="accordian-body collapse">
-                    <button type="submit" class="btn btn-danger">delete</button>
-                  </div>
+                  <form method="post" action="deleteCar" accept-charset="ISO-8859-1">
+                    <input type="hidden" name="idCarForDelete" value="${carsList.id}">
+                    <div id="demo${carsList.id}" class="accordian-body collapse">
+                      <c:choose>
+                        <c:when test="${carsList.carStatus.carStatusValue == 'FREE'}">
+                          <button type="submit" class="btn btn-danger">delete</button>
+                        </c:when>
+                        <c:otherwise>
+                          <button type="submit" class="btn btn-danger" disabled>delete</button>
+                        </c:otherwise>
+                      </c:choose>
+                    </div>
+                  </form>
                 </td>
-                </tr>
-              </form>
+
+              </tr>
+
             </c:forEach>
             </tbody>
           </table>
