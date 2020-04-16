@@ -1,5 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.employmentstatus;
 
+import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
 import ua.nure.kovteba.finaltask.enumlist.Employment;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface EmploymentStatusDAO {
     List<Long> getAllFreeDrivers();
 
     void deleteEmploymentStatusByDriverId(Long id);
+
+    List<EmploymentStatus> getAllValueEmployment();
 }

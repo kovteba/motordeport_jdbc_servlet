@@ -1,7 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.employmentstatus;
 
-import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
-import ua.nure.kovteba.finaltask.entity.Request;
+import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
 import ua.nure.kovteba.finaltask.enumlist.Employment;
 import ua.nure.kovteba.finaltask.util.Connect;
 
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
 public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(EmploymentStatusDAOImpl.class.getName());
+    private static Logger log = Logger.getLogger(EmploymentStatusDAOImpl.class.getName());
 
     //set connection
     private static Connection conn = Connect.connect();
@@ -31,7 +30,7 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
 
     @Override
     public Long createEmploymentStatus(Long idDriver, Employment employmentValue) {
-        LOG.info("Create EmploymentStatus with idDriver == " + idDriver + ", with employmentValue --> \'" + employmentValue.getEmploymentStatusValue() + "\" ....");
+        log.info("Create EmploymentStatus with idDriver == " + idDriver + ", with employmentValue --> \'" + employmentValue.getEmploymentStatusValue() + "\" ....");
         Long idNewEmploymentStatus = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -49,10 +48,10 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
             if (resultSet.next()) {
                 idNewEmploymentStatus = resultSet.getLong(1);
             }
-            LOG.info("New user with id == " + idNewEmploymentStatus + "in EmploymentStatus added successfully!");
+            log.info("New user with id == " + idNewEmploymentStatus + "in EmploymentStatus added successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"createEmploymentStatus\" with idDriver == " + idDriver + ", with value--> \"" + employmentValue.getEmploymentStatusValue()
+            log.warning("Some problem in method \"createEmploymentStatus\" with idDriver == " + idDriver + ", with value--> \"" + employmentValue.getEmploymentStatusValue()
                     + ", " + e.toString());
         }
         return idNewEmploymentStatus;
@@ -60,7 +59,7 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
 
     @Override
     public void changeEmploymentStatus(Long idDriver, Employment employmentValue) {
-        LOG.info("Change employmentStatus on --> \"" + employmentValue.getEmploymentStatusValue() + "\", by id == " + idDriver + " ....");
+        log.info("Change employmentStatus on --> \"" + employmentValue.getEmploymentStatusValue() + "\", by id == " + idDriver + " ....");
         //SQL query for update car_status car by id
         String changeEmploymentStatusById =
                 "UPDATE employment_status SET value_employment = ? WHERE id_driver = ?;";
@@ -72,13 +71,13 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Same problem in \"changeEmploymentStatus\" method in " + this.getClass());
+            log.warning("Same problem in \"changeEmploymentStatus\" method in " + this.getClass());
         }
     }
 
     @Override
     public List<Long> getAllFreeDrivers() {
-        LOG.info("Get all free drivers ....");
+        log.info("Get all free drivers ....");
         //create return list
         List<Long> allIdFreeDrivers = new ArrayList();
         //SQL query for select all requests
@@ -91,7 +90,7 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllFreeDrivers\"");
+            log.warning("Some problem in method \"getAllFreeDrivers\"");
         }
         //return all users by role
         return allIdFreeDrivers;
@@ -99,13 +98,37 @@ public class EmploymentStatusDAOImpl implements EmploymentStatusDAO {
 
     @Override
     public void deleteEmploymentStatusByDriverId(Long id) {
-        LOG.info("Delete employment status with driver id == " + id + " ....");
+        log.info("Delete employment status with driver id == " + id + " ....");
         String deleteUserById = "DELETE FROM employment_status where id_driver =" + id;
         try (Statement stmt = conn.createStatement();) {
             stmt.executeUpdate(deleteUserById);
-            LOG.info("Employment status with idDriver == " + id + ", deleted successfully!");
+            log.info("Employment status with idDriver == " + id + ", deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<EmploymentStatus> getAllValueEmployment() {
+        log.info("Get all drivers ....");
+        //create return list
+        List<EmploymentStatus> allValueEmployment = new ArrayList();
+        //SQL query for select all requests
+        String selectAll = "SELECT * FROM employment_status;";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAll);) {
+            while (rs.next()) {
+                EmploymentStatus employmentStatus = new EmploymentStatus();
+                employmentStatus.setId(rs.getLong(1));
+                employmentStatus.setIdDriver(rs.getLong(2));
+                employmentStatus.setValue(rs.getString(3));
+                allValueEmployment.add(employmentStatus);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.warning("Some problem in method \"getAllFreeDrivers\"");
+        }
+        //return all users by role
+        return allValueEmployment;
     }
 }
