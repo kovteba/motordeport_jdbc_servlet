@@ -40,19 +40,23 @@ public class i18nUS extends HttpServlet {
 
         String userToken = "0";
 
-        if (req.getSession().getAttribute("userToken") != null){
+        if (req.getSession().getAttribute("userToken") != null) {
             userToken = String.valueOf(req.getSession().getAttribute("userToken"));
         }
 
         User user = null;
-        if (!userToken.equals("0")){
+        if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
 
-        if (userToken.equals("0")){
+        if (userToken.equals("0")) {
             resp.sendRedirect("");
-        } else if (user.getRole().getRoleValue().equals("ADMIN")){
+        } else if (user.getRole().getRoleValue().equals("ADMIN")) {
             resp.sendRedirect("admin");
+        } else if (user.getRole().getRoleValue().equals("DRIVER")) {
+            resp.sendRedirect("driver");
+        } else if (user.getRole().getRoleValue().equals("DISPATCHER")) {
+            resp.sendRedirect("dispatcher");
         }
 
     }

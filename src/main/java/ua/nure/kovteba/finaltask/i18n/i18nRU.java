@@ -64,7 +64,12 @@ public class i18nRU extends HttpServlet {
             resp.sendRedirect("");
         } else if (user.getRole().getRoleValue().equals("ADMIN")){
             resp.sendRedirect("admin");
+        } else if (user.getRole().getRoleValue().equals("DRIVER")){
+            resp.sendRedirect("driver");
+        } else if (user.getRole().getRoleValue().equals("DISPATCHER")){
+            resp.sendRedirect("dispatcher");
         }
 
     }
+
 }
