@@ -100,6 +100,11 @@
           <fmt:message key="label.cars"/>
         </a>
       </div>
+      <ul class="list-group">
+        <li class="list-group-item">${requestScope.user.role.roleValue}</li>
+        <li class="list-group-item">${requestScope.user.firstName} ${requestScope.user.lastName}</li>
+        <li class="list-group-item">${requestScope.user.phoneNumber}</li>
+      </ul>
     </div>
     <!--    main container    -->
     <div class="col-md-11">
@@ -279,8 +284,9 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${requestScope.requestsListOpen}" var="requestsListOpen" varStatus="counter">
-                          <form action="createFlight" method="post" accept-charset="ISO-8859-1">
-                            <tr>
+
+                          <tr>
+                            <form action="createFlight" method="post" accept-charset="ISO-8859-1">
                               <input type="hidden" name="idRequest" value="${requestsListOpen.id}">
                               <input type="hidden" name="idDriverInReq" value="${requestsListOpen.driver.id}">
                               <th rowspan="2">${counter.count}</th>
@@ -289,28 +295,28 @@
                               <td style="padding: 10px">${requestsListOpen.loadCapacity}</td>
                               <td style="padding: 10px">${requestsListOpen.seats}</td>
                               <c:choose>
-                                <c:when test="${requestsListOpen.luggageCompartment}">
-                                  <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                                </c:when>
-                                <c:otherwise>
-                                  <td style="padding: 10px"><input type="checkbox" disabled></td>
-                                </c:otherwise>
+                              <c:when test="${requestsListOpen.luggageCompartment}">
+                              <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                              </c:when>
+                              <c:otherwise>
+                              <td style="padding: 10px"><input type="checkbox" disabled></td>
+                              </c:otherwise>
                               </c:choose>
                               <c:choose>
-                                <c:when test="${requestsListOpen.airConditioning}">
-                                  <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                                </c:when>
-                                <c:otherwise>
-                                  <td style="padding: 10px"><input type="checkbox" disabled></td>
-                                </c:otherwise>
+                              <c:when test="${requestsListOpen.airConditioning}">
+                              <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                              </c:when>
+                              <c:otherwise>
+                              <td style="padding: 10px"><input type="checkbox" disabled></td>
+                              </c:otherwise>
                               </c:choose>
                               <c:choose>
-                                <c:when test="${requestsListOpen.navigator}">
-                                  <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                                </c:when>
-                                <c:otherwise>
-                                  <td style="padding: 10px"><input type="checkbox" disabled></td>
-                                </c:otherwise>
+                              <c:when test="${requestsListOpen.navigator}">
+                              <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                              </c:when>
+                              <c:otherwise>
+                              <td style="padding: 10px"><input type="checkbox" disabled></td>
+                              </c:otherwise>
                               </c:choose>
                               <td style="padding: 10px">
                                 <select name="carValueId" required>
@@ -323,34 +329,40 @@
                                   </c:forEach>
                                 </select>
                               </td>
-                              <td style="padding: 10px" rowspan="2">
+                              <td style="padding: 10px">
                                 <button class="btn btn-success"><fmt:message key="label.approve"/></button>
                               </td>
-                            </tr>
-                            <tr>
-                              <td colspan="2">
-                                <label for="flightNumberInReq"><fmt:message key="label.flightNumber"/></label>
-                                <input type="text" id="flightNumberInReq" name="numbreFlightInReq"
-                                       placeholder="<fmt:message key="label.flightNumber"/>" required>
-                              </td>
-                              <td style="padding: 10px" colspan="2">
-                                <label for="startDateInReq"><fmt:message key="label.startDateIn"/></label>
-                                <input type="date" id="startDateInReq" name="startDateInReq" required>
-                              </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <label for="flightNumberInReq"><fmt:message key="label.flightNumber"/></label>
+                              <input type="text" id="flightNumberInReq" name="numbreFlightInReq"
+                                     placeholder="<fmt:message key="label.flightNumber"/>" required>
+                            </td>
+                            <td style="padding: 10px" colspan="2">
+                              <label for="startDateInReq"><fmt:message key="label.startDateIn"/></label>
+                              <input type="date" id="startDateInReq" name="startDateInReq" required>
+                            </td>
+                            <td style="padding: 10px">
+                              <label for="startTimeInReq"><fmt:message key="label.startTimeIn"/></label>
+                              <input type="time" id="startTimeInReq" name="startTimeInReq" required>
+                            </td>
+                            <td style="padding: 10px" colspan="2">
+                              <label for="endDateInReq"><fmt:message key="label.endDateIn"/></label>
+                              <input type="date" id="endDateInReq" name="endDateInReq" required>
+                            </td>
+                            <td style="padding: 10px">
+                              <label for="endTimeInReq"><fmt:message key="label.endTimeIn"/></label>
+                              <input type="time" id="endTimeInReq" name="endTimeInReq" required>
+                            </td>
+                            </form>
+                            <form action="deleteRequest" method="post" accept-charset="ISO-8859-1">
                               <td style="padding: 10px">
-                                <label for="startTimeInReq"><fmt:message key="label.startTimeIn"/></label>
-                                <input type="time" id="startTimeInReq" name="startTimeInReq" required>
+                                <input type="hidden" name="idRequestForDelete" value="${requestsListOpen.id}">
+                                <button class="btn btn-danger"><fmt:message key="label.deleteUser"/></button>
                               </td>
-                              <td style="padding: 10px" colspan="2">
-                                <label for="endDateInReq"><fmt:message key="label.endDateIn"/></label>
-                                <input type="date" id="endDateInReq" name="endDateInReq" required>
-                              </td>
-                              <td style="padding: 10px">
-                                <label for="endTimeInReq"><fmt:message key="label.endTimeIn"/></label>
-                                <input type="time" id="endTimeInReq" name="endTimeInReq" required>
-                              </td>
-                            </tr>
-                          </form>
+                            </form>
+                          </tr>
                         </c:forEach>
                         </tbody>
                       </table>
@@ -830,7 +842,7 @@
                   </td>
                   <td class="hiddenRow">
                     <div id="demo${carsList.id}" class="accordian-body collapse">
-                      <button type="submit" class="btn btn-success">ok</button>
+                      <button type="submit" class="btn btn-success"><fmt:message key="label.change"/></button>
                     </div>
                   </td>
                   <input type="hidden" name="carTechnicalStatusValue"
@@ -844,18 +856,17 @@
                     <div id="demo${carsList.id}" class="accordian-body collapse">
                       <c:choose>
                         <c:when test="${carsList.carStatus.carStatusValue == 'FREE'}">
-                          <button type="submit" class="btn btn-danger">delete</button>
+                          <button type="submit" class="btn btn-danger"><fmt:message key="label.deleteUser"/></button>
                         </c:when>
                         <c:otherwise>
-                          <button type="submit" class="btn btn-danger" disabled>delete</button>
+                          <button type="submit" class="btn btn-danger" disabled><fmt:message
+                           key="label.deleteUser"/></button>
                         </c:otherwise>
                       </c:choose>
                     </div>
                   </form>
                 </td>
-
               </tr>
-
             </c:forEach>
             </tbody>
           </table>
