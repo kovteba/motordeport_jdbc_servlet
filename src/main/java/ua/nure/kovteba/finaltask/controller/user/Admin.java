@@ -14,7 +14,9 @@ import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAO;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
+import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
 import ua.nure.kovteba.finaltask.entity.Token;
+import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -111,7 +116,9 @@ public class Admin extends HttpServlet {
 
             //drivers section
             //set driver list
-            req.setAttribute("driversList", userDAO.getUserByRole(Role.DRIVER));
+            req.setAttribute("driversList", getMapDriverEmploymentStatus(
+                    employmentStatusDAO.getAllValueEmployment(),
+                    userDAO.getUserByRole(Role.DRIVER)));
             req.setAttribute("freeDrivers", userDAO.getAllUsersByListId(employmentStatusDAO.getAllFreeDrivers()));
 
             //car section
@@ -147,4 +154,17 @@ public class Admin extends HttpServlet {
         request.setAttribute("carBtn", carBtn);
         return request;
     }
+
+    private Map<User, String> getMapDriverEmploymentStatus(List<EmploymentStatus> employmentStatuses, List<User> userList) {
+        Map<User, String> map = new HashMap<>();
+        for (User user : userList) {
+            for (EmploymentStatus employmentStatus : employmentStatuses) {
+                if (user.getId().equals(employmentStatus.getIdDriver())) {
+                    map.put(user, employmentStatus.getValue());
+                }
+            }
+        }
+        return map;
+    }
+
 }
