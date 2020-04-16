@@ -11,7 +11,9 @@ public enum FlightStatus {
 
     CLOSE("CLOSE"),
 
-    CANСELED("CANCELED");
+    CANСELED("CANCELED"),
+
+    DONE("DONE");
 
     private final String statusValue;
 
@@ -23,17 +25,18 @@ public enum FlightStatus {
         return statusValue;
     }
 
-    public static List<FlightStatus> getFlightStatus(){
+    public static List<FlightStatus> getFlightStatusList(){
         List<FlightStatus> listCarStatus = new ArrayList<>();
         listCarStatus.add(FlightStatus.OPEN);
         listCarStatus.add(FlightStatus.INPROGRESS);
         listCarStatus.add(FlightStatus.CLOSE);
         listCarStatus.add(FlightStatus.CANСELED);
+        listCarStatus.add(FlightStatus.DONE);
         return listCarStatus;
     }
 
     public static FlightStatus findFlightStatus(String flightStatus){
-        return getFlightStatus()
+        return getFlightStatusList()
                 .stream()
                 .filter(s -> s.getStatusValue().equals(flightStatus))
                 .findAny()
