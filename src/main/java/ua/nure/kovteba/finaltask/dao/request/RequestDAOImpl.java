@@ -204,6 +204,81 @@ public class RequestDAOImpl implements RequestDAO {
         return allRequestBySatus;
     }
 
+    @Override
+    public List<Request> getAllRequestByDriver(User user) {
+        LOG.info("Get all requests by user ....");
+        //create return list
+        List<Request> allRequestByUser = new ArrayList();
+        //SQL query for select all requests
+        String selectAll = "SELECT * FROM requests;";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAll);) {
+            while (rs.next()) {
+                User userDB = (User)serialization.fromString(rs.getString(8));
+                if (user.getId().equals(userDB.getId())){
+                    Request request = installRequest(
+                            rs.getLong(1),
+                            rs.getString(8),
+                            rs.getString(3),
+                            rs.getInt(4),
+                            rs.getInt(7),
+                            rs.getBoolean(5),
+                            rs.getBoolean(2),
+                            rs.getBoolean(6),
+                            rs.getString(9));
+                    allRequestByUser.add(request);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //return all users by role
+        return allRequestByUser;
+    }
+
+    @Override
+    public List<Request> getAllRequestByDriverAndRequestStatus(User user, RequestStatus requestStatus) {
+        LOG.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
+        //create return list
+        List<Request> allRequestBySatusAndUser = new ArrayList();
+        //SQL query for select request by status
+        String selectAllByDriverAndStatus = "SELECT * FROM requests WHERE request_status = '" + requestStatus + "';";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAllByDriverAndStatus);) {
+            while (rs.next()) {
+                User userDB = (User)serialization.fromString(rs.getString(8));
+                if (user.getId().equals(userDB.getId())){
+                    Request request = installRequest(
+                            rs.getLong(1),
+                            rs.getString(8),
+                            rs.getString(3),
+                            rs.getInt(4),
+                            rs.getInt(7),
+                            rs.getBoolean(5),
+                            rs.getBoolean(2),
+                            rs.getBoolean(6),
+                            rs.getString(9));
+                    allRequestBySatusAndUser.add(request);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOG.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
+                    + requestStatus.getRequestSatus() + "\', " + e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //return all users by role
+        return allRequestBySatusAndUser;
+    }
+
     /**
      *
      * @param id
