@@ -1,10 +1,8 @@
 package ua.nure.kovteba.finaltask.dao.flight;
 
 import ua.nure.kovteba.finaltask.entity.Car;
-import ua.nure.kovteba.finaltask.entity.Request;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
-import ua.nure.kovteba.finaltask.enumlist.Role;
 import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.util.Serialization;
@@ -19,7 +17,7 @@ import java.util.logging.Logger;
 public class FlightDAOImpl implements FlightDAO {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(FlightDAOImpl.class.getName());
+    private static Logger log = Logger.getLogger(FlightDAOImpl.class.getName());
 
     //set connection
     private static Connection conn = Connect.connect();
@@ -40,7 +38,7 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public Long createFlight(Flight flight) {
-        LOG.info("Create flight --> " + flight.toString() + " ....");
+        log.info("Create flight --> " + flight.toString() + " ....");
         Long idNewRequest = null;
         //SQL query for create new flight
         String insert = "INSERT INTO " +
@@ -62,16 +60,17 @@ public class FlightDAOImpl implements FlightDAO {
             if (resultSet.next()) {
                 idNewRequest = resultSet.getLong(1);
             }
-            LOG.info("New request with id == " + idNewRequest + ", added successfully!");
+            log.info("New request with id == " + idNewRequest + ", added successfully!");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();LOG.warning("Same problem in \"createFlight\" method");
+            e.printStackTrace();
+            log.warning("Same problem in \"createFlight\" method");
         }
         return idNewRequest;
     }
 
     @Override
     public List<Flight> getAllFlight() {
-        LOG.info("Get all flight ....");
+        log.info("Get all flight ....");
         List<Flight> flightList = new ArrayList<>();
         //SQL query for create new flight
         String selectAll = "SELECT * FROM flights;";
@@ -106,9 +105,42 @@ public class FlightDAOImpl implements FlightDAO {
         String deleteFlightByIdRequest = "DELETE FROM flights WHERE request = " + id + ";";
         try (Statement stmt = conn.createStatement();) {
             stmt.executeUpdate(deleteFlightByIdRequest);
-            LOG.info("User with id == " + id + ", deleted successfully!");
+            log.info("User with id == " + id + ", deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Flight> getAllFlightByDriver(User driver) {
+        log.info("Get all flight ....");
+        List<Flight> flightListByDriver = new ArrayList<>();
+        //SQL query for create new flight
+        String selectAll = "SELECT * FROM flights;";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAll);) {
+            while (rs.next()) {
+                if (driver.equals((User) serialization.fromString(rs.getString(7)))){
+                    Flight newFlight = new Flight();
+                    newFlight.setId(rs.getLong(1));
+                    newFlight.setEndDate(ZonedDateTime.parse(rs.getString(2)));
+                    newFlight.setFlightNumber(rs.getString(3));
+                    newFlight.setFlightStatus(FlightStatus.findFlightStatus(rs.getString(4)));
+                    newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
+                    newFlight.setCar((Car) serialization.fromString(rs.getString(6)));
+                    newFlight.setDriver((User) serialization.fromString(rs.getString(7)));
+                    newFlight.setRequest(Long.valueOf(rs.getString(8)));
+                    flightListByDriver.add(newFlight);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //return all flight
+        return flightListByDriver;
     }
 }
