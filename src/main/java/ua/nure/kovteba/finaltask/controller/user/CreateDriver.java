@@ -62,6 +62,7 @@ public class CreateDriver extends HttpServlet {
             String phoneNumber = req.getParameter("phoneNumberDriver");
             User findUser = userDAO.getUserByUserPhoneNumber(phoneNumber);
             if (findUser == null){
+                //create new user with role "Driver"
                 User newDriver = new User();
                 newDriver.setFirstName(req.getParameter("firstNameDriver"));
                 newDriver.setLastName(req.getParameter("lastNameDriver"));
@@ -69,8 +70,6 @@ public class CreateDriver extends HttpServlet {
                 newDriver.setPassword(req.getParameter("passwordDriver"));
                 newDriver.setRole(Role.DRIVER);
                 Long newDriverId = userDAO.createUser(newDriver);
-                //create new user with role "Driver"
-                employmentStatusDAO.createEmploymentStatus(newDriverId, Employment.FREE);
             } else {
                 log.warning("User with " + phoneNumber + " already exist!! " + this.getClass());
             }
