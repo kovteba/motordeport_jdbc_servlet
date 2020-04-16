@@ -123,30 +123,15 @@
                 <div class="navbar">
                   <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
                   <ul class="dropdown-menu tableFlights">
-                    <li>
-                      <form action="admin">
-                        <input type="hidden" value="OPEN">
-                        <input class="dropdown-item" type="submit" value="OPEN">
-                      </form>
-                    </li>
-                    <li>
-                      <form action="admin">
-                        <input type="hidden" value="CLOSED">
-                        <input class="dropdown-item" type="submit" value="CLOSED">
-                      </form>
-                    </li>
-                    <li>
-                      <form action="admin">
-                        <input type="hidden" value="CANCELED">
-                        <input class="dropdown-item" type="submit" value="CANCELED">
-                      </form>
-                    </li>
-                    <li>
-                      <form action="admin">
-                        <input type="hidden" value="INPROGRESS">
-                        <input class="dropdown-item" type="submit" value="IN PROGRESS">
-                      </form>
-                    </li>
+                    <c:forEach items="${requestScope.flightStatusList}" var="flightStatusList">
+                      <li>
+                        <form action="sortFlightByStatus" method="post" accept-charset="ISO-8859-1">
+                          <input type="hidden" name="flightStatusValue" value="${flightStatusList.statusValue}">
+                          <input type="submit" class="dropdown-item" type="submit"
+                                 value="${flightStatusList.statusValue}">
+                        </form>
+                      </li>
+                    </c:forEach>
                   </ul>
                 </div>
               </th>
