@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class RequestDAOImpl implements RequestDAO {
 
     //Create logger
-    private static Logger LOG = Logger.getLogger(RequestDAOImpl.class.getName());
+    private static Logger log = Logger.getLogger(RequestDAOImpl.class.getName());
 
     //set connection
     private static Connection conn = Connect.connect();
@@ -44,7 +44,7 @@ public class RequestDAOImpl implements RequestDAO {
      */
     @Override
     public Long createRequest(Request request) {
-        LOG.info("Create request --> " + request.toString() + " ....");
+        log.info("Create request --> " + request.toString() + " ....");
         Long idNewRequest = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
@@ -68,10 +68,10 @@ public class RequestDAOImpl implements RequestDAO {
             if (resultSet.next()) {
                 idNewRequest = resultSet.getLong(1);
             }
-            LOG.info("new request with id == " + idNewRequest + ", added successfully!");
+            log.info("new request with id == " + idNewRequest + ", added successfully!");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"createRequest\", " + e.toString());
+            log.warning("Some problem in method \"createRequest\", " + e.toString());
         }
         return idNewRequest;
     }
@@ -84,7 +84,7 @@ public class RequestDAOImpl implements RequestDAO {
      */
     @Override
     public List<Request> getAllRequestByStatus(RequestStatus requestStatus) {
-        LOG.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
+        log.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
         //create return list
         List<Request> allRequestBySatus = new ArrayList();
         //SQL query for select request by status
@@ -106,7 +106,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
+            log.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
                     + requestStatus.getRequestSatus() + "\', " + e.toString());
         }
         //return all users by role
@@ -121,7 +121,7 @@ public class RequestDAOImpl implements RequestDAO {
      */
     @Override
     public Request getRequestById(Long id) {
-        LOG.info("Get request by id == " + id + " ....");
+        log.info("Get request by id == " + id + " ....");
         Request request = null;
         //SQL query for select request by id
         String selectUserById = "SELECT * FROM requests " +
@@ -142,7 +142,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getRequestById\" by id == " + id + ", " + e.toString());
+            log.warning("Some problem in method \"getRequestById\" by id == " + id + ", " + e.toString());
         }
         //return request by id
         return request;
@@ -156,7 +156,7 @@ public class RequestDAOImpl implements RequestDAO {
      */
     @Override
     public void changeStatusRequestById(Long id, RequestStatus requestStatus) {
-        LOG.info("Change request status on -->  \"" + requestStatus.getRequestSatus() + "\", by id == " + id + " ....");
+        log.info("Change request status on -->  \"" + requestStatus.getRequestSatus() + "\", by id == " + id + " ....");
         //SQL query for update status request by id
         String changeStatusRequestById =
                 "UPDATE requests SET request_status = ? WHERE id = ?;";
@@ -169,14 +169,14 @@ public class RequestDAOImpl implements RequestDAO {
             preparedStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"changeStatusRequestById\" by id == " + id + ", with request status --> " +
+            log.warning("Some problem in method \"changeStatusRequestById\" by id == " + id + ", with request status --> " +
                     requestStatus.getRequestSatus() + ", " + e.toString());
         }
     }
 
     @Override
     public List<Request> getAllRequest() {
-        LOG.info("Get all requests by ....");
+        log.info("Get all requests by ....");
         //create return list
         List<Request> allRequestBySatus = new ArrayList();
         //SQL query for select all requests
@@ -198,7 +198,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+            log.warning("Some problem in method \"getAllRequestByStatus\"");
         }
         //return all users by role
         return allRequestBySatus;
@@ -206,7 +206,7 @@ public class RequestDAOImpl implements RequestDAO {
 
     @Override
     public List<Request> getAllRequestByDriver(User user) {
-        LOG.info("Get all requests by user ....");
+        log.info("Get all requests by user ....");
         //create return list
         List<Request> allRequestByUser = new ArrayList();
         //SQL query for select all requests
@@ -231,7 +231,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+            log.warning("Some problem in method \"getAllRequestByStatus\"");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -243,7 +243,7 @@ public class RequestDAOImpl implements RequestDAO {
 
     @Override
     public List<Request> getAllRequestByDriverAndRequestStatus(User user, RequestStatus requestStatus) {
-        LOG.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
+        log.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
         //create return list
         List<Request> allRequestBySatusAndUser = new ArrayList();
         //SQL query for select request by status
@@ -268,7 +268,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
+            log.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
                     + requestStatus.getRequestSatus() + "\', " + e.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -277,6 +277,18 @@ public class RequestDAOImpl implements RequestDAO {
         }
         //return all users by role
         return allRequestBySatusAndUser;
+    }
+
+    @Override
+    public void deleteRequestById(Long id) {
+        log.info("Delete request with id == " + id + " ....");
+        String deleteRequestById = "DELETE FROM requests where id=" + id;
+        try (Statement stmt = conn.createStatement();) {
+            stmt.executeUpdate(deleteRequestById);
+            log.info("Car with id == " + id + ", deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

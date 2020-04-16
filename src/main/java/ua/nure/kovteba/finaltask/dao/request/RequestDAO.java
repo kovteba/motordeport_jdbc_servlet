@@ -22,5 +22,6 @@ public interface RequestDAO {
 
     List<Request> getAllRequestByDriverAndRequestStatus(User user, RequestStatus requestStatus);
 
+    void deleteRequestById(Long id);
 
 }
