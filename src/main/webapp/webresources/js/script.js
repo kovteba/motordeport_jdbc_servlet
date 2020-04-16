@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     var logOut = document.getElementById("logOut");
 
-    if (userToken.value !== "") {
+    if (userToken.value !== "0") {
         logIn.style.display = "none";
         logOut.style.display = "block";
     } else {
