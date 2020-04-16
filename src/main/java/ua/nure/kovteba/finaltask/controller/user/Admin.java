@@ -15,9 +15,11 @@ import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAO;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
+import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.Token;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
+import ua.nure.kovteba.finaltask.util.CompareFlightByStatus;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -70,6 +72,7 @@ public class Admin extends HttpServlet {
         log.info("user token session--> " + userToken + ", class: " + this.getClass());
 
         Token token = tokenDAO.getTokenByToken(userToken);
+
         if (token != null && userDAO.getUserById(token.getUser()).getRole().getRoleValue().equals("ADMIN")) {
             //choose tab for open
             String value = req.getParameter("value");
@@ -97,9 +100,45 @@ public class Admin extends HttpServlet {
                 }
             }
 
+            //set user info
+            req.setAttribute("user", userDAO.getUserById(token.getUser()));
+
             //flights and requests section
             //set flight list
-            req.setAttribute("flightsList", flightDAO.getAllFlight());
+            if (req.getSession().getAttribute("typeSort") != null){
+                String typeSort = String.valueOf(req.getSession().getAttribute("typeSort"));
+                System.out.println("!!!!!!!!!!!!! : " + typeSort);
+
+                if (typeSort.equals("OPEN")){
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStatus(FlightStatus.OPEN));
+                    req.setAttribute("flightsList", flightList);
+                }
+                if (typeSort.equals("IN PROGRESS")){
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStatus(FlightStatus.INPROGRESS));
+                    req.setAttribute("flightsList", flightList);
+                }
+                if (typeSort.equals("CLOSE")){
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStatus(FlightStatus.CLOSE));
+                    req.setAttribute("flightsList", flightList);
+                }
+                if (typeSort.equals("CANCELED")){
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStatus(FlightStatus.CANСELED));
+                    req.setAttribute("flightsList", flightList);
+                }
+                if (typeSort.equals("DONE")){
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStatus(FlightStatus.DONE));
+                    req.setAttribute("flightsList", flightList);
+                }
+            } else {
+                req.setAttribute("flightsList", flightDAO.getAllFlight());
+            }
+
+            req.setAttribute("flightStatusList", FlightStatus.getFlightStatusList());
             //set requests with status OPEN
             req.setAttribute("requestsListOpen", requestDAO.getAllRequestByStatus(RequestStatus.OPEN));
             //set requests all
@@ -129,8 +168,6 @@ public class Admin extends HttpServlet {
             req.setAttribute("carTechnicalStatusList", CarTechnicalStatus.getListCarTechnicalStatus());
             req.setAttribute("carStatus", CarStatus.getListCarStatus());
 
-            //set token
-            req.setAttribute("token", userToken);
             RequestDispatcher dispatcher = req.getRequestDispatcher(
                     "/WEB-INF/templates/adminPage.jsp");
             dispatcher.forward(req, resp);
