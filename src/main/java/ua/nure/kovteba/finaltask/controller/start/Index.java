@@ -52,8 +52,7 @@ public class Index extends HttpServlet {
         //set flights list
         req.setAttribute("flightsList", flightDAO.getAllFlight());
 
-        //set token
-        req.setAttribute("token", "null");
+        req.getSession().setAttribute("userToken", "0");
 
         //open index page
         RequestDispatcher dispatcher = req.getRequestDispatcher(
@@ -84,9 +83,9 @@ public class Index extends HttpServlet {
                 if (role.equals("ADMIN")) {
                     resp.sendRedirect("admin");
                 } else if (role.equals("DISPATCHER")){
-                    resp.sendRedirect("dispatcher?token=" + token);
+                    resp.sendRedirect("dispatcher");
                 } else if (role.equals("DRIVER")){
-                    resp.sendRedirect("driver?token=" + token);
+                    resp.sendRedirect("driver");
                 }
             } else {
                 resp.sendRedirect("");
