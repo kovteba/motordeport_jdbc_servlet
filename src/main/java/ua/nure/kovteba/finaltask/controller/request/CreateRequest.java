@@ -55,44 +55,58 @@ public class CreateRequest extends HttpServlet {
         if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
+        if (user != null) {
+            if (user.getRole().getRoleValue().equals("ADMIN") || user.getRole().getRoleValue().equals("DRIVER")) {
+                //create new request
+                Request request = new Request();
+                if (req.getParameter("freeDriversId") != null) {
 
-        if (user != null && user.getRole().getRoleValue().equals("ADMIN")) {
-            //create new request
-            Request request = new Request();
+                    Long idDriver = Long.valueOf(req.getParameter("freeDriversId"));
+                    request.setDriver(userDAO.getUserById(idDriver));
 
-            if (req.getParameter("freeDriversId") != null) {
-                Long idDriver = Long.valueOf(req.getParameter("freeDriversId"));
-                request.setDriver(userDAO.getUserById(idDriver));
-                if (req.getParameter("carClassForRequest") != null) {
-                    String carClassForRequest = req.getParameter("carClassForRequest");
-                    request.setCarClass(CarClass.findCarClass(carClassForRequest));
-                    request.setLoadCapacity(Integer.parseInt(req.getParameter("loadCapacityForRequest")));
-                    request.setSeats(Integer.parseInt(req.getParameter("seatsForRequest")));
-                    if (req.getParameter("luggageCompartmentForRequest") == null) {
-                        request.setLuggageCompartment(false);
-                    } else {
-                        request.setLuggageCompartment(true);
+                    if (req.getParameter("carClassForRequest") != null) {
+
+                        String carClassForRequest = req.getParameter("carClassForRequest");
+                        request.setCarClass(CarClass.findCarClass(carClassForRequest));
+                        request.setLoadCapacity(Integer.parseInt(req.getParameter("loadCapacityForRequest")));
+                        request.setSeats(Integer.parseInt(req.getParameter("seatsForRequest")));
+                        if (req.getParameter("luggageCompartmentForRequest") == null) {
+                            request.setLuggageCompartment(false);
+                        } else {
+                            request.setLuggageCompartment(true);
+                        }
+                        if (req.getParameter("airConditioningForRequest") == null) {
+                            request.setAirConditioning(false);
+                        } else {
+                            request.setAirConditioning(true);
+                        }
+                        if (req.getParameter("navigatorForRequest") == null) {
+                            request.setNavigator(false);
+                        } else {
+                            request.setNavigator(true);
+                        }
+                        request.setRequestStatus(RequestStatus.OPEN);
+                        requestDAO.createRequest(request);
                     }
-                    if (req.getParameter("airConditioningForRequest") == null) {
-                        request.setAirConditioning(false);
-                    } else {
-                        request.setAirConditioning(true);
-                    }
-                    if (req.getParameter("navigatorForRequest") == null) {
-                        request.setNavigator(false);
-                    } else {
-                        request.setNavigator(true);
-                    }
-                    request.setRequestStatus(RequestStatus.OPEN);
-                    requestDAO.createRequest(request);
+
                 }
             }
-        } else {
-            resp.sendRedirect("");
+
+        }
+        String redirect = "";
+        if (user == null) {
+            resp.sendRedirect(redirect);
+        }
+        if (user.getRole().getRoleValue().equals("ADMIN")) {
+            redirect = "admin";
+        } else if (user.getRole().getRoleValue().equals("DRIVER")) {
+            redirect = "driver";
+        } else if (user.getRole().getRoleValue().equals("DISPATCHER")) {
+            redirect = "dispatcher";
         }
 
         //redirect to admin
-        resp.sendRedirect("admin");
+        resp.sendRedirect(redirect);
     }
 
 }
