@@ -63,4 +63,20 @@ class RequestDAOImplTest {
             System.out.println(request.toString());
         }
     }
+
+    @Test
+    void getAllRequestByDriver() {
+        List<Request> list = requestDAO.getAllRequestByDriver(userDAO.getUserById(133L));
+        for (Request request : list){
+            System.out.println(request.toString());
+        }
+    }
+
+    @Test
+    void getAllRequestByDriverAndRequestStatus() {
+        List<Request> list = requestDAO.getAllRequestByDriverAndRequestStatus(userDAO.getUserById(133L), RequestStatus.CLOSED);
+        for (Request request : list){
+            System.out.println(request.toString());
+        }
+    }
 }
