@@ -6,10 +6,15 @@ import ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
+import ua.nure.kovteba.finaltask.util.CompareFlightByStatus;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,23 +35,30 @@ class FlightDAOImplTest {
         flight.setStartDate(ZonedDateTime.now());
         flight.setEndDate(ZonedDateTime.now().plusDays(2));
         flight.setRequest(16L);
-        flightDAO.createFlight(flight);
-
+        Long id = flightDAO.createFlight(flight);
+        System.out.println("New flight id : " + id);
     }
 
     @Test
     void getAllFlight() {
         List<Flight> list = flightDAO.getAllFlight();
-        for (Flight flight : list){
-            System.out.println(flight.toString());
-            System.out.println(flight.getStartDate().toLocalDate());
+        for (Flight flight : list) {
+            System.out.println(flight.getFlightStatus());
         }
-
-
     }
 
     @Test
     void deleteFlightByIdRequest() {
         flightDAO.deleteFlightByIdRequest(16L);
     }
+
+    @Test
+    void getAllFlightByDriver() {
+        List<Flight> list = flightDAO.getAllFlightByDriver(userDAO.getUserById(133L));
+        for (Flight flight : list) {
+            System.out.println(flight.toString());
+        }
+    }
+
+
 }
