@@ -1,14 +1,11 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
-import jdk.vm.ci.meta.Local;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
-import ua.nure.kovteba.finaltask.enumlist.Role;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 @WebServlet(
