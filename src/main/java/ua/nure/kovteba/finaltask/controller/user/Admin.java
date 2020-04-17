@@ -19,7 +19,7 @@ import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.Token;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
-import ua.nure.kovteba.finaltask.util.CompareFlightByStatus;
+import ua.nure.kovteba.finaltask.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -105,34 +105,56 @@ public class Admin extends HttpServlet {
 
             //flights and requests section
             //set flight list
-            if (req.getSession().getAttribute("typeSort") != null){
+            if (req.getSession().getAttribute("typeSort") != null) {
                 String typeSort = String.valueOf(req.getSession().getAttribute("typeSort"));
                 System.out.println("!!!!!!!!!!!!! : " + typeSort);
 
-                if (typeSort.equals("OPEN")){
+                if (typeSort.equals("OPEN")) {
                     List<Flight> flightList = flightDAO.getAllFlight();
                     flightList.sort(new CompareFlightByStatus(FlightStatus.OPEN));
                     req.setAttribute("flightsList", flightList);
-                }
-                if (typeSort.equals("IN PROGRESS")){
+                } else if (typeSort.equals("IN PROGRESS")) {
                     List<Flight> flightList = flightDAO.getAllFlight();
                     flightList.sort(new CompareFlightByStatus(FlightStatus.INPROGRESS));
                     req.setAttribute("flightsList", flightList);
-                }
-                if (typeSort.equals("CLOSE")){
+                } else if (typeSort.equals("CLOSE")) {
                     List<Flight> flightList = flightDAO.getAllFlight();
                     flightList.sort(new CompareFlightByStatus(FlightStatus.CLOSE));
                     req.setAttribute("flightsList", flightList);
-                }
-                if (typeSort.equals("CANCELED")){
+                } else if (typeSort.equals("CANCELED")) {
                     List<Flight> flightList = flightDAO.getAllFlight();
                     flightList.sort(new CompareFlightByStatus(FlightStatus.CANСELED));
                     req.setAttribute("flightsList", flightList);
-                }
-                if (typeSort.equals("DONE")){
+                } else if (typeSort.equals("DONE")) {
                     List<Flight> flightList = flightDAO.getAllFlight();
                     flightList.sort(new CompareFlightByStatus(FlightStatus.DONE));
                     req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("endDateDown")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByEndDateDown());
+                    req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("endDateUp")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByEndDateUp());
+                    req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("flightNumberDown")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByNumberDown());
+                    req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("flightNumberUp")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByNumberUp());
+                    req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("startDateDown")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStartDateDown());
+                    req.setAttribute("flightsList", flightList);
+                } else if (typeSort.equals("startDateUp")) {
+                    List<Flight> flightList = flightDAO.getAllFlight();
+                    flightList.sort(new CompareFlightByStartDateUp());
+                    req.setAttribute("flightsList", flightList);
+                } else {
+                    req.setAttribute("flightsList", flightDAO.getAllFlight());
                 }
             } else {
                 req.setAttribute("flightsList", flightDAO.getAllFlight());
