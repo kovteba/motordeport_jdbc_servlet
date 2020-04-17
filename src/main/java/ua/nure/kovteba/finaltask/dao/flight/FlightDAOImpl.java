@@ -109,7 +109,7 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public List<Flight> getAllFlightByDriver(User driver) {
-        log.info("Get all flight ....");
+        log.info("Get all flight by driver ....");
         List<Flight> flightListByDriver = new ArrayList<>();
         //SQL query for create new flight
         String selectAll = "SELECT * FROM flights;";
