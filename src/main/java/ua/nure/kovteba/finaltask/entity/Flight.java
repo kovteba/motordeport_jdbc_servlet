@@ -28,4 +28,8 @@ public class Flight {
 
     private Long request;
 
+    public boolean testEndDate(){
+        return endDate.toLocalDate().isAfter(ZonedDateTime.now().toLocalDate());
+    }
+
 }
