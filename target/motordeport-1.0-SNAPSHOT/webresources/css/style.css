@@ -23,6 +23,10 @@
     color: white;
 }
 
+.logOutBtn{
+    color: white;
+}
+
 .changeLanguage {
     position: absolute;
     top: 20%;

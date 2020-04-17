@@ -48,8 +48,8 @@
             </div>
           </div>
           <div id="logOut" class="logOut">
-            <form method="post" action="logOut">
-              <input type="submit" value="log out">
+            <form method="get" action="">
+              <a style="color: white; text-underline: none" href="logOut"><fmt:message key="label.logOut"/></a>
             </form>
           </div>
           <div class="navbar logIn" id="logIn">
