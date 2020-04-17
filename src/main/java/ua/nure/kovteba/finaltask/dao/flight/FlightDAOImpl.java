@@ -20,17 +20,17 @@ public class FlightDAOImpl implements FlightDAO {
     private static Logger log = Logger.getLogger(FlightDAOImpl.class.getName());
 
     //set connection
-    private static Connection conn = Connect.connect();
+    private static final Connection CONNECT = Connect.connect();
 
     //
-    private static Serialization serialization = new Serialization();
+    private static final Serialization SERIALIZATION = new Serialization();
 
     //create statement
     private static Statement smtp;
 
     static {
         try {
-            smtp = conn.createStatement();
+            smtp = CONNECT.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,13 +44,13 @@ public class FlightDAOImpl implements FlightDAO {
         String insert = "INSERT INTO " +
                 "flights (flight_number, flight_status, car_id, driver_id, start_date, end_date, request) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(insert,
+        try (PreparedStatement preparedStatement = CONNECT.prepareStatement(insert,
                 PreparedStatement.RETURN_GENERATED_KEYS);) {
             //set value in insert string
             preparedStatement.setString(1, flight.getFlightNumber());
             preparedStatement.setString(2, flight.getFlightStatus().getStatusValue());
-            preparedStatement.setString(3, serialization.entityToString(flight.getCar()));
-            preparedStatement.setString(4, serialization.entityToString(flight.getDriver()));
+            preparedStatement.setString(3, SERIALIZATION.entityToString(flight.getCar()));
+            preparedStatement.setString(4, SERIALIZATION.entityToString(flight.getDriver()));
             preparedStatement.setString(5, flight.getStartDate().toString());
             preparedStatement.setString(6, flight.getEndDate().toString());
             preparedStatement.setString(7, String.valueOf(flight.getRequest()));
@@ -75,7 +75,7 @@ public class FlightDAOImpl implements FlightDAO {
         //SQL query for create new flight
         String selectAll = "SELECT * FROM flights;";
         //Create ResultSet in try with resources
-        try (ResultSet rs = smtp.executeQuery(selectAll);) {
+        try (ResultSet rs = CONNECT.createStatement().executeQuery(selectAll)) {
             while (rs.next()) {
                 Flight newFlight = new Flight();
                 newFlight.setId(rs.getLong(1));
@@ -83,16 +83,12 @@ public class FlightDAOImpl implements FlightDAO {
                 newFlight.setFlightNumber(rs.getString(3));
                 newFlight.setFlightStatus(FlightStatus.findFlightStatus(rs.getString(4)));
                 newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
-                newFlight.setCar((Car) serialization.fromString(rs.getString(6)));
-                newFlight.setDriver((User) serialization.fromString(rs.getString(7)));
+                newFlight.setCar((Car) SERIALIZATION.fromString(rs.getString(6)));
+                newFlight.setDriver((User) SERIALIZATION.fromString(rs.getString(7)));
                 newFlight.setRequest(Long.valueOf(rs.getString(8)));
                 flightList.add(newFlight);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         //return all flight
@@ -103,7 +99,7 @@ public class FlightDAOImpl implements FlightDAO {
     public void deleteFlightByIdRequest(Long id) {
         //SQL query for create new flight
         String deleteFlightByIdRequest = "DELETE FROM flights WHERE request = " + id + ";";
-        try (Statement stmt = conn.createStatement();) {
+        try (Statement stmt = CONNECT.createStatement();) {
             stmt.executeUpdate(deleteFlightByIdRequest);
             log.info("User with id == " + id + ", deleted successfully!");
         } catch (SQLException e) {
@@ -120,7 +116,7 @@ public class FlightDAOImpl implements FlightDAO {
         //Create ResultSet in try with resources
         try (ResultSet rs = smtp.executeQuery(selectAll);) {
             while (rs.next()) {
-                User user = (User) serialization.fromString(rs.getString(7));
+                User user = (User) SERIALIZATION.fromString(rs.getString(7));
                 if (driver.getId().equals(user.getId())){
                     Flight newFlight = new Flight();
                     newFlight.setId(rs.getLong(1));
@@ -128,17 +124,13 @@ public class FlightDAOImpl implements FlightDAO {
                     newFlight.setFlightNumber(rs.getString(3));
                     newFlight.setFlightStatus(FlightStatus.findFlightStatus(rs.getString(4)));
                     newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
-                    newFlight.setCar((Car) serialization.fromString(rs.getString(6)));
-                    newFlight.setDriver((User) serialization.fromString(rs.getString(7)));
+                    newFlight.setCar((Car) SERIALIZATION.fromString(rs.getString(6)));
+                    newFlight.setDriver((User) SERIALIZATION.fromString(rs.getString(7)));
                     newFlight.setRequest(Long.valueOf(rs.getString(8)));
                     flightListByDriver.add(newFlight);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         //return all flight
