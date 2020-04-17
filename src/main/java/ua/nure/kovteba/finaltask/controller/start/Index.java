@@ -3,18 +3,20 @@ package ua.nure.kovteba.finaltask.controller.start;
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
+import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
+import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
+import ua.nure.kovteba.finaltask.util.sort.ChooseSort;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ResourceBundle;
+import java.util.List;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -50,9 +52,20 @@ public class Index extends HttpServlet {
         }
 
         //set flights list
-        req.setAttribute("flightsList", flightDAO.getAllFlight());
+        if (req.getSession().getAttribute("typeSort") != null) {
+            String typeSort = String.valueOf(req.getSession().getAttribute("typeSort"));
+            List<Flight> flightList = flightDAO.getAllFlight();
+            req.setAttribute("flightsList", ChooseSort.chooseTypeSort(typeSort, flightList));
 
-        req.getSession().setAttribute("userToken", "0");
+        } else {
+            req.setAttribute("flightsList", flightDAO.getAllFlight());
+        }
+
+        req.setAttribute("flightStatusList", FlightStatus.getFlightStatusList());
+
+        if (req.getSession().getAttribute("userToken") == null){
+            req.getSession().setAttribute("userToken", "0");
+        }
 
         //open index page
         RequestDispatcher dispatcher = req.getRequestDispatcher(
