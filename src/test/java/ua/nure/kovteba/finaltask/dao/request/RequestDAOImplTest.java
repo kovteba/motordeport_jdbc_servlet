@@ -8,17 +8,20 @@ import ua.nure.kovteba.finaltask.enumlist.RequestStatus;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class RequestDAOImplTest {
 
-    UserDAOImpl userDAO = new UserDAOImpl();
-    RequestDAOImpl requestDAO = new RequestDAOImpl();
+    private static final UserDAOImpl USER_DAO;
+    private static final RequestDAOImpl REQUEST_DAO;
+
+    static {
+        USER_DAO = new UserDAOImpl();
+        REQUEST_DAO = new RequestDAOImpl();
+    }
 
     @Test
     void createRequest() {
         Request request = new Request();
-        request.setDriver(userDAO.getUserById(1L));
+        request.setDriver(USER_DAO.getUserById(1L));
         request.setCarClass(CarClass.COMFORT);
         request.setLoadCapacity(1000);
         request.setSeats(20);
@@ -26,22 +29,15 @@ class RequestDAOImplTest {
         request.setAirConditioning(true);
         request.setNavigator(true);
         request.setRequestStatus(RequestStatus.OPEN);
-        Long newRequestId = requestDAO.createRequest(request);
-        Request findNewRequest = requestDAO.getRequestById(newRequestId);
-        request.setId(newRequestId);
-        assertTrue(request.getCarClass().equals(findNewRequest.getCarClass()));
-        assertTrue(request.getLoadCapacity() == (findNewRequest.getLoadCapacity()));
-        assertTrue(request.getSeats() == (findNewRequest.getSeats()));
-        assertTrue(request.getLuggageCompartment().equals(findNewRequest.getLuggageCompartment()));
-        assertTrue(request.getAirConditioning().equals(findNewRequest.getAirConditioning()));
-        assertTrue(request.getNavigator().equals(findNewRequest.getNavigator()));
-        assertTrue(request.getRequestStatus().equals(findNewRequest.getRequestStatus()));
+        Long newRequestId = REQUEST_DAO.createRequest(request);
+        Request findNewRequest = REQUEST_DAO.getRequestById(newRequestId);
+
 
     }
 
     @Test
     void getAllRequestByStatus() {
-        List<Request> list = requestDAO.getAllRequestByStatus(RequestStatus.OPEN);
+        List<Request> list = REQUEST_DAO.getAllRequestByStatus(RequestStatus.OPEN);
         for (Request request : list){
             System.out.println(request.toString());
         }
@@ -49,16 +45,17 @@ class RequestDAOImplTest {
 
     @Test
     void getRequestById() {
+        System.out.println(REQUEST_DAO.getRequestById(36L));
     }
 
     @Test
     void changeStatusRequestById() {
-        requestDAO.changeStatusRequestById(10L, RequestStatus.CLOSED);
+        REQUEST_DAO.changeStatusRequestById(36L, RequestStatus.CLOSED);
     }
 
     @Test
     void getAllRequest() {
-        List<Request> list = requestDAO.getAllRequest();
+        List<Request> list = REQUEST_DAO.getAllRequest();
         for (Request request : list){
             System.out.println(request.toString());
         }
@@ -66,7 +63,7 @@ class RequestDAOImplTest {
 
     @Test
     void getAllRequestByDriver() {
-        List<Request> list = requestDAO.getAllRequestByDriver(userDAO.getUserById(133L));
+        List<Request> list = REQUEST_DAO.getAllRequestByDriver(USER_DAO.getUserById(133L));
         for (Request request : list){
             System.out.println(request.toString());
         }
@@ -74,7 +71,7 @@ class RequestDAOImplTest {
 
     @Test
     void getAllRequestByDriverAndRequestStatus() {
-        List<Request> list = requestDAO.getAllRequestByDriverAndRequestStatus(userDAO.getUserById(133L), RequestStatus.CLOSED);
+        List<Request> list = REQUEST_DAO.getAllRequestByDriverAndRequestStatus(USER_DAO.getUserById(133L), RequestStatus.CLOSED);
         for (Request request : list){
             System.out.println(request.toString());
         }

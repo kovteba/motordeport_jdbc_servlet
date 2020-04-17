@@ -1,8 +1,6 @@
 package ua.nure.kovteba.finaltask.dao.user;
 
 import org.fluttercode.datafactory.impl.DataFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
@@ -14,15 +12,16 @@ import java.util.*;
 
 class UserDAOImplTest {
 
-    private static UserDAOImpl userDAO;
+    private static final UserDAOImpl USER_DAO;
 
-    private static DataFactory dataFactory = new DataFactory();
+    private static final DataFactory DATA_FACTORY;
 
-    private static EmploymentStatusDAOImpl employmentStatusDAO;
+    private static final EmploymentStatusDAOImpl EMPLOYMENT_STATUS_DAO;
 
     static {
-        userDAO = new UserDAOImpl();
-        employmentStatusDAO = new EmploymentStatusDAOImpl();
+        USER_DAO = new UserDAOImpl();
+        EMPLOYMENT_STATUS_DAO = new EmploymentStatusDAOImpl();
+        DATA_FACTORY = new DataFactory();
     }
 
     @Test
@@ -32,63 +31,63 @@ class UserDAOImplTest {
             Random random = new Random();
             String firstName = null;
             for (int j = 0; j < random.nextInt(100); j++) {
-                firstName = dataFactory.getFirstName();
+                firstName = DATA_FACTORY.getFirstName();
             }
             String lastName = null;
             for (int j = 0; j < random.nextInt(100); j++) {
-                lastName = dataFactory.getLastName();
+                lastName = DATA_FACTORY.getLastName();
             }
             String number = null;
             for (int j = 0; j < random.nextInt(100); j++) {
-                number = String.valueOf(dataFactory.getNumberBetween(1000000, 9999999));
+                number = String.valueOf(DATA_FACTORY.getNumberBetween(1000000, 9999999));
             }
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setPhoneNumber("050" + number);
             user.setRole(Role.DISPATCHER);
             user.setPassword(lastName);
-            Long idNewUser = userDAO.createUser(user);
+            Long idNewUser = USER_DAO.createUser(user);
             System.out.println(idNewUser);
         }
     }
 
     @Test
     void getUserByRole() {
-        List<User> userList = userDAO.getUserByRole(Role.DRIVER);
-        for (User user : userList){
+        List<User> userList = USER_DAO.getUserByRole(Role.DRIVER);
+        for (User user : userList) {
             System.out.println(user.toString());
         }
     }
 
     @Test
     void getUserById() {
-        User user = userDAO.getUserById(2L);
+        User user = USER_DAO.getUserById(1L);
         System.out.println(user == null);
     }
 
     @Test
     void getUserByUserPhoneNumber() {
-        System.out.println(userDAO.getUserByUserPhoneNumber("0509769376").toString());
+        System.out.println(USER_DAO.getUserByUserPhoneNumber("0509769376").toString());
     }
 
     @Test
     void getAllUsers() {
-        Map<User,String> map = new HashMap<>();
-        List<User> userList = userDAO.getAllUsers();
-        for (User user : userList){
+        Map<User, String> map = new HashMap<>();
+        List<User> userList = USER_DAO.getAllUsers();
+        for (User user : userList) {
             System.out.println(user.toString());
         }
-        List<EmploymentStatus> employmentStatuses = employmentStatusDAO.getAllValueEmployment();
+        List<EmploymentStatus> employmentStatuses = EMPLOYMENT_STATUS_DAO.getAllValueEmployment();
 
-        for (User user : userList){
-            for (EmploymentStatus employmentStatus : employmentStatuses){
-                if (user.getId().equals(employmentStatus.getIdDriver())){
+        for (User user : userList) {
+            for (EmploymentStatus employmentStatus : employmentStatuses) {
+                if (user.getId().equals(employmentStatus.getIdDriver())) {
                     map.put(user, employmentStatus.getValue());
                 }
             }
         }
 
-        for (Map.Entry entry : map.entrySet()){
+        for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
 
@@ -96,12 +95,13 @@ class UserDAOImplTest {
 
     @Test
     void deleteUserById() {
+        USER_DAO.deleteUserById(135L);
     }
 
     @Test
     void getAllUsersByListId() {
-        List<User> list = userDAO.getAllUsersByListId(employmentStatusDAO.getAllFreeDrivers());
-        for (User user : list){
+        List<User> list = USER_DAO.getAllUsersByListId(EMPLOYMENT_STATUS_DAO.getAllFreeDrivers());
+        for (User user : list) {
             System.out.println(user.toString());
         }
     }

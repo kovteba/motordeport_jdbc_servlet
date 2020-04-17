@@ -5,7 +5,7 @@ import ua.nure.kovteba.finaltask.entity.CarBrand;
 
 class CarBrandDAOImplTest {
 
-    private static final CarBrandDAOImpl CAR_BRAND_DAO;
+    private static final CarBrandDAO CAR_BRAND_DAO;
 
     static {
         CAR_BRAND_DAO = new CarBrandDAOImpl();

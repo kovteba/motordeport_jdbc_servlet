@@ -8,7 +8,7 @@ import java.util.List;
 
 class EmploymentStatusDAOImplTest {
 
-    private static final EmploymentStatusDAOImpl EMPLOYMENT_STATUS_DAO;
+    private static final EmploymentStatusDAO EMPLOYMENT_STATUS_DAO;
 
     static {
         EMPLOYMENT_STATUS_DAO = new EmploymentStatusDAOImpl();

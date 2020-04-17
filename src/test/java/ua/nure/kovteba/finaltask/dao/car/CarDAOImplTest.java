@@ -1,22 +1,18 @@
 package ua.nure.kovteba.finaltask.dao.car;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAO;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Car;
 import ua.nure.kovteba.finaltask.enumlist.CarClass;
 import ua.nure.kovteba.finaltask.enumlist.CarStatus;
 import ua.nure.kovteba.finaltask.enumlist.CarTechnicalStatus;
 
-import java.util.List;
-
 class CarDAOImplTest {
 
-    private static final CarDAOImpl CAR_DAO;
+    private static final CarDAO CAR_DAO;
 
-    private static final CarBrandDAOImpl CAR_BRAND_DAO;
+    private static final CarBrandDAO CAR_BRAND_DAO;
 
     private static Long idNewCar;
 
