@@ -31,6 +31,7 @@
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/i18n/i18nRU.java
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/dao/carbrand/CarBrandDAOImpl.java
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/util/Connect.java
+/home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/controller/flight/DoneFlight.java
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/dao/carbrand/CarBrandDAO.java
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/dao/car/CarDAOImpl.java
 /home/dima/Documents/Projects/epamFinProject/motorDeportServlet/motordeport/src/main/java/ua/nure/kovteba/finaltask/controller/car/ChangeCarInformation.java

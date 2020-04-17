@@ -87,6 +87,7 @@ public class DoneFlight extends HttpServlet {
 
                 if (req.getParameter("carTechnicalStatusValueAfterFlight") != null) {
                     String technicalStatus = req.getParameter("carTechnicalStatusValueAfterFlight");
+                    carDAO.changeCarStatus(idCarInFlight, CarStatus.FREE);
                     carDAO.changeCarTechnicalStatus(idCarInFlight, CarTechnicalStatus.findCarTechnicatlStatus(technicalStatus));
                     flightDAO.changeFlightStatus(idFinishFlight, FlightStatus.DONE);
                 }

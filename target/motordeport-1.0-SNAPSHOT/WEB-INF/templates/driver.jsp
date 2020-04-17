@@ -30,6 +30,7 @@
   <%String driverBtn = (String) request.getAttribute("driverBtn");%>
   <%String carBtn = (String) request.getAttribute("carBtn");%>
 
+
   <div class="row header">
     <div class="col-md-4"><img src="webresources/img/logo.png" class="logo" alt=""></div>
     <div class="col-md-4 time navBox"><span id="time" style="color: white">00:00:00</span></div>
@@ -54,8 +55,8 @@
         </div>
       </div>
       <div id="logOut" class="logOut">
-        <form method="post" action="logOut">
-          <input type="submit" value="<fmt:message key="label.logOut"/>">
+        <form method="get" action="">
+          <a style="color: white; text-underline: none" href="logOut"><fmt:message key="label.logOut"/></a>
         </form>
       </div>
       <div class="navbar logIn" id="logIn">
@@ -195,36 +196,36 @@
             </thead>
             <tbody>
             <c:forEach items="${requestScope.requestsListOpen}" var="requestsListOpen" varStatus="counter">
-                <tr>
-                  <th>${counter.count}</th>
-                  <td style="padding: 10px">${requestsListOpen.carClass.classValue}</td>
-                  <td style="padding: 10px">${requestsListOpen.loadCapacity}</td>
-                  <td style="padding: 10px">${requestsListOpen.seats}</td>
-                  <c:choose>
-                    <c:when test="${requestsListOpen.luggageCompartment}">
-                      <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                    </c:when>
-                    <c:otherwise>
-                      <td style="padding: 10px"><input type="checkbox" disabled></td>
-                    </c:otherwise>
-                  </c:choose>
-                  <c:choose>
-                    <c:when test="${requestsListOpen.airConditioning}">
-                      <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                    </c:when>
-                    <c:otherwise>
-                      <td style="padding: 10px"><input type="checkbox" disabled></td>
-                    </c:otherwise>
-                  </c:choose>
-                  <c:choose>
-                    <c:when test="${requestsListOpen.navigator}">
-                      <td style="padding: 10px"><input type="checkbox" checked disabled></td>
-                    </c:when>
-                    <c:otherwise>
-                      <td style="padding: 10px"><input type="checkbox" disabled></td>
-                    </c:otherwise>
-                  </c:choose>
-                </tr>
+              <tr>
+                <th>${counter.count}</th>
+                <td style="padding: 10px">${requestsListOpen.carClass.classValue}</td>
+                <td style="padding: 10px">${requestsListOpen.loadCapacity}</td>
+                <td style="padding: 10px">${requestsListOpen.seats}</td>
+                <c:choose>
+                  <c:when test="${requestsListOpen.luggageCompartment}">
+                    <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                  </c:when>
+                  <c:otherwise>
+                    <td style="padding: 10px"><input type="checkbox" disabled></td>
+                  </c:otherwise>
+                </c:choose>
+                <c:choose>
+                  <c:when test="${requestsListOpen.airConditioning}">
+                    <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                  </c:when>
+                  <c:otherwise>
+                    <td style="padding: 10px"><input type="checkbox" disabled></td>
+                  </c:otherwise>
+                </c:choose>
+                <c:choose>
+                  <c:when test="${requestsListOpen.navigator}">
+                    <td style="padding: 10px"><input type="checkbox" checked disabled></td>
+                  </c:when>
+                  <c:otherwise>
+                    <td style="padding: 10px"><input type="checkbox" disabled></td>
+                  </c:otherwise>
+                </c:choose>
+              </tr>
             </c:forEach>
             </tbody>
           </table>
@@ -341,10 +342,58 @@
 
         <div class="tab-pane fade" id="myFlight" role="tabpanel"
              aria-labelledby="myFlight-tab">
-
-
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col"><fmt:message key="label.flightNumber"/></th>
+              <th scope="col"><fmt:message key="label.startDateIn"/></th>
+              <th scope="col"><fmt:message key="label.endDateIn"/></th>
+              <th scope="col"><fmt:message key="label.status.request"/></th>
+              <th scope="col"><fmt:message key="label.carTechnicalStatus"/></th>
+              <th scope="col"><fmt:message key="label.actionApprove"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${requestScope.flightListByUser}" var="flightListByUser" varStatus="counter">
+              <tr>
+                <td style="padding: 10px">${counter.count}</td>
+                <td style="padding: 10px">${flightListByUser.flightNumber}</td>
+                <td style="padding: 10px">${flightListByUser.startDate.toLocalDate()}</td>
+                <td style="padding: 10px">${flightListByUser.endDate.toLocalDate()}</td>
+                <td style="padding: 10px">${flightListByUser.flightStatus.statusValue}</td>
+                <form action="doneFlight" method="post" accept-charset="ISO-8859-1">
+                  <td style="padding: 10px">
+                    <input type="hidden" name="idCarInFlight" value="${flightListByUser.car.id}">
+                    <input type="hidden" name="idFinishFlight" value="${flightListByUser.id}">
+                    <select name="carTechnicalStatusValueAfterFlight" required>
+                      <option selected disabled="disabled"><fmt:message key="label.ChooseTechnStatus"/></option>
+                      <c:forEach items="${requestScope.carTechnicalStatusList}" var="carTechnicalStatusList">
+                        <option value="${carTechnicalStatusList.carTechnicalStatusValue}">
+                            ${carTechnicalStatusList.carTechnicalStatusValue}
+                        </option>
+                      </c:forEach>
+                    </select>
+                  </td>
+                  <td style="padding: 10px">
+                    <c:choose>
+                      <c:when test="${flightListByUser.flightStatus.statusValue == 'DONE'}">
+                        <button class="btn btn-success" disabled><fmt:message key="label.done"/></button>
+                      </c:when>
+                      <c:when test="${flightListByUser.testEndDate()}">
+                        <button class="btn btn-success"><fmt:message key="label.done"/></button>
+                      </c:when>
+                      <c:otherwise>
+                        <button class="btn btn-success" disabled><fmt:message key="label.done"/></button>
+                      </c:otherwise>
+                    </c:choose>
+                  </td>
+                </form>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
         </div>
-
       </div>
     </div>
   </div>

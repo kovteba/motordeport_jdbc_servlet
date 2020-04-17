@@ -10,6 +10,7 @@ ua/nure/kovteba/finaltask/enumlist/CarTechnicalStatus.class
 ua/nure/kovteba/finaltask/util/Encryption.class
 ua/nure/kovteba/finaltask/util/Connect.class
 ua/nure/kovteba/finaltask/dao/employmentstatus/EmploymentStatusDAO.class
+ua/nure/kovteba/finaltask/controller/flight/DoneFlight.class
 ua/nure/kovteba/finaltask/dao/carbrand/CarBrandDAOImpl.class
 ua/nure/kovteba/finaltask/entity/EmploymentStatus.class
 ua/nure/kovteba/finaltask/controller/start/Index.class

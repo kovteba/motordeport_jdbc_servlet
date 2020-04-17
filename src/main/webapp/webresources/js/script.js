@@ -16,7 +16,6 @@ $(document).ready(function () {
     }
 
 
-
     // e.preventDefault();
     $(".logInBtn").click(function (e) {
         var phoneNumber = document.getElementById("phoneNumber");
@@ -27,21 +26,20 @@ $(document).ready(function () {
             "password": password.value
         };
 
-        if (phoneNumber.value === ""){
+        if (phoneNumber.value === "") {
             e.preventDefault();
             phoneNumber.setAttribute("placeholder", "cant be enpty");
             phoneNumber.style.background = "red";
-        } else if (password.value === ""){
+        } else if (password.value === "") {
             password.setAttribute("placeholder", "cant be enpty");
             password.style.background = "red";
         } else {
             $.post({
-                url:"",
+                url: "",
                 data: logInForm
             });
         }
     });
-
 
 
     setInterval(function () {

@@ -35,7 +35,7 @@ class FlightDAOImplTest {
     void getAllFlight() {
         List<Flight> list = flightDAO.getAllFlight();
         for (Flight flight : list) {
-            System.out.println(flight.getFlightStatus());
+            System.out.println(flight.toString());
         }
     }
 
@@ -53,4 +53,8 @@ class FlightDAOImplTest {
     }
 
 
+    @Test
+    void changeFlightStatus() {
+        flightDAO.changeFlightStatus(33L, FlightStatus.findFlightStatus("OPEN"));
+    }
 }
