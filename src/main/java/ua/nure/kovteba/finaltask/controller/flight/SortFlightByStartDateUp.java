@@ -45,10 +45,10 @@ public class SortFlightByStartDateUp extends HttpServlet {
         User user = null;
         if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
 
-            if (req.getParameter("flightStartDateValue") != null) {
-                req.getSession().setAttribute("typeSort", req.getParameter("flightStartDateValue"));
-            }
+        if (req.getParameter("flightStartDateValue") != null) {
+            req.getSession().setAttribute("typeSort", req.getParameter("flightStartDateValue"));
         }
 
         if (userToken.equals("0")) {

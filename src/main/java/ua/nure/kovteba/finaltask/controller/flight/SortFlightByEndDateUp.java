@@ -45,10 +45,10 @@ public class SortFlightByEndDateUp extends HttpServlet {
         User user = null;
         if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
 
-            if (req.getParameter("flightEndDateValue") != null) {
-                req.getSession().setAttribute("typeSort", req.getParameter("flightEndDateValue"));
-            }
+        if (req.getParameter("flightEndDateValue") != null) {
+            req.getSession().setAttribute("typeSort", req.getParameter("flightEndDateValue"));
         }
 
         if (userToken.equals("0")) {

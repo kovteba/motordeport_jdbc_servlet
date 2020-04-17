@@ -47,10 +47,10 @@ public class SortFlightByStatus extends HttpServlet {
         User user = null;
         if (!userToken.equals("0")){
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
+        }
 
-            if (req.getParameter("flightStatusValue") != null){
-                req.getSession().setAttribute("typeSort", req.getParameter("flightStatusValue"));
-            }
+        if (req.getParameter("flightStatusValue") != null){
+            req.getSession().setAttribute("typeSort", req.getParameter("flightStatusValue"));
         }
 
         if (userToken.equals("0")){
