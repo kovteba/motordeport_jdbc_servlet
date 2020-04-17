@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @WebServlet(
-        name = "sortFlightByNumberDown",
-        urlPatterns = "/sortFlightByNumberDown"
+        name = "sortFlightByStartDateDown",
+        urlPatterns = "/sortFlightByStartDateDown"
 )
-public class SortFlightByNumberDown extends HttpServlet {
+public class SortFlightByStartDateDown extends HttpServlet {
 
     //Create logger
-    private static Logger log = Logger.getLogger(SortFlightByNumberDown.class.getName());
+    private static Logger log = Logger.getLogger(SortFlightByStartDateDown.class.getName());
 
     private static UserDAO userDAO;
     private static TokenDAO tokenDAO;
@@ -46,8 +46,8 @@ public class SortFlightByNumberDown extends HttpServlet {
         if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
 
-            if (req.getParameter("flightNumberValue") != null) {
-                req.getSession().setAttribute("typeSort", req.getParameter("flightNumberValue"));
+            if (req.getParameter("flightStartDateValue") != null) {
+                req.getSession().setAttribute("typeSort", req.getParameter("flightStartDateValue"));
             }
         }
 

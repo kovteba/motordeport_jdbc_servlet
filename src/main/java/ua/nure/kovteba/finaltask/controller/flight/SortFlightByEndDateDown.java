@@ -19,7 +19,7 @@ import java.util.logging.Logger;
         name = "sortFlightByEndDateDown",
         urlPatterns = "/sortFlightByEndDateDown"
 )
-public class SortFlightByEndDateDown  extends HttpServlet {
+public class SortFlightByEndDateDown extends HttpServlet {
 
     //Create logger
     private static Logger log = Logger.getLogger(SortFlightByEndDateDown.class.getName());
@@ -39,26 +39,26 @@ public class SortFlightByEndDateDown  extends HttpServlet {
 
         String userToken = "0";
 
-        if (req.getSession().getAttribute("userToken") != null){
+        if (req.getSession().getAttribute("userToken") != null) {
             userToken = String.valueOf(req.getSession().getAttribute("userToken"));
         }
 
         User user = null;
-        if (!userToken.equals("0")){
+        if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
 
-            if (req.getParameter("flightEndValue") != null){
-                req.getSession().setAttribute("typeSort", req.getParameter("flightEndValue"));
+            if (req.getParameter("flightEndDateValue") != null) {
+                req.getSession().setAttribute("typeSort", req.getParameter("flightEndDateValue"));
             }
         }
 
-        if (userToken.equals("0")){
+        if (userToken.equals("0")) {
             resp.sendRedirect("");
-        } else if (user.getRole().getRoleValue().equals("ADMIN")){
+        } else if (user.getRole().getRoleValue().equals("ADMIN")) {
             resp.sendRedirect("admin");
-        } else if (user.getRole().getRoleValue().equals("DRIVER")){
+        } else if (user.getRole().getRoleValue().equals("DRIVER")) {
             resp.sendRedirect("driver");
-        } else if (user.getRole().getRoleValue().equals("DISPATCHER")){
+        } else if (user.getRole().getRoleValue().equals("DISPATCHER")) {
             resp.sendRedirect("dispatcher");
         }
 
