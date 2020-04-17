@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,9 @@ public class Driver extends HttpServlet {
 
             req.setAttribute("flightListByUser",flightDAO.getAllFlightByDriver(user));
 
+            req.setAttribute("carTechnicalStatusList", CarTechnicalStatus.getListCarTechnicalStatus());
 
-            //car section
-            //set car list
+            //set car list class
             req.setAttribute("carClassList", CarClass.getListCarClass());
 
 
