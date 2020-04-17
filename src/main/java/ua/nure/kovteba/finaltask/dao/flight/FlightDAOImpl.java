@@ -147,7 +147,7 @@ public class FlightDAOImpl implements FlightDAO {
         try (ResultSet rs = smtp.executeQuery(selectAll);) {
             while (rs.next()) {
                 User user = (User) SERIALIZATION.fromString(rs.getString(7));
-                if (driver.getId().equals(user.getId())) {
+                if (user != null && driver.getId().equals(user.getId())) {
                     Flight newFlight = new Flight();
                     newFlight.setId(rs.getLong(1));
                     newFlight.setEndDate(ZonedDateTime.parse(rs.getString(2)));
