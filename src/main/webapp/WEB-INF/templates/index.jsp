@@ -82,8 +82,10 @@
           <tr>
             <th scope="col">
               <div class="navbar">
-                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.number.flight"/></div>
-                <ul class="dropdown-menu tableFlights">
+                <div class="navBox" data-toggle="dropdown">
+                  <div><fmt:message key="label.number.flight"/></div>
+                </div>
+                <ul class="dropdown-menu">
                   <li>
                     <form action="sortFlightByNumberDown" method="post" accept-charset="ISO-8859-1">
                       <input type="hidden" name="flightNumberValue" value="flightNumberDown">
@@ -101,8 +103,10 @@
             </th>
             <th scope="col">
               <div class="navbar">
-                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.startDate"/></div>
-                <ul class="dropdown-menu tableFlights">
+                <div class="navBox" data-toggle="dropdown">
+                  <div><fmt:message key="label.startDate"/></div>
+                </div>
+                <ul class="dropdown-menu">
                   <li>
                     <form action="sortFlightByStartDateDown" method="post" accept-charset="ISO-8859-1">
                       <input type="hidden" name="flightStartDateValue" value="startDateDown">
@@ -120,8 +124,10 @@
             </th>
             <th scope="col">
               <div class="navbar">
-                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.endDate"/></div>
-                <ul class="dropdown-menu tableFlights">
+                <div class="navBox" data-toggle="dropdown">
+                  <div><fmt:message key="label.endDate"/></div>
+                </div>
+                <ul class="dropdown-menu">
                   <li>
                     <form action="sortFlightByEndDateDown" method="post" accept-charset="ISO-8859-1">
                       <input type="hidden" name="flightEndDateValue" value="endDateDown">
@@ -139,8 +145,10 @@
             </th>
             <th scope="col">
               <div class="navbar">
-                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
-                <ul class="dropdown-menu tableFlights">
+                <div class="navBox" data-toggle="dropdown">
+                  <div><fmt:message key="label.status.flight"/></div>
+                </div>
+                <ul class="dropdown-menu">
                   <c:forEach items="${requestScope.flightStatusList}" var="flightStatusList">
                     <li>
                       <form action="sortFlightByStatus" method="post" accept-charset="ISO-8859-1">
