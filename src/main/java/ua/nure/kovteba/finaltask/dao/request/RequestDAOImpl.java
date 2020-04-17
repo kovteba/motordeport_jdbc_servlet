@@ -15,7 +15,9 @@ import java.util.logging.Logger;
 
 /**
  * Data Access Object for Request entity
- * Methods:
+ * Methods: createRequest, getAllRequestByStatus, getRequestById,
+ * changeStatusRequestById, getAllRequest, getAllRequestByDriver,
+ * getAllRequestByDriverAndRequestStatus, deleteRequestById
  */
 public class RequestDAOImpl implements RequestDAO {
 
