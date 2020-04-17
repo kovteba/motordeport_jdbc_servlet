@@ -88,11 +88,8 @@ public class Driver extends HttpServlet {
             req.setAttribute("requestsListClosed",
                     requestDAO.getAllRequestByDriverAndRequestStatus(user, RequestStatus.CLOSED));
 
-            //set car with status FREE
-            req.setAttribute("carsListForRequest", carDAO.getListCarFreeAndGood());
+            req.setAttribute("flightListByUser",flightDAO.getAllFlightByDriver(user));
 
-
-            req.setAttribute("freeDrivers", userDAO.getAllUsersByListId(employmentStatusDAO.getAllFreeDrivers()));
 
             //car section
             //set car list

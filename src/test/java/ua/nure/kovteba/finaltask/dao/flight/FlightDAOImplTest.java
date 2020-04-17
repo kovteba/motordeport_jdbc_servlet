@@ -6,17 +6,9 @@ import ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
-import ua.nure.kovteba.finaltask.util.CompareFlightByStatus;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FlightDAOImplTest {
 
