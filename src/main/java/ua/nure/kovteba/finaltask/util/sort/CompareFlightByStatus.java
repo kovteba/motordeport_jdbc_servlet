@@ -1,4 +1,4 @@
-package ua.nure.kovteba.finaltask.util;
+package ua.nure.kovteba.finaltask.util.sort;
 
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
