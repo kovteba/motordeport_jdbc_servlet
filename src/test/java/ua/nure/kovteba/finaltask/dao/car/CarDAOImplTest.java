@@ -44,7 +44,7 @@ class CarDAOImplTest {
 
     @Test
     void getCarById() {
-        System.out.println(CAR_DAO.getCarById(26L).toString() + "\n");
+        System.out.println(CAR_DAO.getCarById(26L).toString());
     }
 
     @Test
@@ -61,7 +61,7 @@ class CarDAOImplTest {
     void changeCarStatus() {
         System.out.println("Old status : " + CAR_DAO.getCarById(26L).getCarStatus().getCarStatusValue());
         CAR_DAO.changeCarStatus(26L, CarStatus.BUSY);
-        System.out.println("New status : " + CAR_DAO.getCarById(26L).getCarStatus().getCarStatusValue() + "\n");
+        System.out.println("New status : " + CAR_DAO.getCarById(26L).getCarStatus().getCarStatusValue());
     }
 
     @Test
@@ -100,7 +100,7 @@ class CarDAOImplTest {
         car.setCarTechnicalStatus(CarTechnicalStatus.GOOD);
         car.setCarStatus(CarStatus.FREE);
         CAR_DAO.changeCarInformation(car);
-        System.out.println("Old value : " + CAR_DAO.getCarById(26L).toString() + "\n");
+        System.out.println("Old value : " + CAR_DAO.getCarById(26L).toString());
 
     }
 
