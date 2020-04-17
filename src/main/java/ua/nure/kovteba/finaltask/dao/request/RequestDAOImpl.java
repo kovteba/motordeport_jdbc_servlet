@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Data Access Object for Request entity
+ * Methods:
+ */
 public class RequestDAOImpl implements RequestDAO {
 
     //Create logger
@@ -40,7 +44,7 @@ public class RequestDAOImpl implements RequestDAO {
      * Insert new request in data base
      *
      * @param request
-     * @return id new user in data base Long
+     * @return id new request in data base Long
      */
     @Override
     public Long createRequest(Request request) {
@@ -48,7 +52,8 @@ public class RequestDAOImpl implements RequestDAO {
         Long idNewRequest = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
-                "requests (driver_id, car_class, load_capacity, seats, luggage_compartment, air_conditioning, navigator, request_status) " +
+                "requests (driver_id, car_class, load_capacity, seats, " +
+                "luggage_compartment, air_conditioning, navigator, request_status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         //Create PreparedStatement in try with resources
         try (PreparedStatement preparedStatement = CONNECT.prepareStatement(insert,
@@ -71,7 +76,7 @@ public class RequestDAOImpl implements RequestDAO {
             LOG.info("new request with id == " + idNewRequest + ", added successfully!");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"createRequest\", " + e.toString());
+            LOG.warning("Some problem in method \"createRequest\", " + this.getClass());
         }
         return idNewRequest;
     }
@@ -107,7 +112,7 @@ public class RequestDAOImpl implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             LOG.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
-                    + requestStatus.getRequestSatus() + "\', " + e.toString());
+                    + requestStatus.getRequestSatus() + "\', " + this.getClass());
         }
         //return all users by role
         return allRequestBySatus;
@@ -142,14 +147,15 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getRequestById\" by id == " + id + ", " + e.toString());
+            LOG.warning("Some problem in method \"getRequestById\" by id == " + id + ", " + this.getClass());
         }
         //return request by id
         return request;
     }
 
     /**
-     * Change request status : OPEN, CLOSED
+     * Change request status by id
+     * Request status : OPEN, CLOSED
      *
      * @param id
      * @param requestStatus
@@ -170,19 +176,24 @@ public class RequestDAOImpl implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             LOG.warning("Some problem in method \"changeStatusRequestById\" by id == " + id + ", with request status --> " +
-                    requestStatus.getRequestSatus() + ", " + e.toString());
+                    requestStatus.getRequestSatus() + ", " + this.getClass());
         }
     }
 
+    /**
+     * Return all request from database
+     *
+     * @return List<Request>
+     */
     @Override
     public List<Request> getAllRequest() {
-        LOG.info("Get all requests by ....");
+        LOG.info("Get all requests ....");
         //create return list
         List<Request> allRequestBySatus = new ArrayList();
         //SQL query for select all requests
-        String selectAllByRole = "SELECT * FROM requests;";
+        String selectAllRequest = "SELECT * FROM requests;";
         //Create ResultSet in try with resources
-        try (ResultSet rs = smtp.executeQuery(selectAllByRole);) {
+        try (ResultSet rs = smtp.executeQuery(selectAllRequest);) {
             while (rs.next()) {
                 Request request = installRequest(
                         rs.getLong(1),
@@ -198,12 +209,18 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+            LOG.warning("Some problem in method \"getAllRequest\", " + this.getClass());
         }
         //return all users by role
         return allRequestBySatus;
     }
 
+    /**
+     * Return List<Request> by user
+     *
+     * @param user
+     * @return List<Request>
+     */
     @Override
     public List<Request> getAllRequestByDriver(User user) {
         LOG.info("Get all requests by user ....");
@@ -215,7 +232,7 @@ public class RequestDAOImpl implements RequestDAO {
         try (ResultSet rs = smtp.executeQuery(selectAll);) {
             while (rs.next()) {
                 User userDB = (User) SERIALIZATION.fromString(rs.getString(8));
-                if (user.getId().equals(userDB.getId())) {
+                if (userDB != null && user.getId().equals(userDB.getId())) {
                     Request request = installRequest(
                             rs.getLong(1),
                             rs.getString(8),
@@ -231,7 +248,7 @@ public class RequestDAOImpl implements RequestDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\"");
+            LOG.warning("Some problem in method \"getAllRequestByDriver\", " + this.getClass());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -239,9 +256,18 @@ public class RequestDAOImpl implements RequestDAO {
         return allRequestByUser;
     }
 
+    /**
+     * Return List<Request> for user and request status
+     * Request Status value: "OPEN", "CLOSED"
+     *
+     * @param user
+     * @param requestStatus
+     * @return
+     */
     @Override
     public List<Request> getAllRequestByDriverAndRequestStatus(User user, RequestStatus requestStatus) {
-        LOG.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" ....");
+        LOG.info("Get all request by status --> \"" + requestStatus.getRequestSatus() + "\" for user =="
+                + user.toString() + " ....");
         //create return list
         List<Request> allRequestBySatusAndUser = new ArrayList();
         //SQL query for select request by status
@@ -250,7 +276,7 @@ public class RequestDAOImpl implements RequestDAO {
         try (ResultSet rs = smtp.executeQuery(selectAllByDriverAndStatus);) {
             while (rs.next()) {
                 User userDB = (User) SERIALIZATION.fromString(rs.getString(8));
-                if (user.getId().equals(userDB.getId())) {
+                if (userDB != null && user.getId().equals(userDB.getId())) {
                     Request request = installRequest(
                             rs.getLong(1),
                             rs.getString(8),
@@ -264,17 +290,20 @@ public class RequestDAOImpl implements RequestDAO {
                     allRequestBySatusAndUser.add(request);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            LOG.warning("Some problem in method \"getAllRequestByStatus\", with request status --> \'"
-                    + requestStatus.getRequestSatus() + "\', " + e.toString());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            LOG.warning("Some problem in method \"getAllRequestByDriverAndRequestStatus\", with request " +
+                    "status --> \'" + requestStatus.getRequestSatus() + "\', " + this.getClass());
         }
         //return all users by role
         return allRequestBySatusAndUser;
     }
 
+    /**
+     * Delete request by if
+     *
+     * @param id
+     */
     @Override
     public void deleteRequestById(Long id) {
         LOG.info("Delete request with id == " + id + " ....");
@@ -284,10 +313,14 @@ public class RequestDAOImpl implements RequestDAO {
             LOG.info("Car with id == " + id + ", deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warning("Some problem in method \"deleteRequestById\", " + this.getClass());
+
         }
     }
 
     /**
+     * helper method for install new request
+     *
      * @param id
      * @param driver
      * @param carClass
