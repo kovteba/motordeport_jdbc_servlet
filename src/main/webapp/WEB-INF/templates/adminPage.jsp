@@ -100,11 +100,6 @@
           <fmt:message key="label.cars"/>
         </a>
       </div>
-      <ul class="list-group">
-        <li class="list-group-item">${requestScope.user.role.roleValue}</li>
-        <li class="list-group-item">${requestScope.user.firstName} ${requestScope.user.lastName}</li>
-        <li class="list-group-item">${requestScope.user.phoneNumber}</li>
-      </ul>
     </div>
     <!--    main container    -->
     <div class="col-md-11">
@@ -116,9 +111,63 @@
           <table class="table-hover table-dark tableFlights">
             <thead>
             <tr>
-              <th scope="col"><fmt:message key="label.number.flight"/></th>
-              <th scope="col"><fmt:message key="label.startDate"/></th>
-              <th scope="col"><fmt:message key="label.endDate"/></th>
+              <th scope="col">
+                <div class="navbar">
+                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.number.flight"/></div>
+                  <ul class="dropdown-menu tableFlights">
+                    <li>
+                      <form action="sortFlightByNumberDown" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightNumberValue" value="flightNumberDown">
+                        <input type="submit" class="dropdown-item" type="submit" value="↑">
+                      </form>
+                    </li>
+                    <li>
+                      <form action="sortFlightByNumberUp" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightNumberValue" value="flightNumberUp">
+                        <input type="submit" class="dropdown-item" type="submit" value="↓">
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="navbar">
+                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.startDate"/></div>
+                  <ul class="dropdown-menu tableFlights">
+                    <li>
+                      <form action="sortFlightByStartDateDown" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightStartDateValue" value="startDateDown">
+                        <input type="submit" class="dropdown-item" type="submit" value="↑">
+                      </form>
+                    </li>
+                    <li>
+                      <form action="sortFlightByStartDateUp" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightStartDateValue" value="startDateUp">
+                        <input type="submit" class="dropdown-item" type="submit" value="↓">
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="navbar">
+                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.endDate"/></div>
+                  <ul class="dropdown-menu tableFlights">
+                    <li>
+                      <form action="sortFlightByEndDateDown" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightEndDateValue" value="endDateDown">
+                        <input type="submit" class="dropdown-item" type="submit" value="↑">
+                      </form>
+                    </li>
+                    <li>
+                      <form action="sortFlightByEndDateUp" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightEndDateValue" value="endDateUp">
+                        <input type="submit" class="dropdown-item" type="submit" value="↓">
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </th>
               <th scope="col">
                 <div class="navbar">
                   <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
