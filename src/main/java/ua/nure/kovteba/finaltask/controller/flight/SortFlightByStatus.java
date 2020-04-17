@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class SortFlightByStatus extends HttpServlet {
 
     //Create logger
-    private static Logger log = Logger.getLogger(i18nRU.class.getName());
+    private static Logger log = Logger.getLogger(SortFlightByStatus.class.getName());
 
     private static UserDAO userDAO;
     private static TokenDAO tokenDAO;
