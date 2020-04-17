@@ -16,4 +16,5 @@ public interface EmploymentStatusDAO {
     void deleteEmploymentStatusByDriverId(Long id);
 
     List<EmploymentStatus> getAllValueEmployment();
+
 }
