@@ -136,4 +136,24 @@ public class FlightDAOImpl implements FlightDAO {
         //return all flight
         return flightListByDriver;
     }
+
+    @Override
+    public void changeFlightStatus(Long id, FlightStatus flightStatus) {
+        log.info("Change flight status on --> \"" + flightStatus.getStatusValue() + "\", by id == " + id + " ....");
+        //SQL query for update car_status car by id
+        String changeCarTechnicelStatusById =
+                "UPDATE flights SET flight_status = ? WHERE id = ?;";
+        PreparedStatement preparedStmt = null;
+        try {
+            preparedStmt = CONNECT.prepareStatement(changeCarTechnicelStatusById);
+            preparedStmt.setString(1, flightStatus.getStatusValue());
+            preparedStmt.setLong(2, id);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.warning("Same problem in " + this.getClass());
+        }
+    }
+
+
 }
