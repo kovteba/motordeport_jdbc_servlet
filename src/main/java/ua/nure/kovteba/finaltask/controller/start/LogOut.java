@@ -47,7 +47,7 @@ public class LogOut extends HttpServlet {
 
         if (!userToken.equals("0")){
             tokenDAO.deleteTokenByToken(userToken);
-            req.getSession().setAttribute("userToken", "");
+            req.getSession().setAttribute("userToken", "0");
         }
 
         resp.sendRedirect("");
