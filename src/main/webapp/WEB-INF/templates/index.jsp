@@ -9,6 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ADMIN PAGE</title>
+  <link type="text/css" rel="stylesheet" href="webresources/css/reset.css">
   <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap.css">
   <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-grid.css">
   <link type="text/css" rel="stylesheet" href="webresources/bootstrap/css/bootstrap-reboot.css">
@@ -73,62 +74,101 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid html base">
+  <div class="container-fluid base">
     <div class="row">
-      <table class="table-hover table-dark tableFlights">
-        <thead>
-        <tr>
-          <th scope="col"><fmt:message key="label.number.flight"/></th>
-          <th scope="col"><fmt:message key="label.startDate"/></th>
-          <th scope="col"><fmt:message key="label.endDate"/></th>
-          <th scope="col">
-            <div class="navbar">
-              <div class="tableFlights" data-toggle="dropdown">
-                <fmt:message key="label.status.flight"/>
-              </div>
-              <ul class="dropdown-menu tableFlights">
-                <li>
-                  <form action="admin">
-                    <input type="hidden" value="OPEN">
-                    <input class="dropdown-item" type="submit" value="OPEN">
-                  </form>
-                </li>
-                <li>
-                  <form action="admin">
-                    <input type="hidden" value="CLOSED">
-                    <input class="dropdown-item" type="submit" value="CLOSED">
-                  </form>
-                </li>
-                <li>
-                  <form action="admin">
-                    <input type="hidden" value="CANCELED">
-                    <input class="dropdown-item" type="submit" value="CANCELED">
-                  </form>
-                </li>
-                <li>
-                  <form action="admin">
-                    <input type="hidden" value="INPROGRESS">
-                    <input class="dropdown-item" type="submit" value="IN PROGRESS">
-                  </form>
-                </li>
-              </ul>
-            </div>
-          </th>
-          <th scope="col"><fmt:message key="label.carInfo"/></th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${requestScope.flightsList}" var="flight">
+      <div class="col-md-12">
+        <table class="table-hover table-dark tableFlights">
+          <thead>
           <tr>
-            <td>${flight.flightNumber}</td>
-            <td>${flight.startDate.toLocalDate()}</td>
-            <td>${flight.endDate.toLocalDate()}</td>
-            <td>${flight.flightStatus}</td>
-            <td>${flight.car.carNumber}</td>
+            <th scope="col">
+              <div class="navbar">
+                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.number.flight"/></div>
+                <ul class="dropdown-menu tableFlights">
+                  <li>
+                    <form action="sortFlightByNumberDown" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightNumberValue" value="flightNumberDown">
+                      <input type="submit" class="dropdown-item" type="submit" value="↑">
+                    </form>
+                  </li>
+                  <li>
+                    <form action="sortFlightByNumberUp" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightNumberValue" value="flightNumberUp">
+                      <input type="submit" class="dropdown-item" type="submit" value="↓">
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="navbar">
+                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.startDate"/></div>
+                <ul class="dropdown-menu tableFlights">
+                  <li>
+                    <form action="sortFlightByStartDateDown" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightStartDateValue" value="startDateDown">
+                      <input type="submit" class="dropdown-item" type="submit" value="↑">
+                    </form>
+                  </li>
+                  <li>
+                    <form action="sortFlightByStartDateUp" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightStartDateValue" value="startDateUp">
+                      <input type="submit" class="dropdown-item" type="submit" value="↓">
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="navbar">
+                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.endDate"/></div>
+                <ul class="dropdown-menu tableFlights">
+                  <li>
+                    <form action="sortFlightByEndDateDown" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightEndDateValue" value="endDateDown">
+                      <input type="submit" class="dropdown-item" type="submit" value="↑">
+                    </form>
+                  </li>
+                  <li>
+                    <form action="sortFlightByEndDateUp" method="post" accept-charset="ISO-8859-1">
+                      <input type="hidden" name="flightEndDateValue" value="endDateUp">
+                      <input type="submit" class="dropdown-item" type="submit" value="↓">
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="navbar">
+                <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
+                <ul class="dropdown-menu tableFlights">
+                  <c:forEach items="${requestScope.flightStatusList}" var="flightStatusList">
+                    <li>
+                      <form action="sortFlightByStatus" method="post" accept-charset="ISO-8859-1">
+                        <input type="hidden" name="flightStatusValue" value="${flightStatusList.statusValue}">
+                        <input type="submit" class="dropdown-item" type="submit"
+                               value="${flightStatusList.statusValue}">
+                      </form>
+                    </li>
+                  </c:forEach>
+                </ul>
+              </div>
+            </th>
+            <th scope="col"><fmt:message key="label.carInfo"/></th>
           </tr>
-        </c:forEach>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+          <c:forEach items="${requestScope.flightsList}" var="flight">
+            <tr>
+              <td>${flight.flightNumber}</td>
+              <td>${flight.startDate.toLocalDate()}</td>
+              <td>${flight.endDate.toLocalDate()}</td>
+              <td>${flight.flightStatus}</td>
+              <td>${flight.car.carNumber}</td>
+            </tr>
+          </c:forEach>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
