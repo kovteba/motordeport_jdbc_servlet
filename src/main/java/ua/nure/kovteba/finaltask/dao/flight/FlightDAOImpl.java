@@ -192,4 +192,30 @@ public class FlightDAOImpl implements FlightDAO {
             LOG.warning("Same problem in \"changeFlightStatus\" method" + this.getClass());
         }
     }
+
+    @Override
+    public Flight getFlightById(Long id) {
+        LOG.info("Get flight by ID ....");
+        Flight newFlight = new Flight();
+        //SQL query for create new flight
+        String selectAll = "SELECT * FROM flights WHERE id = " + id + ";";
+        //Create ResultSet in try with resources
+        try (ResultSet rs = smtp.executeQuery(selectAll);) {
+            while (rs.next()) {
+                newFlight.setId(rs.getLong(1));
+                newFlight.setEndDate(ZonedDateTime.parse(rs.getString(2)));
+                newFlight.setFlightNumber(rs.getString(3));
+                newFlight.setFlightStatus(FlightStatus.findFlightStatus(rs.getString(4)));
+                newFlight.setStartDate(ZonedDateTime.parse(rs.getString(5)));
+                newFlight.setCar((Car) SERIALIZATION.fromString(rs.getString(6)));
+                newFlight.setDriver((User) SERIALIZATION.fromString(rs.getString(7)));
+                newFlight.setRequest(Long.valueOf(rs.getString(8)));
+            }
+        } catch (SQLException | IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            LOG.warning("Same problem in \"getFlightById\" method" + this.getClass());
+        }
+        //return all flight
+        return newFlight;
+    }
 }

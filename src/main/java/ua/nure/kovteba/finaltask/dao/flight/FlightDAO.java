@@ -18,4 +18,6 @@ public interface FlightDAO {
 
     void changeFlightStatus(Long id, FlightStatus flightStatus);
 
+    Flight getFlightById(Long id);
+
 }
