@@ -63,4 +63,10 @@ class FlightDAOImplTest {
     void changeFlightStatus() {
         FLIGHT_DAO.changeFlightStatus(35L, FlightStatus.findFlightStatus("OPEN"));
     }
+
+    @Test
+    void getFlightById() {
+        Flight flight = FLIGHT_DAO.getFlightById(40L);
+        System.out.println(flight.toString());
+    }
 }

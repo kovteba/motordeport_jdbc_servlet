@@ -19,18 +19,5 @@ class CreateFlightTest {
     void doPost() {
 
 
-
-
-        String startDate = "2020-12-31";
-        String startTime = "12:59";
-
-        System.out.println(ZonedDateTime.now().toString());
-
-
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDate.parse(startDate), LocalTime.parse(startTime), ZonedDateTime.now().getZone());
-
-        System.out.println(zonedDateTime);
-//        System.out.println(ZonedDateTime.s);
-//        System.out.println(ZonedDateTime.now());
     }
 }

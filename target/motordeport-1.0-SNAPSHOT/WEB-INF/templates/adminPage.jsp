@@ -4,6 +4,7 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setBundle basename="${sessionScope.i18n}"/>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -113,8 +114,10 @@
             <tr>
               <th scope="col">
                 <div class="navbar">
-                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.number.flight"/></div>
-                  <ul class="dropdown-menu tableFlights">
+                  <div class="navBox" data-toggle="dropdown">
+                    <div><fmt:message key="label.number.flight"/></div>
+                  </div>
+                  <ul class="dropdown-menu">
                     <li>
                       <form action="sortFlightByNumberDown" method="post" accept-charset="ISO-8859-1">
                         <input type="hidden" name="flightNumberValue" value="flightNumberDown">
@@ -132,8 +135,10 @@
               </th>
               <th scope="col">
                 <div class="navbar">
-                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.startDate"/></div>
-                  <ul class="dropdown-menu tableFlights">
+                  <div class="navBox" data-toggle="dropdown">
+                    <div><fmt:message key="label.startDate"/></div>
+                  </div>
+                  <ul class="dropdown-menu">
                     <li>
                       <form action="sortFlightByStartDateDown" method="post" accept-charset="ISO-8859-1">
                         <input type="hidden" name="flightStartDateValue" value="startDateDown">
@@ -151,8 +156,10 @@
               </th>
               <th scope="col">
                 <div class="navbar">
-                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.endDate"/></div>
-                  <ul class="dropdown-menu tableFlights">
+                  <div class="navBox" data-toggle="dropdown">
+                    <div><fmt:message key="label.endDate"/></div>
+                  </div>
+                  <ul class="dropdown-menu">
                     <li>
                       <form action="sortFlightByEndDateDown" method="post" accept-charset="ISO-8859-1">
                         <input type="hidden" name="flightEndDateValue" value="endDateDown">
@@ -170,8 +177,10 @@
               </th>
               <th scope="col">
                 <div class="navbar">
-                  <div class="tableFlights" data-toggle="dropdown"><fmt:message key="label.status.flight"/></div>
-                  <ul class="dropdown-menu tableFlights">
+                  <div class="navBox" data-toggle="dropdown">
+                    <div><fmt:message key="label.status.flight"/></div>
+                  </div>
+                  <ul class="dropdown-menu">
                     <c:forEach items="${requestScope.flightStatusList}" var="flightStatusList">
                       <li>
                         <form action="sortFlightByStatus" method="post" accept-charset="ISO-8859-1">
@@ -574,7 +583,9 @@
                    aria-labelledby="headingCreateNewDispatcher"
                    data-parent="#accordionExampleCreateNewDispatcher">
                 <div class="card-body">
-                  <form method="post" action="createDispatcher" accept-charset="ISO-8859-1">
+                  <form method="post" action="createDispatcher">
+                    <label for="emailDispatcher"><fmt:message key="label.email.forCreate"/></label>
+                    <input id="emailDispatcher" name="emailDispatcher">
                     <label for="firstNameDispatcher"><fmt:message key="label.firstName.forCreate"/></label>
                     <input id="firstNameDispatcher" name="firstNameDispatcher">
                     <label for="lastNameDispatcher"><fmt:message key="label.lastName.forCerate"/></label>
@@ -648,7 +659,7 @@
                    data-parent="#accordionExampleCreateNewUser">
                 <div class="card-body">
                   <table class="table table-bordered">
-                    <form method="post" action="createDriver" accept-charset="ISO-8859-1">
+                    <form method="post" action="createDriver">
                       <tbody>
                       <tr>
                         <td style="padding: 10px">
@@ -671,7 +682,11 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2" style="padding: 10px">
+                        <td style="padding: 10px">
+                          <label for="emailDriver"><fmt:message key="label.email.forCreate"/></label>
+                          <input id="emailDriver" name="emailDriver">
+                        </td>
+                        <td style="padding: 10px">
                           <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
                         </td>
                       </tr>
@@ -940,7 +955,7 @@
                       <%---------------START BLOCK CREATE NEW CAR--------------------%>
                       <table class="table table-bordered">
                         <tbody>
-                        <form action="createCar" method="post" accept-charset="ISO-8859-1">
+                        <form action="createCar" method="post">
                           <tr>
                             <td style="padding: 10px">
                               <select name="carBrandId" required>
@@ -1033,7 +1048,7 @@
                         <div class="col-md-6">
                           <%--------------START BLOCK ADD NEW CAR BRAND--------------%>
                           <table class="table table-bordered">
-                            <form method="post" action="createCarBrand" accept-charset="ISO-8859-1">
+                            <form method="post" action="createCarBrand">
                               <tr>
                                 <td style="padding: 10px">
                                   <label for="carBrandName"><fmt:message key="label.carBrandName"/></label>

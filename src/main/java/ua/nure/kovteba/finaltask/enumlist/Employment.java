@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Employment {
@@ -19,17 +20,14 @@ public enum Employment {
         return status;
     }
 
-    public static List<CarStatus> getListEmploymentStatus(){
-        List<CarStatus> listCarStatus = new ArrayList<>();
-        listCarStatus.add(CarStatus.FREE);
-        listCarStatus.add(CarStatus.BUSY);
-        return listCarStatus;
+    public static List<Employment> getListEmploymentStatus(){
+        return Arrays.asList(Employment.values());
     }
 
-    public static CarStatus findCarStatus(String carClassValue){
+    public static Employment findCarStatus(String employmentValue){
         return getListEmploymentStatus()
                 .stream()
-                .filter(s -> s.getCarStatusValue().equals(carClassValue))
+                .filter(s -> s.getListEmploymentStatus().equals(employmentValue))
                 .findAny()
                 .get();
     }

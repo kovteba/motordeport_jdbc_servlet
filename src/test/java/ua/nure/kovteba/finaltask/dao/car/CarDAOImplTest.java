@@ -26,7 +26,7 @@ class CarDAOImplTest {
         Car car = new Car();
         car.setCarBrand(CAR_BRAND_DAO.getCarBrandByBrandValue("MAN"));
         car.setCarClass(CarClass.COMFORT);
-        car.setCarNumber("AX6138A");
+        car.setCarNumber("AX6138999A");
         car.setLoadCapacity(1000);
         car.setSeats(20);
         car.setLuggageCompartment(true);

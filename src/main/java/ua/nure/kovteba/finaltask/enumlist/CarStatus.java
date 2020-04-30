@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum  CarStatus {
@@ -20,10 +21,7 @@ public enum  CarStatus {
     }
 
     public static List<CarStatus> getListCarStatus(){
-        List<CarStatus> listCarStatus = new ArrayList<>();
-        listCarStatus.add(CarStatus.FREE);
-        listCarStatus.add(CarStatus.BUSY);
-        return listCarStatus;
+        return Arrays.asList(CarStatus.values());
     }
 
     public static CarStatus findCarStatus(String carClassValue){

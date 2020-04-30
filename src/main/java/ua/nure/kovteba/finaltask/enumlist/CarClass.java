@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +30,7 @@ public enum  CarClass {
     }
 
     public static List<CarClass> getListCarClass(){
-        List<CarClass> classList = new ArrayList<>();
-        classList.add(CarClass.ECONOMY);
-        classList.add(CarClass.STANDART);
-        classList.add(CarClass.COMFORT);
-        classList.add(CarClass.BUSINESS);
-        classList.add(CarClass.STATIONWAGON);
-        classList.add(CarClass.MINIVAN);
-        return classList;
+        return Arrays.asList(CarClass.values());
     }
 
     public static CarClass findCarClass(String carClassValue){
@@ -46,6 +40,5 @@ public enum  CarClass {
                 .findAny()
                 .get();
     }
-
 
 }

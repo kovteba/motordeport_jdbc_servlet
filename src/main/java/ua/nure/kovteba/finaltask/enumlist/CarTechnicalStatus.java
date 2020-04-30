@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum CarTechnicalStatus {
@@ -20,10 +21,7 @@ public enum CarTechnicalStatus {
     }
 
     public static List<CarTechnicalStatus> getListCarTechnicalStatus(){
-        List<CarTechnicalStatus> carTechnicalStatusList = new ArrayList<>();
-        carTechnicalStatusList.add(CarTechnicalStatus.GOOD);
-        carTechnicalStatusList.add(CarTechnicalStatus.REPAIRS);
-        return carTechnicalStatusList;
+        return Arrays.asList(CarTechnicalStatus.values());
     }
 
     public static CarTechnicalStatus findCarTechnicatlStatus(String carClassValue){

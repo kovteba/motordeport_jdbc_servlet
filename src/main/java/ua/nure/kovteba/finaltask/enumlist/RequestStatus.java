@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum  RequestStatus {
@@ -20,10 +21,7 @@ public enum  RequestStatus {
     }
 
     public static List<RequestStatus> getListRequestStatus(){
-        List<RequestStatus> requestStatusList = new ArrayList<>();
-        requestStatusList.add(RequestStatus.OPEN);
-        requestStatusList.add(RequestStatus.CLOSED);
-        return requestStatusList;
+        return Arrays.asList(RequestStatus.values());
     }
 
     public static RequestStatus findRequestStatus(String requestStatus){

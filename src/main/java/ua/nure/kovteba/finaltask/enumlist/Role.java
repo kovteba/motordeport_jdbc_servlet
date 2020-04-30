@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +26,7 @@ public enum Role {
     }
 
     public static List<Role> getListRole(){
-        List<Role> roles = new ArrayList<>();
-        roles.add(Role.ADMIN);
-        roles.add(Role.DISPATCHER);
-        roles.add(Role.DRIVER);
-        roles.add(Role.USER);
-        return roles;
+        return Arrays.asList(Role.values());
     }
 
     public static Role findRole(String roleString){
@@ -41,7 +37,5 @@ public enum Role {
                 .findAny()
                 .get();
     }
-
-
 
 }

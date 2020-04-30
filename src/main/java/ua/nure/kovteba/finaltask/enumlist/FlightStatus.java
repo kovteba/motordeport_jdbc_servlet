@@ -1,6 +1,7 @@
 package ua.nure.kovteba.finaltask.enumlist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum FlightStatus {
@@ -26,13 +27,7 @@ public enum FlightStatus {
     }
 
     public static List<FlightStatus> getFlightStatusList(){
-        List<FlightStatus> listCarStatus = new ArrayList<>();
-        listCarStatus.add(FlightStatus.OPEN);
-        listCarStatus.add(FlightStatus.INPROGRESS);
-        listCarStatus.add(FlightStatus.CLOSE);
-        listCarStatus.add(FlightStatus.CANСELED);
-        listCarStatus.add(FlightStatus.DONE);
-        return listCarStatus;
+        return Arrays.asList(FlightStatus.values());
     }
 
     public static FlightStatus findFlightStatus(String flightStatus){
