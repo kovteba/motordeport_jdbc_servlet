@@ -13,6 +13,8 @@ import java.io.Serializable;
 @ToString
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -913891286194123998L;
+
     private Long id;
 
     private String firstName;
@@ -24,5 +26,7 @@ public class User implements Serializable {
     private Role role;
 
     private String password;
+
+    private String email;
 
 }
