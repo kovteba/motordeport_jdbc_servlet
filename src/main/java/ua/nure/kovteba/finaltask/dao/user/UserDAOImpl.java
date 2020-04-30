@@ -49,8 +49,8 @@ public class UserDAOImpl implements UserDAO {
         Long idNewUser = null;
         //SQL query for create new user
         String insert = "INSERT INTO " +
-                "users (first_name, last_name, phone_number, role, password) " +
-                "VALUES (?, ?, ?, ?, ?);";
+                "users (first_name, last_name, phone_number, role, password, email) " +
+                "VALUES (?, ?, ?, ?, ?, ?);";
         //Create PreparedStatement in try with resources
         try (PreparedStatement preparedStatement = CONNECT.prepareStatement(insert,
                 PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -60,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(3, user.getPhoneNumber());
             preparedStatement.setString(4, user.getRole().getRoleValue());
             preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setString(6, user.getEmail());
             //execute insert to table
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -101,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
                 newUser.setLastName(rs.getString(3));
                 newUser.setPhoneNumber(rs.getString(4));
                 newUser.setRole(Role.findRole(rs.getString(5)));
+                newUser.setEmail(rs.getString(6));
                 allUsersByRole.add(newUser);
             }
         } catch (SQLException e) {
@@ -134,6 +136,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setLastName(rs.getString(3));
                 user.setPhoneNumber(rs.getString(4));
                 user.setRole(Role.findRole(rs.getString(5)));
+                user.setEmail(rs.getString(6));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,6 +169,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setPhoneNumber(rs.getString(4));
                 user.setRole(Role.findRole(rs.getString(5)));
                 user.setPassword(rs.getString(6));
+                user.setEmail(rs.getString(7));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -197,6 +201,7 @@ public class UserDAOImpl implements UserDAO {
                 newUser.setLastName(rs.getString(3));
                 newUser.setPhoneNumber(rs.getString(4));
                 newUser.setRole(Role.findRole(rs.getString(5)));
+                newUser.setEmail(rs.getString(6));
                 allUsersByRole.add(newUser);
             }
         } catch (SQLException e) {
@@ -244,6 +249,7 @@ public class UserDAOImpl implements UserDAO {
                     newUser.setLastName(rs.getString(3));
                     newUser.setPhoneNumber(rs.getString(4));
                     newUser.setRole(Role.findRole(rs.getString(5)));
+                    newUser.setEmail(rs.getString(6));
                     getAllUsersByListId.add(newUser);
                 }
             } catch (SQLException e) {
