@@ -1,5 +1,8 @@
 package ua.nure.kovteba.finaltask.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -8,22 +11,34 @@ import java.util.logging.Logger;
 public class Connect {
 
     private static Logger LOG = Logger.getLogger(Connect.class.getName());
-    //?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-    // JDBC URL, username and password of MySQL server
-    private static final String url = "jdbc:mysql://localhost:3306/motordeport?serverTimezone=UTC";
-    private static final String user = "root";
-    private static final String password = "root";
+
+    private static final Properties PROPERTIES = new Properties();
 
     //Create connection
     public static Connection connect() {
-        Properties properties = new Properties();
-        properties.setProperty("user", user);
-        properties.setProperty("password", password);
-        properties.setProperty("useUnicode", "true");
-        properties.setProperty("characterEncoding", "cp1251");
+
+        FileInputStream fileWithPropertiesForDB
+                = null;
+        try {
+            fileWithPropertiesForDB = new FileInputStream("src/main/resources/db.config.properties");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         try {
-            Connection connection = DriverManager.getConnection(url, user, password);
+            PROPERTIES.load(fileWithPropertiesForDB);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String url = PROPERTIES.getProperty("db.url");
+        Properties properties = new Properties();
+        properties.setProperty("user", PROPERTIES.getProperty("db.login"));
+        properties.setProperty("password", PROPERTIES.getProperty("db.password"));
+        properties.setProperty("serverTimezone", PROPERTIES.getProperty("db.serverTimeZone"));
+
+
+        try {
+            Connection connection = DriverManager.getConnection(url, properties);
             LOG.info("Connection to Store DB succesfull!");
             return connection;
         } catch (Exception ex) {
