@@ -1,5 +1,6 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
+import com.itextpdf.text.DocumentException;
 import ua.nure.kovteba.finaltask.dao.car.CarDAO;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
 import ua.nure.kovteba.finaltask.dao.carbrand.CarBrandDAO;
@@ -18,6 +19,7 @@ import ua.nure.kovteba.finaltask.entity.EmploymentStatus;
 import ua.nure.kovteba.finaltask.entity.Token;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
+import ua.nure.kovteba.finaltask.util.GeneratePDF;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -65,12 +67,6 @@ public class Driver extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         //get user token from session
         String userToken = String.valueOf(req.getSession().getAttribute("userToken"));
 
@@ -78,6 +74,11 @@ public class Driver extends HttpServlet {
 
         Token token = tokenDAO.getTokenByToken(userToken);
         User user = userDAO.getUserById(token.getUser());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (token != null && user.getRole().getRoleValue().equals("DRIVER")) {
             //flights and requests section
 
