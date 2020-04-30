@@ -4,6 +4,7 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setBundle basename="${sessionScope.i18n}"/>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -87,6 +88,9 @@
         <li class="list-group-item">${requestScope.user.firstName} ${requestScope.user.lastName}</li>
         <li class="list-group-item">${requestScope.user.phoneNumber}</li>
       </ul>
+      <form method="get" action="genpdf">
+        <button type="submit" class="btn btn-success"><fmt:message key="label.printpdf"/></button>
+      </form>
     </div>
     <div class="col-md-10">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
