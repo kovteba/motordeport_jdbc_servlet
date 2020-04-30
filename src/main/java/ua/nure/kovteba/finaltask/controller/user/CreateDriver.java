@@ -43,25 +43,25 @@ public class CreateDriver extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         String userToken = "0";
 
-        if (req.getSession().getAttribute("userToken") != null){
+        if (req.getSession().getAttribute("userToken") != null) {
             userToken = String.valueOf(req.getSession().getAttribute("userToken"));
         }
 
         log.info("user token session--> " + userToken + ", class: " + this.getClass());
 
         User user = null;
-        if (!userToken.equals("0")){
+        if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
 
-        if (user != null && user.getRole().getRoleValue().equals("ADMIN")){
+        if (user != null && user.getRole().getRoleValue().equals("ADMIN")) {
             //find user by phone number
             String phoneNumber = req.getParameter("phoneNumberDriver");
             User findUser = userDAO.getUserByUserPhoneNumber(phoneNumber);
-            if (findUser == null){
+            if (findUser == null) {
                 //create new user with role "Driver"
                 User newDriver = new User();
                 newDriver.setFirstName(req.getParameter("firstNameDriver"));
@@ -69,6 +69,7 @@ public class CreateDriver extends HttpServlet {
                 newDriver.setPhoneNumber(phoneNumber);
                 newDriver.setPassword(req.getParameter("passwordDriver"));
                 newDriver.setRole(Role.DRIVER);
+                newDriver.setEmail(req.getParameter("emailDriver"));
                 Long newDriverId = userDAO.createUser(newDriver);
             } else {
                 log.warning("User with " + phoneNumber + " already exist!! " + this.getClass());

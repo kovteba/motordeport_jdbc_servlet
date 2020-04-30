@@ -37,7 +37,7 @@ public class CreateDispatcher extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         String userToken = "0";
 
         if (req.getSession().getAttribute("userToken") != null){
@@ -59,6 +59,7 @@ public class CreateDispatcher extends HttpServlet {
             newDispatcher.setPhoneNumber(req.getParameter("phoneNumberDispatcher"));
             newDispatcher.setPassword(req.getParameter("passwordDispatcher"));
             newDispatcher.setRole(Role.DISPATCHER);
+            newDispatcher.setEmail(req.getParameter("emailDispatcher"));
             userDAO.createUser(newDispatcher);
         } else {
             resp.sendRedirect("");
