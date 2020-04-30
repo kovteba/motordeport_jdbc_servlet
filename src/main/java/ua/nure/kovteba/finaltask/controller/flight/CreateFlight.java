@@ -1,5 +1,6 @@
 package ua.nure.kovteba.finaltask.controller.flight;
 
+import lombok.SneakyThrows;
 import ua.nure.kovteba.finaltask.controller.user.CreateDispatcher;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
@@ -11,6 +12,7 @@ import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
+import ua.nure.kovteba.finaltask.util.GeneratePDF;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -39,6 +41,7 @@ public class CreateFlight extends HttpServlet {
     private static RequestDAOImpl requestDAO;
     private static EmploymentStatusDAOImpl employmentStatusDAO;
     private static TokenDAO tokenDAO;
+    private static GeneratePDF generatePDF;
 
 
     /**
@@ -54,6 +57,7 @@ public class CreateFlight extends HttpServlet {
         requestDAO = new RequestDAOImpl();
         employmentStatusDAO = new EmploymentStatusDAOImpl();
         tokenDAO = new TokenDAOImpl();
+        generatePDF = new GeneratePDF();
     }
 
     /**
@@ -62,6 +66,7 @@ public class CreateFlight extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -114,10 +119,18 @@ public class CreateFlight extends HttpServlet {
                     flight.setEndDate(endDateTime);
                     flight.setRequest(idRequest);
                     //if flightDAO return id new flight change car status and request status
-                    if (flightDAO.createFlight(flight) != null) {
+                    Long idNewFlight = flightDAO.createFlight(flight);
+                    if (idNewFlight != null) {
                         carDAO.changeCarStatus(idCar, CarStatus.BUSY);
                         requestDAO.changeStatusRequestById(idRequest, RequestStatus.CLOSED);
                         employmentStatusDAO.changeEmploymentStatus(idDriver, Employment.BUSY);
+
+                        String nameFile = generatePDF.generateApproveByUserPDF(
+                                user,
+                                userDAO.getUserById(idDriver),
+                                requestDAO.getRequestById(idRequest),
+                                flightDAO.getFlightById(idNewFlight));
+                        System.out.println("FILE NAME CONTROLLER : " + nameFile);
                     }
                 } else {
                     resp.sendRedirect("admin");
@@ -129,13 +142,13 @@ public class CreateFlight extends HttpServlet {
             resp.sendRedirect("");
         }
 
-        if (userToken.equals("0")){
+        if (userToken.equals("0")) {
             resp.sendRedirect("");
-        } else if (user.getRole().getRoleValue().equals("ADMIN")){
+        } else if (user.getRole().getRoleValue().equals("ADMIN")) {
             resp.sendRedirect("admin");
-        } else if (user.getRole().getRoleValue().equals("DRIVER")){
+        } else if (user.getRole().getRoleValue().equals("DRIVER")) {
             resp.sendRedirect("driver");
-        } else if (user.getRole().getRoleValue().equals("DISPATCHER")){
+        } else if (user.getRole().getRoleValue().equals("DISPATCHER")) {
             resp.sendRedirect("dispatcher");
         }
 
