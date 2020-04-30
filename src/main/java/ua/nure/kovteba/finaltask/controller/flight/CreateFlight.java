@@ -12,6 +12,7 @@ import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
+import ua.nure.kovteba.finaltask.util.EmailSender;
 import ua.nure.kovteba.finaltask.util.GeneratePDF;
 
 import javax.servlet.ServletConfig;
@@ -42,6 +43,7 @@ public class CreateFlight extends HttpServlet {
     private static EmploymentStatusDAOImpl employmentStatusDAO;
     private static TokenDAO tokenDAO;
     private static GeneratePDF generatePDF;
+    private static EmailSender emailSender;
 
 
     /**
@@ -58,6 +60,7 @@ public class CreateFlight extends HttpServlet {
         employmentStatusDAO = new EmploymentStatusDAOImpl();
         tokenDAO = new TokenDAOImpl();
         generatePDF = new GeneratePDF();
+        emailSender = new EmailSender();
     }
 
     /**
@@ -82,7 +85,6 @@ public class CreateFlight extends HttpServlet {
         if (!userToken.equals("0")) {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
-
 
         if (user != null) {
             if (user.getRole().getRoleValue().equals("ADMIN") || user.getRole().getRoleValue().equals("DISPATCHER")) {
@@ -124,13 +126,13 @@ public class CreateFlight extends HttpServlet {
                         carDAO.changeCarStatus(idCar, CarStatus.BUSY);
                         requestDAO.changeStatusRequestById(idRequest, RequestStatus.CLOSED);
                         employmentStatusDAO.changeEmploymentStatus(idDriver, Employment.BUSY);
-
+                        User driver = userDAO.getUserById(idDriver);
                         String nameFile = generatePDF.generateApproveByUserPDF(
                                 user,
-                                userDAO.getUserById(idDriver),
+                                driver,
                                 requestDAO.getRequestById(idRequest),
                                 flightDAO.getFlightById(idNewFlight));
-                        System.out.println("FILE NAME CONTROLLER : " + nameFile);
+                        emailSender.send("MOTOR DEPORT", "APPROVED FLIGHT", nameFile, user.getEmail());
                     }
                 } else {
                     resp.sendRedirect("admin");
