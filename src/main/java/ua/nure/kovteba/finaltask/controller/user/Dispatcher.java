@@ -18,7 +18,7 @@ import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.Token;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
-import ua.nure.kovteba.finaltask.util.sort.ChooseSort;
+import ua.nure.kovteba.finaltask.util.ChooseSort;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;

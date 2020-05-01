@@ -6,7 +6,7 @@ import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
-import ua.nure.kovteba.finaltask.util.sort.ChooseSort;
+import ua.nure.kovteba.finaltask.util.ChooseSort;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;

@@ -1,10 +1,8 @@
-package ua.nure.kovteba.finaltask.util.sort;
+package ua.nure.kovteba.finaltask.util;
 
-import ua.nure.kovteba.finaltask.controller.flight.CreateFlight;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 

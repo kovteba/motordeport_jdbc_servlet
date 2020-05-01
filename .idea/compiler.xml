@@ -9,6 +9,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="motordeport" />
+        <module name="motordeport_jdbc_servlet" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />

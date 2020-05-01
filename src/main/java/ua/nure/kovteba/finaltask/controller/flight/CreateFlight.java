@@ -1,7 +1,6 @@
 package ua.nure.kovteba.finaltask.controller.flight;
 
-import lombok.SneakyThrows;
-import ua.nure.kovteba.finaltask.controller.user.CreateDispatcher;
+import com.itextpdf.text.DocumentException;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
@@ -69,7 +68,6 @@ public class CreateFlight extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -127,11 +125,16 @@ public class CreateFlight extends HttpServlet {
                         requestDAO.changeStatusRequestById(idRequest, RequestStatus.CLOSED);
                         employmentStatusDAO.changeEmploymentStatus(idDriver, Employment.BUSY);
                         User driver = userDAO.getUserById(idDriver);
-                        String nameFile = generatePDF.generateApproveByUserPDF(
-                                user,
-                                driver,
-                                requestDAO.getRequestById(idRequest),
-                                flightDAO.getFlightById(idNewFlight));
+                        String nameFile = null;
+                        try {
+                            nameFile = generatePDF.generateApproveByUserPDF(
+                                    user,
+                                    driver,
+                                    requestDAO.getRequestById(idRequest),
+                                    flightDAO.getFlightById(idNewFlight));
+                        } catch (DocumentException e) {
+                            e.printStackTrace();
+                        }
                         emailSender.send("MOTOR DEPORT", "APPROVED FLIGHT", nameFile, user.getEmail());
                     }
                 } else {
