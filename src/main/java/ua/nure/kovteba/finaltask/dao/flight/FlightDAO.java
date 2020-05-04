@@ -20,4 +20,6 @@ public interface FlightDAO {
 
     Flight getFlightById(Long id);
 
+    Flight getFlightByNumber(String number);
+
 }

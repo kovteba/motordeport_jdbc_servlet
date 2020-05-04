@@ -66,20 +66,21 @@ public class Admin extends HttpServlet {
     @Override()
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         //get user token from session
         String userToken = String.valueOf(req.getSession().getAttribute("userToken"));
 
         log.info("user token session--> " + userToken + ", class: " + this.getClass());
 
         Token token = tokenDAO.getTokenByToken(userToken);
+        User user = userDAO.getUserById(token.getUser());
 
-        if (token != null && userDAO.getUserById(token.getUser()).getRole().getRoleValue().equals("ADMIN")) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (token != null && user.getRole().getRoleValue().equals("ADMIN")) {
             //choose tab for open
             String value = req.getParameter("value");
             if (value == null) {

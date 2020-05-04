@@ -1,11 +1,16 @@
 package ua.nure.kovteba.finaltask.controller.flight;
 
+import ua.nure.kovteba.finaltask.dao.car.CarDAO;
 import ua.nure.kovteba.finaltask.dao.car.CarDAOImpl;
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAO;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
+import ua.nure.kovteba.finaltask.dao.flight.FlightDAO;
 import ua.nure.kovteba.finaltask.dao.flight.FlightDAOImpl;
+import ua.nure.kovteba.finaltask.dao.request.RequestDAO;
 import ua.nure.kovteba.finaltask.dao.request.RequestDAOImpl;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
+import ua.nure.kovteba.finaltask.dao.user.UserDAO;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
@@ -32,11 +37,11 @@ public class DoneFlight extends HttpServlet {
     //Create logger
     private static Logger log = Logger.getLogger(CreateFlight.class.getName());
 
-    private static UserDAOImpl userDAO;
-    private static CarDAOImpl carDAO;
-    private static FlightDAOImpl flightDAO;
-    private static RequestDAOImpl requestDAO;
-    private static EmploymentStatusDAOImpl employmentStatusDAO;
+    private static UserDAO userDAO;
+    private static CarDAO carDAO;
+    private static FlightDAO flightDAO;
+    private static RequestDAO requestDAO;
+    private static EmploymentStatusDAO employmentStatusDAO;
     private static TokenDAO tokenDAO;
 
 
@@ -77,19 +82,19 @@ public class DoneFlight extends HttpServlet {
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
 
-
         if (user != null) {
             if (user.getRole().getRoleValue().equals("ADMIN") || user.getRole().getRoleValue().equals("DISPATCHER")
                     || user.getRole().getRoleValue().equals("DRIVER")) {
 
                 Long idCarInFlight = Long.valueOf(req.getParameter("idCarInFlight"));
                 Long idFinishFlight = Long.valueOf(req.getParameter("idFinishFlight"));
-
+                User driver = flightDAO.getFlightById(idFinishFlight).getDriver();
                 if (req.getParameter("carTechnicalStatusValueAfterFlight") != null) {
                     String technicalStatus = req.getParameter("carTechnicalStatusValueAfterFlight");
                     carDAO.changeCarStatus(idCarInFlight, CarStatus.FREE);
                     carDAO.changeCarTechnicalStatus(idCarInFlight, CarTechnicalStatus.findCarTechnicatlStatus(technicalStatus));
                     flightDAO.changeFlightStatus(idFinishFlight, FlightStatus.DONE);
+                    employmentStatusDAO.changeEmploymentStatus(driver.getId(), Employment.FREE);
                 }
             }
 

@@ -32,4 +32,16 @@ public enum CarTechnicalStatus {
                 .get();
     }
 
+    public static CarTechnicalStatus findIgnoreCase(String carTechnicalStatus){
+        return getListCarTechnicalStatus()
+            .stream()
+            .filter(s -> s.getCarTechnicalStatusValue().compareToIgnoreCase(carTechnicalStatus) == 0)
+            .findAny()
+            .get();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(CarTechnicalStatus.findIgnoreCase("goo"));
+    }
+
 }

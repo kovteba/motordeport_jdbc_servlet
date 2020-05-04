@@ -75,8 +75,7 @@ public class GeneratePDF {
     public String generateApproveByUserPDF(User userApproved, User driver, Request request, Flight flight) throws DocumentException, IOException {
         Document document = new Document();
         String fileName = driver.getPhoneNumber() + "approved.pdf";
-        System.out.println("FILE STORE : " + fileName);
-        System.out.println("FILE STORE : " + fileStorage);
+
         try {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(fileStorage + fileName));

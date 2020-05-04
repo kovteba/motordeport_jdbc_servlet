@@ -74,11 +74,13 @@ public class Driver extends HttpServlet {
 
         Token token = tokenDAO.getTokenByToken(userToken);
         User user = userDAO.getUserById(token.getUser());
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if (token != null && user.getRole().getRoleValue().equals("DRIVER")) {
             //flights and requests section
 

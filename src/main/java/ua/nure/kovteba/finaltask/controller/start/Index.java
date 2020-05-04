@@ -8,6 +8,7 @@ import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
 import ua.nure.kovteba.finaltask.util.ChooseSort;
 import ua.nure.kovteba.finaltask.util.Encryption;
+import ua.nure.kovteba.finaltask.util.bot.Application;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -40,6 +41,7 @@ public class Index extends HttpServlet {
         userDAO = new UserDAOImpl();
         tokenDAO = new TokenDAOImpl();
         flightDAO = new FlightDAOImpl();
+        Application.main();
     }
 
     @Override
@@ -74,7 +76,6 @@ public class Index extends HttpServlet {
         dispatcher.forward(req, resp);
 
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
