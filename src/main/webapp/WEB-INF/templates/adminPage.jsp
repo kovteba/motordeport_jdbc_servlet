@@ -509,11 +509,11 @@
                               </select>
                             </td>
                             <td style="padding: 10px">
-                              <input type="text" placeholder="<fmt:message key="label.loadCopacity"/>"
+                              <input style="width: 130px" type="text" placeholder="<fmt:message key="label.loadCopacity"/>"
                                      name="loadCapacityForRequest" required>
                             </td>
                             <td style="padding: 10px">
-                              <input type="text" placeholder="<fmt:message key="label.seats"/>"
+                              <input style="width: 60px" type="text" placeholder="<fmt:message key="label.seats"/>"
                                      name="seatsForRequest" required>
                             </td>
                             <td style="padding: 10px"><input type="checkbox" name="luggageCompartmentForRequest"></td>
@@ -583,19 +583,41 @@
                    aria-labelledby="headingCreateNewDispatcher"
                    data-parent="#accordionExampleCreateNewDispatcher">
                 <div class="card-body">
-                  <form method="post" action="createDispatcher">
-                    <label for="emailDispatcher"><fmt:message key="label.email.forCreate"/></label>
-                    <input id="emailDispatcher" name="emailDispatcher">
-                    <label for="firstNameDispatcher"><fmt:message key="label.firstName.forCreate"/></label>
-                    <input id="firstNameDispatcher" name="firstNameDispatcher">
-                    <label for="lastNameDispatcher"><fmt:message key="label.lastName.forCerate"/></label>
-                    <input id="lastNameDispatcher" name="lastNameDispatcher">
-                    <label for="phoneNumberDispatcher"><fmt:message key="label.phoneNumber.forCreate"/></label>
-                    <input id="phoneNumberDispatcher" name="phoneNumberDispatcher">
-                    <label for="passwordDispatcher"><fmt:message key="label.password.forCreate"/></label>
-                    <input id="passwordDispatcher" name="passwordDispatcher">
-                    <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
-                  </form>
+                  <table class="table table-bordered">
+                    <form method="post" action="createDispatcher">
+                      <tbody>
+                      <tr>
+                        <td style="padding: 10px">
+                          <label for="emailDispatcher"><fmt:message key="label.email.forCreate"/></label>
+                          <input id="emailDispatcher" name="emailDispatcher">
+                        </td>
+                        <td style="padding: 10px">
+                          <label for="firstNameDispatcher"><fmt:message key="label.firstName.forCreate"/></label>
+                          <input id="firstNameDispatcher" name="firstNameDispatcher">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px">
+                          <label for="lastNameDispatcher"><fmt:message key="label.lastName.forCerate"/></label>
+                          <input id="lastNameDispatcher" name="lastNameDispatcher">
+                        </td>
+                        <td style="padding: 10px">
+                          <label for="phoneNumberDispatcher"><fmt:message key="label.phoneNumber.forCreate"/></label>
+                          <input id="phoneNumberDispatcher" name="phoneNumberDispatcher">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px">
+                          <label for="passwordDispatcher"><fmt:message key="label.password.forCreate"/></label>
+                          <input id="passwordDispatcher" name="passwordDispatcher">
+                        </td>
+                        <td style="padding: 10px">
+                          <input type="submit" class="btn btn-success createDispatcher"
+                                 value="<fmt:message key="label.submitUser"/>">
+                        </td>
+                      </tr>
+                    </form>
+                  </table>
                 </div>
               </div>
             </div>
@@ -687,7 +709,8 @@
                           <input id="emailDriver" name="emailDriver">
                         </td>
                         <td style="padding: 10px">
-                          <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
+                          <input type="submit" class="btn btn-success createDriver"
+                                 value="<fmt:message key="label.submitUser"/>">
                         </td>
                       </tr>
                       </tbody>
@@ -909,7 +932,7 @@
                         </c:when>
                         <c:otherwise>
                           <button type="submit" class="btn btn-danger" disabled><fmt:message
-                           key="label.deleteUser"/></button>
+                                  key="label.deleteUser"/></button>
                         </c:otherwise>
                       </c:choose>
                     </div>
@@ -976,7 +999,7 @@
                             <td style="padding: 10px">
                               <select name="carTechnicalStatusValue" required>
                                 <option selected disabled="disabled"><fmt:message
-                                 key="label.ChooseTechnStatus"/></option>
+                                        key="label.ChooseTechnStatus"/></option>
                                 <c:forEach items="${requestScope.carTechnicalStatusList}" var="carTechnicalStatusList">
                                   <option value="${carTechnicalStatusList.carTechnicalStatusValue}">
                                       ${carTechnicalStatusList.carTechnicalStatusValue}
@@ -988,7 +1011,7 @@
                           <tr>
                             <td style="padding: 10px">
                               <input type="text" placeholder="<fmt:message key="label.carNumber"/>" name="carNumber"
-                                     required>
+                                     id="carNumber" required>
                             </td>
                             <td style="padding: 10px">
                               <input type="text" placeholder="<fmt:message key="label.loadCopacity"/>"
@@ -1017,7 +1040,7 @@
                           </tr>
                           <tr>
                             <td colspan="3" style="padding: 10px">
-                              <input class="btn btn-success" type="submit" value="<fmt:message key="label.addCar"/>">
+                              <input class="btn btn-success addNewCarBtn" type="submit" value="<fmt:message key="label.addCar"/>">
                             </td>
                           </tr>
                         </form>
@@ -1052,7 +1075,7 @@
                               <tr>
                                 <td style="padding: 10px">
                                   <label for="carBrandName"><fmt:message key="label.carBrandName"/></label>
-                                  <input type="text" id="carBrandName" name="carBrandName">
+                                  <input type="text" id="carBrandName" name="carBrandName" required>
                                 </td>
                               </tr>
                               <tr>

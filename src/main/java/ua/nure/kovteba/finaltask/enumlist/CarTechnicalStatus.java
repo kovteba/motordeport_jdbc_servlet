@@ -40,8 +40,5 @@ public enum CarTechnicalStatus {
             .get();
     }
 
-    public static void main(String[] args) {
-        System.out.println(CarTechnicalStatus.findIgnoreCase("goo"));
-    }
 
 }

@@ -325,11 +325,11 @@
                   </select>
                 </td>
                 <td style="padding: 10px">
-                  <input type="text" placeholder="<fmt:message key="label.loadCopacity"/>"
+                  <input style="width: 130px"  type="text" placeholder="<fmt:message key="label.loadCopacity"/>"
                          name="loadCapacityForRequest" required>
                 </td>
                 <td style="padding: 10px">
-                  <input type="text" placeholder="<fmt:message key="label.seats"/>"
+                  <input style="width: 60px"  type="text" placeholder="<fmt:message key="label.seats"/>"
                          name="seatsForRequest" required>
                 </td>
                 <td style="padding: 10px"><input type="checkbox" name="luggageCompartmentForRequest"></td>
@@ -384,11 +384,8 @@
                       <c:when test="${flightListByUser.flightStatus.statusValue == 'DONE'}">
                         <button class="btn btn-success" disabled><fmt:message key="label.done"/></button>
                       </c:when>
-                      <c:when test="${flightListByUser.testEndDate()}">
-                        <button class="btn btn-success"><fmt:message key="label.done"/></button>
-                      </c:when>
                       <c:otherwise>
-                        <button class="btn btn-success" disabled><fmt:message key="label.done"/></button>
+                        <button class="btn btn-success" ><fmt:message key="label.done"/></button>
                       </c:otherwise>
                     </c:choose>
                   </td>

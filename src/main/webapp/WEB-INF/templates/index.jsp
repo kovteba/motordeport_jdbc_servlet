@@ -77,7 +77,7 @@
                aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-                <form method="post" action="registration">
+                <form method="post" action="">
                   <div class="modal-header">
                     <div><fmt:message key="label.registration"/></div>
                   </div>
@@ -123,7 +123,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                       <fmt:message key="label.close"/>
                     </button>
-                    <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
+                    <input id="registration" type="submit" class="btn btn-success registration" value="<fmt:message key="label.submitUser"/>">
                   </div>
                 </form>
               </div>
