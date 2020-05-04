@@ -116,7 +116,7 @@ public class MotorDeportBot extends TelegramLongPollingBot {
 
    @Override
    public String getBotToken() {
-      return "1017849293:AAGI-dCgHmS7r9noHUC1rnHOUojkuQFLULE";
+      return "";
    }
 
 
