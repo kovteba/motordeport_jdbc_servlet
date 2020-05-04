@@ -6,6 +6,7 @@ import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Role;
 import ua.nure.kovteba.finaltask.i18n.i18nRU;
+import ua.nure.kovteba.finaltask.util.Encryption;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -57,7 +58,7 @@ public class CreateDispatcher extends HttpServlet {
             newDispatcher.setFirstName(req.getParameter("firstNameDispatcher"));
             newDispatcher.setLastName(req.getParameter("lastNameDispatcher"));
             newDispatcher.setPhoneNumber(req.getParameter("phoneNumberDispatcher"));
-            newDispatcher.setPassword(req.getParameter("passwordDispatcher"));
+            newDispatcher.setPassword(Encryption.SHA256(req.getParameter("passwordDispatcher")));
             newDispatcher.setRole(Role.DISPATCHER);
             newDispatcher.setEmail(req.getParameter("emailDispatcher"));
             userDAO.createUser(newDispatcher);

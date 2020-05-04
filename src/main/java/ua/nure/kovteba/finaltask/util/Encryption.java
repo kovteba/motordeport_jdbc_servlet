@@ -1,24 +1,23 @@
 package ua.nure.kovteba.finaltask.util;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 
 public class Encryption {
 
-    public static String md5(String in) {
-        String result = null;
-        try
-        {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.reset();
-            digest.update(in.getBytes());
-            BigInteger bigInt = new BigInteger(1, digest.digest());
-            result = bigInt.toString(16);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static String SHA256(String password) {
+        return Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
+    }
+
+    public static boolean testOriginal(String password, String passwordDB){
+        return Encryption.SHA256(password).equals(passwordDB);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Encryption.SHA256("kovteba"));
     }
 
 }

@@ -45,7 +45,7 @@
     right: 2%;
 }
 
-.phoneNumber, .password {
+.phoneNumber, .password, .registration {
     padding: 0.5rem 0;
     margin-left: 0.1rem ;
     margin-right: 0.1rem ;
@@ -97,7 +97,8 @@
 .perent {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 80px);
+    /*min-height: calc(100vh - 80px);*/
+    min-height: calc(100vh);
 }
 
 

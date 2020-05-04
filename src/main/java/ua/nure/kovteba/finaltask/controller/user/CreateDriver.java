@@ -1,12 +1,15 @@
 package ua.nure.kovteba.finaltask.controller.user;
 
+import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAO;
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAO;
 import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
+import ua.nure.kovteba.finaltask.dao.user.UserDAO;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Employment;
 import ua.nure.kovteba.finaltask.enumlist.Role;
+import ua.nure.kovteba.finaltask.util.Encryption;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -29,8 +32,8 @@ public class CreateDriver extends HttpServlet {
     //Create logger
     private static Logger log = Logger.getLogger(CreateDriver.class.getName());
 
-    private static UserDAOImpl userDAO;
-    private static EmploymentStatusDAOImpl employmentStatusDAO;
+    private static UserDAO userDAO;
+    private static EmploymentStatusDAO employmentStatusDAO;
     private static TokenDAO tokenDAO;
 
     @Override
@@ -67,7 +70,7 @@ public class CreateDriver extends HttpServlet {
                 newDriver.setFirstName(req.getParameter("firstNameDriver"));
                 newDriver.setLastName(req.getParameter("lastNameDriver"));
                 newDriver.setPhoneNumber(phoneNumber);
-                newDriver.setPassword(req.getParameter("passwordDriver"));
+                newDriver.setPassword(Encryption.SHA256(req.getParameter("passwordDriver")));
                 newDriver.setRole(Role.DRIVER);
                 newDriver.setEmail(req.getParameter("emailDriver"));
                 Long newDriverId = userDAO.createUser(newDriver);

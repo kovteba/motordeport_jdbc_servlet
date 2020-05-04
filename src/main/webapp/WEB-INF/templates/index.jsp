@@ -70,6 +70,65 @@
               </div>
             </form>
           </div>
+          <a style="color: white; cursor: pointer" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+            <fmt:message key="label.registration"/>
+          </a>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <form method="post" action="registration">
+                  <div class="modal-header">
+                    <div><fmt:message key="label.registration"/></div>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="emailAdmin" class="col-form-label">
+                        <fmt:message key="label.email.forCreate"/>
+                      </label>
+                      <input id="emailAdmin" name="emailAdmin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="firstNameAdmin" class="col-form-label">
+                        <fmt:message key="label.firstName.forCreate"/>
+                      </label>
+                      <input id="firstNameAdmin" name="firstNameAdmin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastNameAdmin" class="col-form-label">
+                        <fmt:message key="label.lastName.forCerate"/>
+                      </label>
+                      <input id="lastNameAdmin" name="lastNameAdmin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="phoneNumberAdmin" class="col-form-label">
+                        <fmt:message key="label.phoneNumber.forCreate"/>
+                      </label>
+                      <input id="phoneNumberAdmin" name="phoneNumberAdmin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="passwordAdmin" class="col-form-label">
+                        <fmt:message key="label.password.forCreate"/>
+                      </label>
+                      <input type="password" id="passwordAdmin" name="passwordAdmin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="secretCode" class="col-form-label" class="form-control">
+                        <fmt:message key="label.secretCode"/>
+                      </label>
+                      <input type="password" id="secretCode" name="secretCode" class="form-control">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      <fmt:message key="label.close"/>
+                    </button>
+                    <input type="submit" class="btn btn-success" value="<fmt:message key="label.submitUser"/>">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -179,10 +238,10 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12 foot">
+  <div class="row">
+    <div class="col-md-12 foot">
 
+    </div>
   </div>
 </div>
 

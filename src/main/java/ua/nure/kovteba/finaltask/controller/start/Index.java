@@ -7,6 +7,7 @@ import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
 import ua.nure.kovteba.finaltask.util.ChooseSort;
+import ua.nure.kovteba.finaltask.util.Encryption;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -89,7 +90,7 @@ public class Index extends HttpServlet {
         String token = null;
         if (user != null){
             log.info("User with phoneNumber --> " + phoneNumber + "found successfully!");
-            if (user.getPassword().equals(password)) {
+            if (Encryption.testOriginal(password, user.getPassword())) {
                 token = tokenDAO.createToken(user.getId());
                 req.getSession().setAttribute("userToken", token);
                 String role = user.getRole().getRoleValue();
