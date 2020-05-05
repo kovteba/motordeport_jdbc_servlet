@@ -52,47 +52,49 @@ public class MotorDeportBot extends TelegramLongPollingBot {
    public void onUpdateReceived(Update update) {
       String message = update.getMessage().getText();
       String[] massageDone = null;
-      if (message.length() > 0){
+
+      if (message.length() > 3){
         massageDone = message.split("/");
+         System.out.println(massageDone.length + "EEEEEEEEEEEEE");
+         String phoneNumber = massageDone[0];
+         String password = massageDone[1];
+         String flightNumber = massageDone[2];
+         String carStatus = massageDone[3];
+
+         User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
+         if (user == null) {
+            sendMsg(update.getMessage().getChatId().toString(), "Number not correct or user not exist");
+            return;
+         }
+
+         if (Encryption.testOriginal(password, user.getPassword())){
+            Flight flight = flightDAO.getFlightByNumber(flightNumber);
+            System.out.println(flight.toString());
+            if (flight.getId() == null){
+               sendMsg(update.getMessage().getChatId().toString(), "Flight with number not exist");
+               return;
+            }
+            Car carInFlight = flight.getCar();
+            User driver = flight.getDriver();
+            carDAO.changeCarStatus(carInFlight.getId(), CarStatus.FREE);
+            CarTechnicalStatus carTechnicalStatus = null;
+            try {
+               carTechnicalStatus = CarTechnicalStatus.findIgnoreCase(carStatus);
+            } catch (NoSuchElementException e){
+               log.warning(e.getMessage());
+               sendMsg(update.getMessage().getChatId().toString(), "Incorrect car technical status. Try again");
+               return;
+            }
+            carDAO.changeCarTechnicalStatus(carInFlight.getId(),
+                CarTechnicalStatus.findCarTechnicatlStatus(carTechnicalStatus.getCarTechnicalStatusValue()));
+            flightDAO.changeFlightStatus(flight.getId(), FlightStatus.DONE);
+            employmentStatusDAO.changeEmploymentStatus(driver.getId(), Employment.FREE);
+            sendMsg(update.getMessage().getChatId().toString(), "Flight DONE");
+         }
+
       } else {
          sendMsg(update.getMessage().getChatId().toString(), "Enter value by format phoneNumber/password/flightNumber/carStatus");
          return;
-      }
-      String phoneNumber = massageDone[0];
-      String password = massageDone[1];
-      String flightNumber = massageDone[2];
-      String carStatus = massageDone[3];
-      System.out.println("EEE " + phoneNumber + " "+ password + " "+ flightNumber + "" + carStatus);
-
-      User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
-      if (user == null) {
-         sendMsg(update.getMessage().getChatId().toString(), "Number not correct or user not exist");
-         return;
-      }
-
-      if (Encryption.testOriginal(password, user.getPassword())){
-         Flight flight = flightDAO.getFlightByNumber(flightNumber);
-         System.out.println(flight.toString());
-         if (flight.getId() == null){
-            sendMsg(update.getMessage().getChatId().toString(), "Flight with number not exist");
-            return;
-         }
-         Car carInFlight = flight.getCar();
-         User driver = flight.getDriver();
-         carDAO.changeCarStatus(carInFlight.getId(), CarStatus.FREE);
-         CarTechnicalStatus carTechnicalStatus = null;
-         try {
-            carTechnicalStatus = CarTechnicalStatus.findIgnoreCase(carStatus);
-         } catch (NoSuchElementException e){
-            log.warning(e.getMessage());
-            sendMsg(update.getMessage().getChatId().toString(), "Incorrect car technical status. Try again");
-            return;
-         }
-         carDAO.changeCarTechnicalStatus(carInFlight.getId(),
-             CarTechnicalStatus.findCarTechnicatlStatus(carTechnicalStatus.getCarTechnicalStatusValue()));
-         flightDAO.changeFlightStatus(flight.getId(), FlightStatus.DONE);
-         employmentStatusDAO.changeEmploymentStatus(driver.getId(), Employment.FREE);
-         sendMsg(update.getMessage().getChatId().toString(), "Flight DONE");
       }
 
    }
@@ -116,7 +118,7 @@ public class MotorDeportBot extends TelegramLongPollingBot {
 
    @Override
    public String getBotToken() {
-      return "";
+      return "1017849293:AAGI-dCgHmS7r9noHUC1rnHOUojkuQFLULE";
    }
 
 
