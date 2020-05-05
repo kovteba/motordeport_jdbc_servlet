@@ -39,7 +39,7 @@ public class CreateCarBrand extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         String userToken = "0";
 
         if (req.getSession().getAttribute("userToken") != null){
