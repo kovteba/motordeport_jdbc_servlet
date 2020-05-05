@@ -16,8 +16,5 @@ public class Encryption {
         return Encryption.SHA256(password).equals(passwordDB);
     }
 
-    public static void main(String[] args) {
-        System.out.println(Encryption.SHA256("kovteba"));
-    }
 
 }
