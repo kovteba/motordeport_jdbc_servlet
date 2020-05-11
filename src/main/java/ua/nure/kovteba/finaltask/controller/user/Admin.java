@@ -19,6 +19,7 @@ import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.Token;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.*;
+import ua.nure.kovteba.finaltask.exception.SomethingWrongException;
 import ua.nure.kovteba.finaltask.util.ChooseSort;
 
 import javax.servlet.RequestDispatcher;
@@ -72,7 +73,13 @@ public class Admin extends HttpServlet {
         log.info("user token session--> " + userToken + ", class: " + this.getClass());
 
         Token token = tokenDAO.getTokenByToken(userToken);
-        User user = userDAO.getUserById(token.getUser());
+        User user = null;
+        try {
+            user = userDAO.getUserById(token.getUser());
+        } catch (NullPointerException e){
+            req.setAttribute("errorMessage", "User not found tray leter");
+            throw new SomethingWrongException("User not found tray leter");
+        }
 
         try {
             Thread.sleep(1000);

@@ -1,0 +1,176 @@
+@font-face {
+    font-family: LCDDisplayCapsSSK; /* Гарнитура шрифта */
+    src: url("../font/LCDDisplayCapsSSK.otf"); /* Путь к файлу со шрифтом */
+}
+
+@font-face {
+    font-family: MinecartLCD; /* Гарнитура шрифта */
+    src: url("../font/MinecartLCD.ttf"); /* Путь к файлу со шрифтом */
+}
+
+/******START PAGE******/
+.time {
+    color: white;
+    text-align: center;
+    vertical-align: center;
+    margin-top: 2%;
+}
+
+.logIn, .logOut{
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    color: white;
+}
+
+.logOutBtn{
+    color: white;
+}
+
+.changeLanguage {
+    position: absolute;
+    top: 20%;
+    right: 30%;
+    color: white;
+}
+
+.changeLanguage {
+    margin-right: 10px;
+    color: white;
+}
+
+.link{
+    position: absolute;
+    top: 20%;
+    right: 2%;
+}
+
+.phoneNumber, .password, .registration {
+    padding: 0.5rem 0;
+    margin-left: 0.1rem ;
+    margin-right: 0.1rem ;
+}
+
+.logInBtn {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-bottom: 0.5rem ;
+}
+
+.container {
+    overflow: hidden;
+    /*width:200px*/
+}
+
+.box {
+    white-space: nowrap;
+    /*width:90px;*/
+}
+
+.box div {
+    /*width:90px;*/
+    display: inline-block;
+    border: 1px solid black
+}
+
+
+#clock{
+    color: white;
+}
+/*****END START PAGE*******/
+
+
+.header {
+    background: black;
+    color: black;
+    margin-bottom: 2%;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Параметры тени */
+}
+
+.logo {
+    margin: 10px 10px 10px 3%;
+    width: 100%;
+}
+
+.perent {
+    display: flex;
+    flex-direction: column;
+    /*min-height: calc(100vh - 80px);*/
+    min-height: calc(100vh);
+}
+
+
+.base {
+    flex: 1 0 auto;
+    width: 95%;
+    margin: auto;
+}
+
+/*****START FLIGHT BLOCK********/
+
+/*start table flight*/
+.tableFlights {
+    border-radius: 9px 9px 9px 9px;
+    width: 100%;
+    font-family: MinecartLCD;
+    text-align: center;
+}
+
+.tableFlights tbody tr {
+    color: yellow;
+    border-top: 2px solid #000000 !important;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.tableFlights thead {
+    color: #007402;
+    cursor: pointer;
+}
+
+.tableFlights thead tr th {
+    cursor: pointer;
+}
+
+.tableFlights td {
+    vertical-align: center;
+}
+
+.tableTd {
+    padding: 10px;
+}
+
+/*end table flight*/
+
+/*****END FLIGHT BLOCK********/
+
+.hrBeetwen {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+/*****START DISPATCHER BLOCK********/
+/*****END DISPATCHER BLOCK********/
+/*****START DRIVERS BLOCK********/
+
+/*****END DRIVERS BLOCK********/
+
+
+.foot {
+    height: 80px;
+    margin-top: 20px;
+    background: black;
+    flex: 0 0 auto;
+}
+
+.navBox {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+
+

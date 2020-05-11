@@ -6,8 +6,10 @@ import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.Flight;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.FlightStatus;
+import ua.nure.kovteba.finaltask.exception.SomethingWrongException;
 import ua.nure.kovteba.finaltask.util.ChooseSort;
 import ua.nure.kovteba.finaltask.util.Encryption;
+import ua.nure.kovteba.finaltask.util.TestFlightByDate;
 import ua.nure.kovteba.finaltask.util.bot.Application;
 
 import javax.servlet.RequestDispatcher;
@@ -42,6 +44,9 @@ public class Index extends HttpServlet {
         tokenDAO = new TokenDAOImpl();
         flightDAO = new FlightDAOImpl();
         Application.main();
+        TestFlightByDate testFlightByDate = new TestFlightByDate();
+        testFlightByDate.setDaemon(true);
+        testFlightByDate.start();
     }
 
     @Override
@@ -87,8 +92,17 @@ public class Index extends HttpServlet {
         String password = req.getParameter("password");
 
         //find user by phone
-        User user = userDAO.getUserByUserPhoneNumber(phoneNumber);
+        User user = null;
         String token = null;
+        try {
+            user = userDAO.getUserByUserPhoneNumber(phoneNumber);
+        } catch (SomethingWrongException e) {
+            e.printStackTrace();
+            req.setAttribute("errorMessage", "User with " + phoneNumber + " already exist!!");
+            RequestDispatcher dispatcher = req.getRequestDispatcher(
+                "/WEB-INF/templates/ErrorPage.jsp");
+            dispatcher.forward(req, resp);
+        }
         if (user != null){
             log.info("User with phoneNumber --> " + phoneNumber + "found successfully!");
             if (Encryption.testOriginal(password, user.getPassword())) {

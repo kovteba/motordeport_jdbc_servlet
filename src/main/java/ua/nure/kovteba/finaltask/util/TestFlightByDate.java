@@ -18,11 +18,18 @@ public class TestFlightByDate extends Thread {
 
    @Override
    public void run() {
+      System.out.println("TEST RUN");
       while (true){
+         System.out.println("TEST WHILE");
          List<Flight> flights = flightDAO.getAllFlight();
          for (Flight flight : flights){
-            if (ZonedDateTime.now().toLocalDate().isBefore(flight.getStartDate().toLocalDate())){
-               flightDAO.changeFlightStatus(flight.getId(), FlightStatus.INPROGRESS);
+            System.out.println("Now : " + ZonedDateTime.now().toLocalDate());
+            System.out.println("flight : " + flight.getStartDate().toLocalDate());
+            if (ZonedDateTime.now().toLocalDate().isAfter(flight.getStartDate().toLocalDate())){
+               if (ZonedDateTime.now().toLocalDate().isBefore(flight.getEndDate().toLocalDate())){
+                  flightDAO.changeFlightStatus(flight.getId(), FlightStatus.INPROGRESS);
+                  System.out.println("TEST");
+               }
             }
          }
          try {

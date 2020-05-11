@@ -5,9 +5,11 @@ import ua.nure.kovteba.finaltask.dao.token.TokenDAOImpl;
 import ua.nure.kovteba.finaltask.dao.user.UserDAOImpl;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Role;
+import ua.nure.kovteba.finaltask.exception.SomethingWrongException;
 import ua.nure.kovteba.finaltask.i18n.i18nRU;
 import ua.nure.kovteba.finaltask.util.Encryption;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,23 +53,41 @@ public class CreateDispatcher extends HttpServlet {
         if (!userToken.equals("0")){
             user = userDAO.getUserById(tokenDAO.getTokenByToken(userToken).getUser());
         }
+//
+        String phoneNumber = req.getParameter("phoneNumberDispatcher");
+        User findUser = userDAO.getUserByUserPhoneNumber(phoneNumber);
 
-        if (user != null && user.getRole().getRoleValue().equals("ADMIN")){
-            //create new user with role "Dispatcher"
-            User newDispatcher = new User();
-            newDispatcher.setFirstName(req.getParameter("firstNameDispatcher"));
-            newDispatcher.setLastName(req.getParameter("lastNameDispatcher"));
-            newDispatcher.setPhoneNumber(req.getParameter("phoneNumberDispatcher"));
-            newDispatcher.setPassword(Encryption.SHA256(req.getParameter("passwordDispatcher")));
-            newDispatcher.setRole(Role.DISPATCHER);
-            newDispatcher.setEmail(req.getParameter("emailDispatcher"));
-            userDAO.createUser(newDispatcher);
+        if (findUser != null) {
+            try {
+                throw new SomethingWrongException("User with " + phoneNumber + " already exist!!");
+            } catch (SomethingWrongException e) {
+                e.printStackTrace();
+                req.setAttribute("errorMessage", "User with " + phoneNumber + " already exist!!");
+                RequestDispatcher dispatcher = req.getRequestDispatcher(
+                    "/WEB-INF/templates/ErrorPage.jsp");
+                dispatcher.forward(req, resp);
+            }
         } else {
-            resp.sendRedirect("");
+            if (user != null && user.getRole().getRoleValue().equals("ADMIN")){
+                //create new user with role "Dispatcher"
+                User newDispatcher = new User();
+                newDispatcher.setFirstName(req.getParameter("firstNameDispatcher"));
+                newDispatcher.setLastName(req.getParameter("lastNameDispatcher"));
+                newDispatcher.setPhoneNumber(req.getParameter("phoneNumberDispatcher"));
+                newDispatcher.setPassword(Encryption.SHA256(req.getParameter("passwordDispatcher")));
+                newDispatcher.setRole(Role.DISPATCHER);
+                newDispatcher.setEmail(req.getParameter("emailDispatcher"));
+                userDAO.createUser(newDispatcher);
+            } else {
+                resp.sendRedirect("");
+            }
+
+            //redirect to admin
+            resp.sendRedirect("admin?value=DISPATCHER");
         }
 
-        //redirect to admin
-        resp.sendRedirect("admin?value=DISPATCHER");
+
+
     }
 
 }

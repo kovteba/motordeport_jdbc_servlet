@@ -2,6 +2,7 @@ package ua.nure.kovteba.finaltask.dao.user;
 
 import ua.nure.kovteba.finaltask.dao.employmentstatus.EmploymentStatusDAOImpl;
 import ua.nure.kovteba.finaltask.enumlist.Employment;
+import ua.nure.kovteba.finaltask.exception.SomethingWrongException;
 import ua.nure.kovteba.finaltask.util.Connect;
 import ua.nure.kovteba.finaltask.entity.User;
 import ua.nure.kovteba.finaltask.enumlist.Role;
@@ -175,6 +176,7 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
             LOG.warning("Some problem in method \"getUserByUserPhoneNumber\" with phone == "
                     + phoneNumber + ", " + this.getClass());
+            throw new SomethingWrongException("User with " + phoneNumber + " not exist!!");
         }
         //return user by id
         return user;
